@@ -5,6 +5,7 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 
+// Static files
 app.use(express.static('public'));
 
 app.set('views', './src/views');
