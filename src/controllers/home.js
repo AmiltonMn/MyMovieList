@@ -1,5 +1,5 @@
 module.exports = {
-    async pagInicialGet(res, req){
+    async pagInicialGet(req, res){
         res.render('../views/home');
     }
 }
