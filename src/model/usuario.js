@@ -8,5 +8,24 @@ const usuario = database.define('usuario', {
         allowNull: false,
         primaryKey: true
     },
-    
+    NickName: {
+        type: Sequelize.STRING(255),
+        allowNull: false
+    },
+    Nome: {
+        type: Sequelize.STRING(255),
+        allowNull: false
+    },
+    DtNasc: {
+        type: Sequelize.DATE,
+        allowNull: false
+    },
+    Senha: {
+        type: Sequelize.STRING(255),
+        allowNull: false
+    },
+    Email: {
+        type: Sequelize.STRING(255),
+        allowNull: false
+    }
 })
