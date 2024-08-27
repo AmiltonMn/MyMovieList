@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize');
 const database = require('../config/db');
-const usuario = require('../model/usuario');
+const usuario = require('./usuario');
 
-const comentario = database.define('comentario', {
-    IDComentario: {
+const reclamacao = database.define('reclamacao', {
+    IDReclamacao: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
@@ -19,14 +19,14 @@ const comentario = database.define('comentario', {
     }
 });
 
-comentario.belongsTo(usuario, {
+reclamacao.belongsTo(usuario, {
     constraints: true,
     foreignKey: 'IDUsuario',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });
 
-comentario.belongsTo(usuario, {
+reclamacao.belongsTo(usuario, {
     constraints: true,
     foreignKey: 'IDUsuarioAdmin',
     onDelete: 'CASCADE',
@@ -34,4 +34,4 @@ comentario.belongsTo(usuario, {
     allowNull: true
 });
 
-module.exports = comentario;
+module.exports = reclamacao;
