@@ -1,7 +1,6 @@
-const usuario = require('../model/usuario');
-
 const Sequelize = require('sequelize');
 const database = require('../config/db');
+const usuario = require('../model/usuario');
 
 const amizade = database.define('amizade', {
     IDAmizade: {
