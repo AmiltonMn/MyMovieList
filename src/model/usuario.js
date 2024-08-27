@@ -28,4 +28,6 @@ const usuario = database.define('usuario', {
         type: Sequelize.STRING(255),
         allowNull: false
     }
-})
+});
+
+module.exports = usuario;
