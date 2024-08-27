@@ -27,6 +27,11 @@ const usuario = database.define('usuario', {
     Email: {
         type: Sequelize.STRING(255),
         allowNull: false
+    },
+    ISAdmin: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+        allowNull: false
     }
 });
 

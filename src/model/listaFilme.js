@@ -1,8 +1,10 @@
 const Sequelize = require('sequelize');
 const database = require('../config/db');
+const usuario = require('../model/usuario');
+const filme = require('../model/filme');
 
 const listaFilme = database.define('listaFilme', {
-    IDlistaFilme: {
+    IDListaFilme: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
