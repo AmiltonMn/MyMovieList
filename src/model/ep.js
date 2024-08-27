@@ -30,7 +30,9 @@ const ep = database.define('ep', {
 
 ep.belongsTo(temporada, {
     constraint: true,
-    foreignKey: 'IDTemporada'
+    foreignKey: 'IDTemporada',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
 });
 
 module.exports = ep;

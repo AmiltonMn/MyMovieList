@@ -19,12 +19,16 @@ const listaFilme = database.define('listaFilme', {
 
 listaFilme.belongsTo(filme, {
     constraints: true,
-    foreignKey: 'IDFilme'
+    foreignKey: 'IDFilme',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
 });
 
 listaFilme.belongsTo(usuario, {
     constraints: true,
-    foreignKey: 'IDUsuario'
+    foreignKey: 'IDUsuario',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
 });
 
 module.exports = listaFilme;

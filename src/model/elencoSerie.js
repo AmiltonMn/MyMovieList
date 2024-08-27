@@ -14,12 +14,16 @@ const elencoSerie = database.define('elencoSerie', {
 
 elencoSerie.belongsTo(pessoa, {
     constraint: true,
-    foreignKey: 'IDPessoa'
+    foreignKey: 'IDPessoa',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
 });
 
 elencoSerie.belongsTo(serie, {
     constraint: true,
-    foreignKey: 'IDFilme'
+    foreignKey: 'IDFilme',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
 });
 
 module.exports = elencoSerie;

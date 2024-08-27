@@ -19,12 +19,16 @@ const listaSerie = database.define('listaSerie', {
 
 listaSerie.belongsTo(usuario, {
     constraint: true,
-    foreignKey: 'IDUsuario'
+    foreignKey: 'IDUsuario',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
 });
 
 listaSerie.belongsTo(serie, {
     constraint: true,
-    foreignKey: "IDSerie"
+    foreignKey: 'IDSerie',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
 });
 
 module.exports = listaSerie;

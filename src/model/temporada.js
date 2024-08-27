@@ -30,7 +30,9 @@ const temporada = database.define('temporada', {
 
 temporada.belongsTo(serie, {
     constraints: true,
-    foreignKey: 'IDSerie'
+    foreignKey: 'IDSerie',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
 })
 
 module.exports = temporada;

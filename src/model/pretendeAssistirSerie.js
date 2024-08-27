@@ -14,12 +14,16 @@ const pretendeAssistirSerie = database.define('pretendeAssistirSerie', {
 
 pretendeAssistirSerie.belongsTo(usuario, {
     constraint: true,
-    foreignKey: 'IDUsuario'
+    foreignKey: 'IDUsuario',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
 });
 
 pretendeAssistirSerie.belongsTo(serie, {
     constraint: true,
-    foreignKey: "IDSerie"
+    foreignKey: 'IDSerie',
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
 });
 
 
