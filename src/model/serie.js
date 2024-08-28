@@ -24,6 +24,11 @@ const serie = database.define('serie', {
         type: Sequelize.FLOAT,
         allowNull: false,
         defaultValue: 0
+    },
+    Imagem: {
+        type: Sequelize.STRING(255),
+        defaultValue: 'noImage',
+        allowNull: false
     }
 });
 

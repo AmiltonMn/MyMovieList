@@ -8,9 +8,10 @@ const login = require('./src/controllers/login');
 const cadastro = require('./src/controllers/cadastro');
 
 // Iniciando as rotas
-route.get('/', home.pagInicialGet);
-
+route.get('/', home.getHome);
 route.get('/login', login.getLoginPage);
+route.post('/login', login.postLoginPage);
+
 
 route.get('/registrar', cadastro.getRegPage);
 

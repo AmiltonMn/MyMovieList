@@ -4,19 +4,19 @@ main {
 }
 
 #main {
-    background-color: antiquewhite;
+    /* background-color: antiquewhite; */
     width: 80%;
     display: flex;
     justify-content: space-between;
 }
 
 #blablabla {
-    background-color: chartreuse;
+    /* background-color: chartreuse; */
     width: 40%;
 }
 
 #login {
-    background-color: coral;
+    /* background-color: coral; */
     width: 50%;
     padding: 10px;
 }

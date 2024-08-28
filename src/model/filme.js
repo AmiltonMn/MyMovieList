@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const database = require('../config/db');
+const { defaultValueSchemable } = require('sequelize/lib/utils');
 
 const filme = database.define('filme', {
     IDFilme: {
@@ -26,6 +27,11 @@ const filme = database.define('filme', {
     },
     IdadeIndicativa: {
         type: Sequelize.INTEGER,
+        allowNull: false
+    },
+    Imagem: {
+        type: Sequelize.STRING(255),
+        defaultValue: 'noImage',
         allowNull: false
     }
 })

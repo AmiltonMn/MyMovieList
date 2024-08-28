@@ -26,6 +26,11 @@ const temporada = database.define('temporada', {
         allowNull: false,
         defaultValue: 0
     },
+    Imagem: {
+        type: Sequelize.STRING(255),
+        defaultValue: 'noImage',
+        allowNull: false
+    }
 });
 
 temporada.belongsTo(serie, {

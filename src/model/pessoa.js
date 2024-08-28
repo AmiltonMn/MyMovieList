@@ -20,6 +20,11 @@ const pessoa = database.define('pessoa', {
         type: Sequelize.STRING(255),
         allowNull: false
     },
+    Imagem: {
+        type: Sequelize.STRING(255),
+        defaultValue: 'noImage',
+        allowNull: false
+    }
 })
 
 module.exports = pessoa;

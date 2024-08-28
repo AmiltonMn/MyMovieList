@@ -32,6 +32,11 @@ const usuario = database.define('usuario', {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false
+    },
+    Imagem: {
+        type: Sequelize.STRING(255),
+        defaultValue: 'noImage',
+        allowNull: false
     }
 });
 
