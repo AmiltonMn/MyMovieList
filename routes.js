@@ -16,7 +16,7 @@ route.get('/login', login.getLoginPage);
 route.post('/login', login.postLoginPage);
 
 // Get e Post do registrar
-route.get('/registrar', cadastro.getRegPage);
+route.get('/cadastrar', cadastro.getCadPage);
 route.post('/cadastrar', cadastro.postCadPage);
 
 // Get e Post do perfil

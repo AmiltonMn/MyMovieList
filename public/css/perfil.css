@@ -8,3 +8,24 @@ footer
 }
 
 #listasContainer
+{
+    float: right;
+}
+
+#imagemPerfil
+{
+    width: 130px;
+    height: 130px;
+}
+
+#imagemContainer
+{
+    width: fit-content;
+    height: fit-content;
+}
+
+#listasContainer
+{
+    width: 100%;
+    height: 164px;
+}
