@@ -10,6 +10,8 @@ const reclamacao = require('../model/reclamacao');
 const serie = require('../model/serie');
 const temporada = require('../model/temporada');
 const usuario = require('../model/usuario');
+const ep = require('../model/ep');
+const pessoa = require('../model/pessoa');
 
 module.exports = {
     async pagInicialGet(req, res){
