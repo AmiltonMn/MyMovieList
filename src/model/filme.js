@@ -23,6 +23,10 @@ const filme = database.define('filme', {
     NotaGeral: {
         type: Sequelize.FLOAT,
         allowNull: false
+    },
+    IdadeIndicativa: {
+        type: Sequelize.INTEGER,
+        allowNull: false
     }
 })
 
