@@ -10,13 +10,11 @@ main {
 }
 
 #sobreMML {
-    background-color: chartreuse;
-    width: 40%;
     height: fit-content;
+    width: 50%;
 }
 
 #registro {
-    background-color: coral;
     width: 50%;
     padding: 10px;
 }
