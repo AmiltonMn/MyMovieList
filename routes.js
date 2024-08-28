@@ -9,10 +9,13 @@ const cadastro = require('./src/controllers/cadastro');
 
 // Iniciando as rotas
 route.get('/', home.getHome);
+
+
 route.get('/login', login.getLoginPage);
 route.post('/login', login.postLoginPage);
 
 
-route.get('/registrar', cadastro.getRegPage);
+route.get('/cadastrar', cadastro.getCadPage);
+route.post('/cadastrar', cadastro.postCadPage);
 
 module.exports = route;
