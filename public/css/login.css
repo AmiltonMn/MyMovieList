@@ -1,0 +1,27 @@
+main {
+    display: flex;
+    justify-content: center;
+}
+
+#main {
+    background-color: antiquewhite;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#blablabla {
+    background-color: chartreuse;
+    width: 40%;
+}
+
+#login {
+    background-color: coral;
+    width: 50%;
+    padding: 10px;
+}
+
+#cadastrar > a {
+    color: white;
+    text-decoration: none;
+}

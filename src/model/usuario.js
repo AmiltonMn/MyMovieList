@@ -8,7 +8,7 @@ const usuario = database.define('usuario', {
         allowNull: false,
         primaryKey: true
     },
-    NickName: {
+    Usuario: {
         type: Sequelize.STRING(255),
         allowNull: false
     },
