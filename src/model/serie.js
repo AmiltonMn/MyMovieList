@@ -12,7 +12,7 @@ const serie = database.define('serie', {
         type: Sequelize.STRING(255),
         allowNull: false
     },
-    Sinpopse: {
+    Sinopse: {
         type: Sequelize.STRING(255),
         allowNull: false
     },
