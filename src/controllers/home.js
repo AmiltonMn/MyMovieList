@@ -31,6 +31,6 @@ module.exports = {
         await temporada
         await usuario
 
-        res.render('../views/home');
+        res.render('../views/home', {usuario: ''});
     }
 }
