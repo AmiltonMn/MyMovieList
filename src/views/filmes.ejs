@@ -12,7 +12,7 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
 
       <div class="container-fluid d-flex justify-content-around">
-
+        
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -20,7 +20,10 @@
         <div class="collapse navbar-collapse">
           <a class="navbar-brand" href="/" onmouseover="mudarTitulo()" onmouseleave="voltarTitulo()" id="tituloNav" >My Movie List</a>
         </div>
-        <%= usuario.Nome %>
+
+        <a class="navbar-brand" href="/perfil">Perfil</a>
+        <a class="navbar-brand" href="/filmes">Filmes</a>
+        <a class="navbar-brand" href="/series">Séries</a>
         <a class="navbar-brand" href="/login">Login</a>
         <a class="navbar-brand" href="/cadastrar">Registrar</a>
 
@@ -30,43 +33,66 @@
 
     <main>
       <div class="container border border-black p-3 d-flex justify-content-end align-items-end p-1 mb-5" id="containerPesquisa">
+
         <div class="container p-3 d-flex justify-content-around align-items-center">
+
           <img src="/img/Lupa.svg" width="30px" height="30px" alt="">
+
           <input class="form-control p-2" list="datalistOptions" id="buscaHome" placeholder="Pesquise um filme ou série">
+
         </div>
+
       </div>
 
       <div class="container border border-black p-3 d-flex justify-content-center align-items-center mb-5">
+        
         <div class="container border border-black row p-3 d-flex justify-content-around align-items-center">
-          <h1>Lançamentos</h1>
+
+          <h1>Filmes</h1>
+
           <div id="lancamentos" class="overflow-x-auto d-flex flex-row">
+
               <div>
                   aaa
               </div>
+
               <div>
                   aaa
               </div>
+
               <div>
                 aaa
               </div>
+
           </div>
+
         </div>
+
       </div>
 
       <div class="container border border-black p-3 d-flex justify-content-center align-items-center mb-5">
+
         <div class="container border border-black row p-3 d-flex justify-content-around align-items-center">
           <h1>Melhor Avaliados</h1>
+
           <div id="maiorRating" class="overflow-x-auto d-flex flex-row">
                 COLOCAR UM FOR AQUI DEPOIS PRA FAZER APARECER OS FILMES
           </div>
+
         </div>
+
       </div>
+
     </main>
+
     <footer class="border border-black">
+
       <div class="container border border-black">
 
       </div>
+
     </footer>
+
     <script src="js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

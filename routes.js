@@ -7,6 +7,7 @@ const home = require('./src/controllers/home')
 const login = require('./src/controllers/login');
 const cadastro = require('./src/controllers/cadastro');
 const perfil = require('./src/controllers/perfil');
+const filmes = require('./src/controllers/filmes');
 
 // Iniciando as rotas
 route.get('/', home.getHome);
@@ -21,6 +22,9 @@ route.post('/cadastrar', cadastro.postCadPage);
 
 // Get e Post do perfil
 route.get('/perfil', perfil.getPerfilPage)
+
+// Get e Post da aba Filmes
+route.get('/filmes', filmes.getFilmesPage)
 
 module.exports = route;
 
