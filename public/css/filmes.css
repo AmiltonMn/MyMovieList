@@ -17,6 +17,11 @@ footer
     width: 50%;
 }
 
+.capaFilme
+{
+    width: 156px;
+    height: 230px;
+}
 #btnCadFilme
 {
     width: 70%;
