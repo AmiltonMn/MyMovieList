@@ -1,14 +1,40 @@
-const usuarios = require('../model/usuario');
+const { defaultValueSchemable, toDefaultValue } = require('sequelize/lib/utils');
+const tabelaFilmes = require('../model/filme');
 
 module.exports = {
     async getFilmesPage(req, res){
-        const id = req.params.id;
 
-        const usuario = await usuarios.findByPk(id, {
+        const filmes = await tabelaFilmes.findAll({
             raw: true,
-            attributes: ['IDUsuario', 'Usuario', 'Nome', 'Email', 'DtNasc', 'Imagem']
+            attributes: ['IDFilme', 'Titulo', 'Sinopse', 'Lancamento', 'NotaGeral', 'IdadeIndicativa', 'Imagem']
         })
 
-        res.render('../views/filmes', {usuario});
+        res.render('../views/filmes', {filmes});
+    },
+
+    
+    async addFilme(req, res){
+        const dados = req.body
+        let capaFilme = dados.imagemInput;
+
+        if (capaFilme == null) {
+            capaFilme = './img/noImage.png'
+        }
+
+        await tabelaFilmes.create({
+            Titulo: dados.tituloInput,
+            Sinopse: dados.sinopseInput,
+            Lancamento: dados.lancamentoInput,
+            NotaGeral: 0,
+            IdadeIndicativa: dados.idadeIndicativaInput,
+            Imagem: capaFilme,
+        });
+
+        const filmes = await tabelaFilmes.findAll({
+            raw: true,
+            attributes: ['IDFilme', 'Titulo', 'Sinopse', 'Lancamento', 'NotaGeral', 'IdadeIndicativa', 'Imagem']
+        })
+
+        res.render('../views/filmes', {filmes})
     }
 }
