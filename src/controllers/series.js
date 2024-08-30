@@ -1,7 +1,7 @@
 const usuarios = require('../model/usuario');
 
 module.exports = {
-    async getFilmesPage(req, res){
+    async getSeriesPage(req, res){
         const id = req.params.id;
 
         const usuario = await usuarios.findByPk(id, {
@@ -9,6 +9,6 @@ module.exports = {
             attributes: ['IDUsuario', 'Usuario', 'Nome', 'Email', 'DtNasc', 'Imagem']
         })
 
-        res.render('../views/filmes', {usuario});
+        res.render('../views/series', {usuario});
     }
 }

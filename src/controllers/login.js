@@ -4,12 +4,19 @@ const usuario = require('../model/usuario');
 module.exports = {
 
     async getLoginPage(req, res){
-        res.render('../views/login')
+        const id = req.params.id;
+
+        const usuario = await usuarios.findByPk(id, {
+            raw: true,
+            attributes: ['IDUsuario', 'Usuario', 'Nome', 'Email', 'DtNasc', 'Imagem']
+        })
+
+        res.render('../views/login', {usuario})
     },
 
     async postLoginPage(req, res){
         const dados = req.body;
-        const usuarios = await usuario.findAll({
+        const usuario = await usuarios.findAll({
             raw: true,
             attributes: ['IDUsuario', 'Usuario', 'Nome', 'DtNasc', 'Senha', 'Email', 'ISAdmin', 'Imagem'],
             where: {Usuario: dados.usuarioEmail, Senha: dados.senha}
@@ -22,4 +29,5 @@ module.exports = {
             res.redirect('/login');
         }
     }
+
 }

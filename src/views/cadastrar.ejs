@@ -13,9 +13,22 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-          <a class="navbar-brand" href="/" onmouseover="mudarTitulo()" onmouseleave="voltarTitulo()" id="tituloNav" >My Movie List</a>
-        </div>
+
+        <% if(usuario == null) { %>
+          <div class="collapse navbar-collapse text-center">
+            <a class="navbar-brand" href="/0" id="tituloNav" >My Movie List</a>
+          </div>
+          <a class="navbar-brand" href="/login/0">Login</a>
+          <a class="navbar-brand" href="/cadastrar">Registrar</a>
+        <% } else { %>
+          <div class="collapse navbar-collapse text-center">
+            <a class="navbar-brand" href="/<%= usuario.IDUsuario %>" id="tituloNav" >My Movie List</a>
+          </div>
+          <a class="navbar-brand" href="/perfil/<%= usuario.IDUsuario %>"><%= usuario.Nome %></a>
+          <a class="navbar-brand" href="/filmes/<%= usuario.IDUsuario %>">Filmes</a>
+          <a class="navbar-brand" href="/series/<%= usuario.IDUsuario %>">Séries</a>
+        <% } %>
+
       </div>
     </nav>
     <main class="container d-flex align-items-center position-absolute top-50 start-50 translate-middle">
