@@ -55,8 +55,15 @@
             <button data-bs-toggle="modal" data-bs-target="#addFilme">Adicionar Filme</button>
           </div>
 
-          <div class="overflow-x-auto d-flex flex-row border">
-            a
+          <div class="overflow-y-auto d-flex flex-row border wrap">
+            <% for(let i = 0; i < filmes.length; i++) { %>
+
+              <div class="col d-flex justify-content-center">
+                <p><%= filmes[i].Titulo %></p>
+                <img  class="capaFilme" src="/img/<%= filmes[i].Imagem %>" alt="Imagem não encontrada">
+              </div>
+
+            <% } %>
           </div>
 
         </div>
@@ -84,13 +91,13 @@
 
           <div class="modal-body">
 
-            <form action="/filmes" method="post">
+            <form action="/filmes/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
 
               <label class="form-label"  for="imagemInput">Imagem de capa do filme</label>
 
               <br>
 
-              <input class="form-control" type="file" name="imagemInput" id="imagemInput">
+              <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/">
 
               <br>
 
