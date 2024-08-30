@@ -26,6 +26,7 @@ route.get('/perfil/:nomeUser', perfil.getPerfilPage);
 
 // Get e Post da aba Filmes
 route.get('/filmes/:nomeUser', filmes.getFilmesPage);
+route.post('/filmes', filmes.addFilme)
 
 // Get e Post da aba Series
 route.get('/series/:nomeUser', series.getSeriesPage);

@@ -1,0 +1,30 @@
+@media (min-width:999px) 
+{   
+    .modal-lg {max-width: 70%;}
+}
+
+footer
+{
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100px;
+}
+
+.indImage
+{
+    width: 50%;
+}
+
+#btnCadFilme
+{
+    width: 70%;
+}
+
+#btnDiv
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
