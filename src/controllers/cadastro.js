@@ -2,14 +2,14 @@ const usuarios = require('../model/usuario');
 
 module.exports = {
     async getCadPage(req, res){
-        const id = req.params.id;
+        // const id = req.params.id;
 
-        const usuario = await usuarios.findByPk(id, {
-            raw: true,
-            attributes: ['IDUsuario', 'Usuario', 'Nome', 'Email', 'DtNasc', 'Imagem']
-        })
+        // const usuario = await usuarios.findByPk(id, {
+        //     raw: true,
+        //     attributes: ['IDUsuario', 'Usuario', 'Nome', 'Email', 'DtNasc', 'Imagem']
+        // })
 
-        res.render('../views/cadastrar', {usuario})
+        res.render('../views/cadastrar')
     },
 
     async postCadPage(req, res){

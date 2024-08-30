@@ -14,22 +14,11 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse">
-
-            <% if(usuario == null) { %>
-                <div class="collapse navbar-collapse text-center">
-                  <a class="navbar-brand" href="/0" id="tituloNav" >My Movie List</a>
-                </div>
-                <a class="navbar-brand" href="/login">Login</a>
-                <a class="navbar-brand" href="/cadastrar">Registrar</a>
-              <% } else { %>
-                <div class="collapse navbar-collapse text-center">
-                  <a class="navbar-brand" href="/<%= usuario.IDUsuario %>" id="tituloNav" >My Movie List</a>
-                </div>
-                <a class="navbar-brand" href="/perfil/<%= usuario.IDUsuario %>"><%= usuario.Nome %></a>
-                <a class="navbar-brand" href="/filmes/<%= usuario.IDUsuario %>">Filmes</a>
-                <a class="navbar-brand" href="/series/<%= usuario.IDUsuario %>">Séries</a>
-              <% } %>
-
+          <div class="collapse navbar-collapse text-center">
+            <a class="navbar-brand" href="/" id="tituloNav" >My Movie List</a>
+          </div>
+          <a class="navbar-brand" href="/login">Login</a>
+          <a class="navbar-brand" href="/cadastrar">Registrar</a>
         </div>
       </div>
     </nav>

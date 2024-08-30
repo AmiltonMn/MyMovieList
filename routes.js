@@ -11,24 +11,24 @@ const filmes = require('./src/controllers/filmes');
 const series = require('./src/controllers/series');
 
 // Iniciando as rotas
-route.get('/:id', home.getHome);
+route.get('/', home.getHome);
 
 // Get e post do login 
-route.get('/login/:id', login.getLoginPage);
+route.get('/login', login.getLoginPage);
 route.post('/login', login.postLoginPage);
 
 // Get e Post do registrar
-route.get('/cadastrar/:id', cadastro.getCadPage);
+route.get('/cadastrar', cadastro.getCadPage);
 route.post('/cadastrar', cadastro.postCadPage);
 
 // Get e Post do perfil
 route.get('/perfil', perfil.getPerfilPage)
 
 // Get e Post da aba Filmes
-route.get('/filmes/:id', filmes.getFilmesPage)
+route.get('/filmes', filmes.getFilmesPage)
 
 // Get e Post da aba Series
-route.get('/series/:id', series.getSeriesPage)
+route.get('/series', series.getSeriesPage)
 
 module.exports = route;
 
