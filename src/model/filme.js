@@ -18,7 +18,7 @@ const filme = database.define('filme', {
         allowNull: false
     },
     Lancamento: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false
     },
     NotaGeral: {

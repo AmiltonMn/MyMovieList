@@ -17,7 +17,7 @@ const serie = database.define('serie', {
         allowNull: false
     },
     Lancamento: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false
     },
     NotaGeral: {

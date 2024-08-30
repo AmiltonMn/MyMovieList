@@ -80,5 +80,22 @@ module.exports = {
         });
 
         res.render('../views/filmes', {filmes, usuario})
+    },
+
+    async filmeSelecionado(req, res){
+        const nomeUser = req.params.nomeUser;
+        const id = req.params.id;
+
+        const filme = await tabelaFilmes.findAll({
+            raw: true,
+            where: {IDFilme: id}
+        });
+
+        const usuario = await tabelaUsuario.findAll({
+            raw: true,
+            where: {Usuario: nomeUser}
+        });
+
+        res.render('../views/filmeSelec', {filme, usuario});
     }
 }
