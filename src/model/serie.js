@@ -25,6 +25,10 @@ const serie = database.define('serie', {
         allowNull: false,
         defaultValue: 0
     },
+    IdadeIndicativa: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
     Imagem: {
         type: Sequelize.STRING(255),
         defaultValue: 'noImage',

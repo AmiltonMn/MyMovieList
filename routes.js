@@ -30,6 +30,7 @@ route.post('/filmes', filmes.addFilme)
 
 // Get e Post da aba Series
 route.get('/series/:nomeUser', series.getSeriesPage);
+route.post('/series/:nomeUser', series.addSerie);
 
 route.get('/:nomeUser', home.getHome);
 
