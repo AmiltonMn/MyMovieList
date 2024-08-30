@@ -12,6 +12,9 @@ const tabelaTemporada = require('../model/temporada');
 const tabelaUsuario = require('../model/usuario');
 const tabelaEp = require('../model/ep');
 const tabelaPessoa = require('../model/pessoa');
+const tabelaGenero = require('../model/genero');
+const tabelaGeneroFilme = require('../model/generoFilme');
+const tabelaGeneroSerie = require('../model/generoFilme');
 
 module.exports = {
     async getHome(req, res){
@@ -30,6 +33,9 @@ module.exports = {
         await tabelaSerie
         await tabelaTemporada
         await tabelaUsuario
+        await tabelaGenero
+        await tabelaGeneroFilme
+        await tabelaGeneroSerie
 
         try {
             const nomeUser = req.params.nomeUser;
