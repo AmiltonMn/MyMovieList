@@ -22,24 +22,24 @@
         </div>
       </div>
     </nav>
-    <main>
-      <div id="main">
-          <div id="blablabla">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum magnam voluptates reiciendis eos nesciunt non, placeat quis blanditiis quaerat, rerum nostrum doloribus officia obcaecati commodi ipsum delectus? Veritatis, hic aliquid! Lorem ipsum dolor sit amet consectetur adipisicing elit.
+  <main class="container d-flex align-items-center position-absolute top-50 start-50 translate-middle">
+    <div id="sobreMML" class="d-flex float-left row">
+      <h1>My Movie List</h1>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis facere molestiae ipsam mollitia accusantium quae asperiores excepturi voluptatibus ea doloremque iste dolore, corrupti maxime ut! Animi quos voluptas labore. Ab.</p>
+    </div>
+    <div id="main" class="d-flex justify-content-end align-items-center">
+      <div id="registro">
+        <h1 class="text-center">Login</h1>
+        <form action="/login" method="post">
+          <label for="usuarioEmail">Usuario ou Email</label>
+          <input type="text" name="usuarioEmail" id="usuarioEmail" class="form-control" required>
+          <label for="senha">Senha</label>
+          <input type="password" name="senha" id="senha" class="form-control" required>
+          <button type="submit" class="btn btn-primary" id="logar">Login</button>
+          <div class="btn btn-primary" id="cadastrar">
+              <a href="/cadastrar">Cadastrar</a>
           </div>
-          <div id="login">
-              <h1>Login</h1>
-              <form action="/login" method="post">
-                  <label for="usuarioEmail">Usuario ou Email</label>
-                  <input type="text" name="usuarioEmail" id="usuarioEmail" class="form-control" required>
-                  <label for="senha">Senha</label>
-                  <input type="password" name="senha" id="senha" class="form-control" required>
-                  <button type="submit" class="btn btn-primary">Login</button>
-                  <div class="btn btn-primary" id="cadastrar">
-                      <a href="/cadastrar">Cadastrar</a>
-                  </div>
-              </form>
-          </div>
+      </form>
       </div>
   </main>
     <script src="js/script.js"></script>

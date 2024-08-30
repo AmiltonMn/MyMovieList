@@ -22,13 +22,15 @@ route.get('/cadastrar', cadastro.getCadPage);
 route.post('/cadastrar', cadastro.postCadPage);
 
 // Get e Post do perfil
-route.get('/perfil', perfil.getPerfilPage)
+route.get('/perfil/:nomeUser', perfil.getPerfilPage);
 
 // Get e Post da aba Filmes
-route.get('/filmes', filmes.getFilmesPage)
+route.get('/filmes/:nomeUser', filmes.getFilmesPage);
 
 // Get e Post da aba Series
-route.get('/series', series.getSeriesPage)
+route.get('/series/:nomeUser', series.getSeriesPage);
+
+route.get('/:nomeUser', home.getHome);
 
 module.exports = route;
 

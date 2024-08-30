@@ -1,13 +1,14 @@
-const usuarios = require('../model/usuario');
+const tabelaUsuario = require('../model/usuario');
 
 module.exports = {
     async getSeriesPage(req, res){
-        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
 
-        const usuario = await usuarios.findByPk(id, {
+        const usuario = await tabelaUsuario.findAll({
             raw: true,
-            attributes: ['IDUsuario', 'Usuario', 'Nome', 'Email', 'DtNasc', 'Imagem']
-        })
+            attributes: ['IDUsuario', 'Usuario', 'Nome', 'DtNasc', 'Senha', 'Email', 'ISAdmin', 'Imagem'],
+            where: {Usuario: nomeUser}
+        });
 
         res.render('../views/series', {usuario});
     }

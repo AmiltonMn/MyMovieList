@@ -17,15 +17,17 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse">
-          <a class="navbar-brand" href="/" onmouseover="mudarTitulo()" onmouseleave="voltarTitulo()" id="tituloNav" >My Movie List</a>
-        </div>
-
-        <a class="navbar-brand" href="/perfil">Perfil</a>
-        <a class="navbar-brand" href="/filmes">Filmes</a>
-        <a class="navbar-brand" href="/series">Séries</a>
-        <a class="navbar-brand" href="/login">Login</a>
-        <a class="navbar-brand" href="/cadastrar">Registrar</a>
+        <% try { %>
+          <% usuario[0].Usuario %>
+          <div class="collapse navbar-collapse">
+            <a class="navbar-brand" href="/<%= usuario[0].Usuario %>" id="tituloNav" >My Movie List</a>
+          </div>
+          <a class="navbar-brand" href="/perfil/<%= usuario[0].Usuario %>"><%= usuario[0].Nome %></a>
+          <a class="navbar-brand" href="/filmes/<%= usuario[0].Usuario %>">Filmes</a>
+          <a class="navbar-brand" href="/series/<%= usuario[0].Usuario %>">Series</a>
+        <% } catch (error) { %>
+          <a class="navbar-brand" href="/">ERRO</a>
+        <% } %>
 
       </div>
 

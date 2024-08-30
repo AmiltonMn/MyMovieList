@@ -17,20 +17,17 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <% if(usuario == 0) { %>
-            <div class="collapse navbar-collapse text-center">
-              <a class="navbar-brand" href="/0" id="tituloNav" >My Movie List</a>
-            </div>
-            <a class="navbar-brand" href="/login">Login</a>
-            <a class="navbar-brand" href="/cadastrar">Registrar</a>
-          <% } else { %>
-            <div class="collapse navbar-collapse text-center">
-              <a class="navbar-brand" href="/<%= usuario.IDUsuario %>" id="tituloNav" >My Movie List</a>
-            </div>
-            <a class="navbar-brand" href="/perfil/<%= usuario.IDUsuario %>"><%= usuario.Nome %></a>
-            <a class="navbar-brand" href="/filmes/<%= usuario.IDUsuario %>">Filmes</a>
-            <a class="navbar-brand" href="/series/<%= usuario.IDUsuario %>">Séries</a>
-          <% } %>
+        <% try { %>
+          <% usuario[0].Usuario %>
+          <div class="collapse navbar-collapse">
+            <a class="navbar-brand" href="/<%= usuario[0].Usuario %>" id="tituloNav" >My Movie List</a>
+          </div>
+          <a class="navbar-brand" href="/perfil/<%= usuario[0].Usuario %>"><%= usuario[0].Nome %></a>
+          <a class="navbar-brand" href="/filmes/<%= usuario[0].Usuario %>">Filmes</a>
+          <a class="navbar-brand" href="/series/<%= usuario[0].Usuario %>">Series</a>
+        <% } catch (error) { %>
+          <a class="navbar-brand" href="/">ERRO</a>
+        <% } %>
 
       </div>
 
@@ -53,7 +50,7 @@
         
         <div class="container border border-black row p-3 d-flex justify-content-around align-items-center">
 
-          <h1>Filmes</h1>
+          <h1>Series</h1>
 
           <div id="lancamentos" class="overflow-x-auto d-flex flex-row">
 

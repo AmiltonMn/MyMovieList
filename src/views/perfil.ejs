@@ -16,16 +16,18 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        
-        <div class="collapse navbar-collapse text-center" id="navbarTogglerDemo01">
-          <a class="navbar-brand" href="/" onmouseover="mudarTitulo()" onmouseleave="voltarTitulo()" id="tituloNav" >My Movie List</a>
-        </div>
 
-        <a class="navbar-brand" href="/perfil">Perfil</a>
-        <a class="navbar-brand" href="/filmes">Filmes</a>
-        <a class="navbar-brand" href="/series">Séries</a>
-        <a class="navbar-brand" href="/login">Login</a>
-        <a class="navbar-brand" href="/cadastrar">Registrar</a>
+        <% try { %>
+          <% usuario[0].Usuario %>
+          <div class="collapse navbar-collapse">
+            <a class="navbar-brand" href="/<%= usuario[0].Usuario %>" id="tituloNav" >My Movie List</a>
+          </div>
+          <a class="navbar-brand" href="/perfil/<%= usuario[0].Usuario %>"><%= usuario[0].Nome %></a>
+          <a class="navbar-brand" href="/filmes/<%= usuario[0].Usuario %>">Filmes</a>
+          <a class="navbar-brand" href="/series/<%= usuario[0].Usuario %>">Series</a>
+        <% } catch (error) { %>
+          <a class="navbar-brand" href="/">ERRO</a>
+        <% } %>
 
       </div>
     </nav>
@@ -38,7 +40,13 @@
             <img src="img/noImage.png" id="imagemPerfil" alt="Imagem do Usuário">
         </div>
 
-          <h2 class="text-center"><%= usuario.Usuario %></h2>
+          <h2 class="text-center">
+            <% try { %>
+              <%= usuario[0].Usuario %>
+            <% } catch (error) { %>
+              erro
+            <% } %>
+          </h2>
 
           <br>
 
