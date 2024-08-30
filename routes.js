@@ -28,6 +28,7 @@ route.get('/perfil/:nomeUser', perfil.getPerfilPage);
 // Get e Post da Filmes
 route.get('/filmes/:nomeUser', filmes.getFilmesPage);
 route.post('/filmes/:nomeUser', multer(config).single("imagemInput"), filmes.addFilme)
+route.post('/buscaFilmes/:nomeUser', filmes.buscarFilmes)
 
 // Get e Post da Series
 route.get('/series/:nomeUser', series.getSeriesPage);
@@ -36,6 +37,7 @@ route.post('/series/:nomeUser', series.addSerie);
 // Get e Post da home
 route.get('/', home.getHome);
 route.get('/:nomeUser', home.getHome);
+
 
 module.exports = route;
 

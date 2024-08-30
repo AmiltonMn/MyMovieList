@@ -6,7 +6,7 @@
 footer
 {
     display: flex;
-    position: absolute;
+    position: static;
     bottom: 0;
     width: 100%;
     height: 100px;
@@ -21,7 +21,10 @@ footer
 {
     width: 156px;
     height: 230px;
+    margin: 5px;
+    border-radius: 15px;
 }
+
 #btnCadFilme
 {
     width: 70%;
@@ -32,4 +35,9 @@ footer
     width: 100%;
     display: flex;
     justify-content: center;
+}
+
+#imgLupa
+{
+    margin-right: 10px;
 }

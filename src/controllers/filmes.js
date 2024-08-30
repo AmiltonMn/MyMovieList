@@ -1,5 +1,7 @@
 const tabelaUsuario = require('../model/usuario');
 const tabelaFilmes = require('../model/filme');
+const sequelize = require('sequelize');
+const { Op } = require('sequelize');
 
 module.exports = {
     async getFilmesPage(req, res){
@@ -56,6 +58,26 @@ module.exports = {
             where: {Usuario: nomeUser}
         });
 
+
+        res.render('../views/filmes', {filmes, usuario})
+    },
+
+    async buscarFilmes(req, res){
+        const dados = req.body;
+        const nomeUser = req.params.nomeUser;
+        let tituloBusca = dados.buscaFilme;
+
+        const filmes = await tabelaFilmes.findAll({
+            raw: true,
+            attributes: ['IDFilme', 'Titulo', 'Sinopse', 'Lancamento', 'NotaGeral', 'IdadeIndicativa', 'Imagem'],
+            where: {Titulo: {[Op.like]: `%${tituloBusca}%`}}
+        });
+
+        const usuario = await tabelaUsuario.findAll({
+            raw: true,
+            attributes: ['IDUsuario', 'Usuario', 'Nome', 'DtNasc', 'Senha', 'Email', 'ISAdmin', 'Imagem'],
+            where: {Usuario: nomeUser}
+        });
 
         res.render('../views/filmes', {filmes, usuario})
     }
