@@ -18,7 +18,7 @@ const temporada = database.define('temporada', {
         allowNull: false
     },
     Lancamento: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false
     },
     NotaGeral: {

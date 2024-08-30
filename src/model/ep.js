@@ -18,7 +18,7 @@ const ep = database.define('ep', {
         allowNull: false
     },
     Lancamento: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false
     },
     NotaGeral: {

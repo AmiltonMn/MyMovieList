@@ -6,6 +6,11 @@ const amizade = database.define('amizade', {
     State: {
         type: Sequelize.INTEGER,
         allowNull: false
+    },
+    InicioAmizade:
+    {
+        type: Sequelize.DATEONLY,
+        allowNull: false
     }
 });
 

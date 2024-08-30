@@ -13,7 +13,7 @@ const pessoa = database.define('pessoa', {
         allowNull: false
     },
     DtNasc: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DATEONLY,
         allowNull: false
     },
     Cargo: {

@@ -27,8 +27,11 @@ route.get('/perfil/:nomeUser', perfil.getPerfilPage);
 
 // Get e Post da Filmes
 route.get('/filmes/:nomeUser', filmes.getFilmesPage);
-route.post('/filmes/:nomeUser', multer(config).single("imagemInput"), filmes.addFilme)
-route.post('/buscaFilmes/:nomeUser', filmes.buscarFilmes)
+route.post('/filmes/:nomeUser', multer(config).single("imagemInput"), filmes.addFilme);
+route.post('/buscaFilmes/:nomeUser', filmes.buscarFilmes);
+
+// Get e Post da pagina de filme selecionado
+route.get('/filmeSelec/:id/:nomeUser', filmes.filmeSelecionado);
 
 // Get e Post da Series
 route.get('/series/:nomeUser', series.getSeriesPage);
