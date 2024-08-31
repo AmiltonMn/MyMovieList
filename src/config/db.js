@@ -6,7 +6,9 @@ const database = new sequelize('MML', 'MMLAdmin', 'mmladmin123456',
 
         // dialect: 'mssql', host:'localhost', port: 56732
 
-        dialect: 'mssql', host:'localhost', port: 1433
+        // dialect: 'mssql', host:'localhost', port: 1433
+
+        dialect: 'mssql', host:'localhost', port: 58770
 
     }
 );
