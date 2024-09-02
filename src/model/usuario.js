@@ -17,7 +17,7 @@ const usuario = database.define('usuario', {
         allowNull: false
     },
     DtNasc: {
-        type: Sequelize.DATE,
+        type: Sequelize.DATEONLY,
         allowNull: false
     },
     Senha: {
