@@ -1,7 +1,9 @@
 const tabelaUsuario = require('../model/usuario');
 const tabelaFilmes = require('../model/filme');
-const sequelize = require('sequelize');
-const { Op } = require('sequelize');
+const tabelaGeneros = require('../model/genero');
+const tabelaGenerosFilme = require('../model/generoFilme');
+const { Op, where } = require('sequelize');
+const { raw } = require('express');
 
 module.exports = {
     async getFilmesPage(req, res){
@@ -18,7 +20,12 @@ module.exports = {
             attributes: ['IDFilme', 'Titulo', 'Sinopse', 'Lancamento', 'NotaGeral', 'IdadeIndicativa', 'Imagem']
         })
 
-        res.render('../views/filmes', {filmes, usuario});
+        const generos = await tabelaGeneros.findAll({
+            raw: true,
+            attributes: ['IDGenero', 'Nome']
+        })
+
+        res.render('../views/filmes', {filmes, usuario, erro: 0, generos});
     },
 
     
@@ -26,31 +33,47 @@ module.exports = {
         const dados = req.body
         const nomeUser = req.params.nomeUser;
 
+        console.log(dados.inputGenero)
+
         let capaFilme = 'noImage.png';
 
-        console.log(capaFilme)
-        console.log(req.file)
-        console.log(req.file.originalname)
-        console.log(req.file.filename)
-
+        const erro = await tabelaFilmes.count({
+            raw: true,
+            where: {Titulo: dados.tituloInput}
+        })
 
         if (req.file) {
             capaFilme = req.file.filename;
         }
 
-        await tabelaFilmes.create({
-            Titulo: dados.tituloInput,
-            Sinopse: dados.sinopseInput,
-            Lancamento: dados.lancamentoInput,
-            NotaGeral: 0,
-            IdadeIndicativa: dados.idadeIndicativaInput,
-            Imagem: capaFilme
-        });
+        
+        if(erro == 0){
+            await tabelaFilmes.create({
+                Titulo: dados.tituloInput,
+                Sinopse: dados.sinopseInput,
+                Lancamento: dados.lancamentoInput,
+                NotaGeral: 0,
+                IdadeIndicativa: dados.idadeIndicativaInput,
+                Imagem: capaFilme
+            });
+        }
+
+        const IDNovoFilme = await tabelaFilmes.findAll({
+            raw: true,
+            where: {Titulo: dados.tituloInput}
+        })
+        
+        for (let i = 0; i < dados.inputGenero.length; i++) {
+            await tabelaGenerosFilme.create({
+                IDFilme: IDNovoFilme[0].IDFilme,
+                IDGenero: dados.inputGenero[i]
+            });
+        }
 
         const filmes = await tabelaFilmes.findAll({
             raw: true,
             attributes: ['IDFilme', 'Titulo', 'Sinopse', 'Lancamento', 'NotaGeral', 'IdadeIndicativa', 'Imagem']
-        })
+        });
 
         const usuario = await tabelaUsuario.findAll({
             raw: true,
@@ -58,8 +81,13 @@ module.exports = {
             where: {Usuario: nomeUser}
         });
 
+        const generos = await tabelaGeneros.findAll({
+            raw: true,
+            attributes: ['IDGenero', 'Nome']
+        })
 
-        res.render('../views/filmes', {filmes, usuario})
+        res.render('../views/filmes', {filmes, usuario, erro, generos})
+
     },
 
     async buscarFilmes(req, res){
@@ -79,7 +107,12 @@ module.exports = {
             where: {Usuario: nomeUser}
         });
 
-        res.render('../views/filmes', {filmes, usuario})
+        const generos = await tabelaGeneros.findAll({
+            raw: true,
+            attributes: ['IDGenero', 'Nome']
+        })
+
+        res.render('../views/filmes', {filmes, usuario, erro: 0, generos})
     },
 
     async filmeSelecionado(req, res){

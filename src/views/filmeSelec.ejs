@@ -46,7 +46,7 @@
 
             </div>
 
-            <div>
+            <div class="d-flex flex-column">
 
               <h1 class=""><%= filme[0].Titulo %></h1>
 
@@ -55,10 +55,30 @@
               <p><%= filme[0].Sinopse %></p>
               <p><%= filme[0].Lancamento %></p>
 
-              <button type="button" class="btn btn-outline-primary">Add Lista</button>
-              <button type="button" class="btn btn-outline-primary">Quero Assistir</button>
-            </div>
+              <div class="d-flex justify-content-between">
 
+                <div>
+
+                  <button type="button" class="btn btn-outline-primary">Add Lista</button>
+                  <button type="button" class="btn btn-outline-primary">Quero Assistir</button>
+  
+                </div>
+                
+                <% if(usuario[0].ISAdmin == 1) { %>
+                  <div class="" id="btnsAdmin">
+    
+                    <button type="button" class="btn btn-outline-primary">Editar</button>
+                    <button type="button" class="btn btn-outline-primary">Excluir</button>
+    
+                  </div>
+                <% } %>
+
+              </div>
+
+
+            </div>
+            
+            
           </div>
 
         </div>
