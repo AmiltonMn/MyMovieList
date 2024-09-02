@@ -24,6 +24,7 @@ route.post('/cadastrar', cadastro.postCadPage);
 
 // Get e Post do perfil
 route.get('/perfil/:nomeUser', perfil.getPerfilPage);
+route.post('/updatePerfil/:nomeUser', perfil.atualizarPerfil);
 
 // Get e Post da Filmes
 route.get('/filmes/:nomeUser', filmes.getFilmesPage);
