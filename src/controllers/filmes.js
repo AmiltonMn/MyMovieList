@@ -4,6 +4,7 @@ const tabelaGeneros = require('../model/genero');
 const tabelaGenerosFilme = require('../model/generoFilme');
 const { Op, where } = require('sequelize');
 const { raw } = require('express');
+const filme = require('../model/filme');
 
 module.exports = {
     async getFilmesPage(req, res){
@@ -129,6 +130,20 @@ module.exports = {
             where: {Usuario: nomeUser}
         });
 
+        const dataLancamento = new Date(filme[0].Lancamento);
+
+        dataLancamento.setDate(dataLancamento.getDate() + 2);
+
+        console.log(dataLancamento);
+
+        filme[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
+
+        console.log(filme[0].Lancamento);
+
         res.render('../views/filmeSelec', {filme, usuario});
+    },
+
+    async addFilmeLista(req, res){
+        
     }
 }

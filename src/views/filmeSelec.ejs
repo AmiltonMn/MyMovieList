@@ -38,15 +38,15 @@
 
           <br>
 
-          <div class="p-2 container d-inline-flex border border-black" id="informacoes">
+          <div class="p-2 container d-inline-flex border border-black justify-content-center align-items-center" id="containerInformacoes">
             
-            <div class="container d-flex flex-column align-items-center">
+            <div class="d-flex flex-column align-items-center">
 
               <img id="filmeCapa" src="/img/<%= filme[0].Imagem %>" alt="">
 
             </div>
 
-            <div class="d-flex flex-column">
+            <div class="container d-flex flex-column" id="infosDoFilme">
 
               <h1 class=""><%= filme[0].Titulo %></h1>
 
@@ -75,9 +75,7 @@
 
               </div>
 
-
             </div>
-            
             
           </div>
 
@@ -90,6 +88,50 @@
     <footer class="border border-black">
 
     </footer>
+
+    <div class="modal" tabindex="-1" id="adicionarLista">
+      
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        
+        <div class="modal-content">
+
+          <div class="modal-header">
+
+            <h5 class="modal-title">Preencha os campos!</h5>
+
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          </div>
+
+          <div class="modal-body">
+
+            <form action="/updatePerfil/<%= usuario[0].Usuario %>" method="post">
+              
+              <label for="usuarioInput">Usuario</label>
+                <input type="text" name="usuarioInput" id="usuarioInput" class="form-control" value="<%= usuario[0].Usuario %>" required>
+
+              <label for="nomeInput">Nome</label>
+                <input type="text" name="nomeInput" id="nomeInput" class="form-control" value="<%= usuario[0].Nome %>" required>
+
+              <label for="emailInput">Email</label>
+                  <input type="email" name="emailInput" id="emailInput" class="form-control" value="<%= usuario[0].Email %>" required>
+
+              <label for="dtNascInput">Data de Nascimento</label>
+                <input type="date" name="dtNascInput" id="dtNascInput" class="form-control" value="<%= usuario[0].DtNasc %>" required>
+
+              <label for="senhaInput">Senha</label>
+                <input type="password" name="senhaInput" id="senhaInput" class="form-control" value="<%= usuario[0].Senha %>" required>
+
+              <button type="submit" class="btn btn-primary" id="Atualizar" data-bs-dismiss="modal" aria-label="Close">Atualizar</button>
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+      
+    </div>
 
     <script src="js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

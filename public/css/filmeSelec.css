@@ -1,8 +1,14 @@
 #filmeCapa
 {
-    width: 50%;
+    width: 312px;
+    height: 460px;
 }
 
+#infosDoFilme
+{
+    margin-left: 45px;
+}
+ 
 hr
 {
     height: 5px;

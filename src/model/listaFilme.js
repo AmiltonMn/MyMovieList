@@ -14,7 +14,12 @@ const listaFilme = database.define('listaFilme', {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false
-    }
+    },
+    Comentario: {
+        type: Sequelize.STRING(1000),
+        allowNull: false
+    },
+
 })
 
 listaFilme.belongsTo(filme, {

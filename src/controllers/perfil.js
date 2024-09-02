@@ -1,3 +1,4 @@
+const { NOW } = require('sequelize');
 const tabelaUsuario = require('../model/usuario');
 
 module.exports = {
@@ -9,19 +10,19 @@ module.exports = {
             where: {Usuario: nomeUser}
         });
         console.log(usuario);
-        // usuario[0].DtNasc++;
-        
-        // parseInt(usuario[0].DtNasc) += 1;
-        
-        // console.log(usuario);
 
         const dataNascimento = new Date(usuario[0].DtNasc);
+
+        console.log(dataNascimento);
 
         dataNascimento.setDate(dataNascimento.getDate() + 2);
 
         console.log(dataNascimento);
 
         usuario[0].DtNasc = dataNascimento.toLocaleDateString('pt-BR');
+
+        console.log(usuario[0].DtNasc);
+
 
         res.render('../views/perfil', {usuario});
     },

@@ -14,7 +14,11 @@ const listaSerie = database.define('listaSerie', {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false
-    }
+    },
+    Comentario: {
+        type: Sequelize.STRING(1000),
+        allowNull: false
+    },
 });
 
 listaSerie.belongsTo(usuario, {
