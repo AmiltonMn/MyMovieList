@@ -42,7 +42,7 @@ module.exports = {
 
         const filmesMaisRecentes = await tabelaFilme.findAll ({
             raw: true,
-            order: ['Lancamento', 'DESC']
+            // order: ['Lancamento', 'DESC']
         })
 
         try {
