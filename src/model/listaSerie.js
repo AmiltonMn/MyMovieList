@@ -15,10 +15,16 @@ const listaSerie = database.define('listaSerie', {
         defaultValue: false,
         allowNull: false
     },
+
     Comentario: {
         type: Sequelize.STRING(1000),
         allowNull: false
     },
+
+    Nota: {
+        type: Sequelize.FLOAT,
+        allowNull: false
+    }
 });
 
 listaSerie.belongsTo(usuario, {

@@ -38,7 +38,7 @@
 
           <br>
 
-          <div class="p-2 container d-inline-flex border border-black justify-content-center align-items-center" id="containerInformacoes">
+          <div class="p-2 container d-flex border border-black position-absolute top-50 start-50 translate-middle" id="containerInformacoes">
             
             <div class="d-flex flex-column align-items-center">
 
@@ -46,7 +46,7 @@
 
             </div>
 
-            <div class="container d-flex flex-column" id="infosDoFilme">
+            <div class="container d-flex flex-column justify-content-center" id="infosDoFilme">
 
               <h1 class=""><%= filme[0].Titulo %></h1>
 
@@ -59,7 +59,7 @@
 
                 <div>
 
-                  <button type="button" class="btn btn-outline-primary">Add Lista</button>
+                  <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#adicionarLista" >Add Lista</button>
                   <button type="button" class="btn btn-outline-primary">Quero Assistir</button>
   
                 </div>
@@ -107,22 +107,22 @@
 
             <form action="/updatePerfil/<%= usuario[0].Usuario %>" method="post">
               
-              <label for="usuarioInput">Usuario</label>
-                <input type="text" name="usuarioInput" id="usuarioInput" class="form-control" value="<%= usuario[0].Usuario %>" required>
+              <label for="comentarioInput">Comentário</label>
 
-              <label for="nomeInput">Nome</label>
-                <input type="text" name="nomeInput" id="nomeInput" class="form-control" value="<%= usuario[0].Nome %>" required>
+              <br>
 
-              <label for="emailInput">Email</label>
-                  <input type="email" name="emailInput" id="emailInput" class="form-control" value="<%= usuario[0].Email %>" required>
+              <textarea class="form-control" name="comentarioInput" id="comentarioInput" rows="2"></textarea>
 
-              <label for="dtNascInput">Data de Nascimento</label>
-                <input type="date" name="dtNascInput" id="dtNascInput" class="form-control" value="<%= usuario[0].DtNasc %>" required>
+              <br>
 
-              <label for="senhaInput">Senha</label>
-                <input type="password" name="senhaInput" id="senhaInput" class="form-control" value="<%= usuario[0].Senha %>" required>
+              <label for="notaInput">Nota</label>
 
-              <button type="submit" class="btn btn-primary" id="Atualizar" data-bs-dismiss="modal" aria-label="Close">Atualizar</button>
+              <br>
+
+              <input type="number" name="notaInput" id="notaInput" class="form-control" required>
+
+              <button type="submit" class="btn btn-primary" id="Atualizar" data-bs-dismiss="modal" aria-label="Close">Adicionar</button>
+
             </form>
 
           </div>
