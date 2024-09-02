@@ -53,6 +53,9 @@ module.exports = {
                 attributes: ['IDUsuario', 'Usuario', 'Nome', 'DtNasc', 'Senha', 'Email', 'ISAdmin', 'Imagem'],
                 where: {Usuario: nomeUser}
             });
+
+            usuario.DtNasc = new Date(usuario.DtNasc).toLocaleString('pt-BR');
+
             res.render('../views/home', {usuario, filmesMaisRecentes});
         } catch (error) {
             res.render('../views/home', {usuario: [], filmesMaisRecentes});

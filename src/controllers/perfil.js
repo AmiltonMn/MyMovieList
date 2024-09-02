@@ -10,6 +10,14 @@ module.exports = {
             where: {Usuario: nomeUser}
         });
 
+        const dataNascimento = new Date(usuario[0].DtNasc);
+
+        dataNascimento.setDate(dataNascimento.getDate() + 2);
+
+        console.log(dataNascimento);
+
+        usuario[0].DtNasc = dataNascimento.toLocaleDateString('pt-BR');
+
         res.render('../views/perfil', {usuario});
     }
 }
