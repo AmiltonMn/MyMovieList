@@ -11,5 +11,22 @@ module.exports = {
         });
 
         res.render('../views/perfil', {usuario});
+    },
+
+    async atualizarPerfil(req, res){
+        const dados = req.body;
+        const nomeUser = req.params.nomeUser;
+
+        await tabelaUsuario.update({
+            Usuario: dados.usuarioInput,
+            Nome: dados.nomeInput,
+            DtNasc: dados.dtNascInput,
+            Senha: dados.senhaInput,
+            Email: dados.emailInput
+        },
+        {
+            where: { Usuario: nomeUser }
+        });
+        res.redirect('/perfil/' + nomeUser);
     }
 }
