@@ -15,6 +15,9 @@ const tabelaPessoa = require('../model/pessoa');
 const tabelaGenero = require('../model/genero');
 const tabelaGeneroFilme = require('../model/generoFilme');
 const tabelaGeneroSerie = require('../model/generoFilme');
+const { Op } = require('sequelize');
+const filme = require('../model/filme');
+
 
 module.exports = {
     async getHome(req, res){
@@ -37,6 +40,11 @@ module.exports = {
         await tabelaGeneroFilme
         await tabelaGeneroSerie
 
+        const filmesMaisRecentes = await tabelaFilme.findAll ({
+            raw: true,
+            order: ['Lancamento', 'DESC']
+        })
+
         try {
             const nomeUser = req.params.nomeUser;
 
@@ -45,9 +53,9 @@ module.exports = {
                 attributes: ['IDUsuario', 'Usuario', 'Nome', 'DtNasc', 'Senha', 'Email', 'ISAdmin', 'Imagem'],
                 where: {Usuario: nomeUser}
             });
-            res.render('../views/home', {usuario});
+            res.render('../views/home', {usuario, filmesMaisRecentes});
         } catch (error) {
-            res.render('../views/home', {usuario: []});
+            res.render('../views/home', {usuario: [], filmesMaisRecentes});
         }
     }
 }
