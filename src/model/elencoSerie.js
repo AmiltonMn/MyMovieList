@@ -21,7 +21,7 @@ elencoSerie.belongsTo(pessoa, {
 
 elencoSerie.belongsTo(serie, {
     constraint: true,
-    foreignKey: 'IDFilme',
+    foreignKey: 'IDSerie',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE'
 });
