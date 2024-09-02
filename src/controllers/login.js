@@ -1,4 +1,5 @@
 const tabelaUsuario = require('../model/usuario');
+const { Op } = require('sequelize');
 
 module.exports = {
 
@@ -18,7 +19,7 @@ module.exports = {
         const usuarios = await tabelaUsuario.findAll({
             raw: true,
             attributes: ['IDUsuario', 'Usuario', 'Nome', 'DtNasc', 'Senha', 'Email', 'ISAdmin', 'Imagem'],
-            where: {Usuario: dados.usuarioEmail, Senha: dados.senha}
+            where: {[Op.or]: [{Usuario: dados.usuarioEmail}, {Email: dados.usuarioEmail}],  Senha: dados.senha}
         });
 
         try {

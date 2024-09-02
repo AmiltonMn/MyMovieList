@@ -1,0 +1,16 @@
+#serieCapa
+{
+    width: 50%;
+}
+
+#informacoes
+{
+    width: 100%;
+}
+
+hr
+{
+    height: 5px;
+    background-color: rgb(255, 0, 0);
+    width: 80%;
+}

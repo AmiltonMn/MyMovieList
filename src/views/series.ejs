@@ -40,7 +40,9 @@
 
           <img src="/img/Lupa.svg" width="30px" height="30px" alt="">
 
-          <input class="form-control p-2" list="datalistOptions" id="buscaHome" placeholder="Pesquise um filme ou série">
+          <form action="/buscaSeries/<%= usuario[0].Usuario %>" method="post">
+            <input class="form-control p-2" list="datalistOptions" name="buscaSerie" id="buscaSerie" placeholder="Pesquise um filme ou série">
+          </form>
 
         </div>
 
@@ -55,8 +57,19 @@
             <button data-bs-toggle="modal" data-bs-target="#addSerie">Adicionar Serie</button>
           </div>
 
-          <div class="overflow-x-auto d-flex flex-row border">
-            a
+          <div class="overflow-y-auto d-flex flex-row flex-wrap">
+            <% for(let i = 0; i < series.length; i++) { %>
+
+              <div class="col text-center p-2">
+
+                <a href="/serieSelec/<%= series[i].IDSerie %>/<%= usuario[0].Usuario %>">
+                  <img  class="capaSerie" src="/img/<%= series[i].Imagem %>" alt="Imagem não encontrada">
+                </a>
+
+                <p class=""><%= series[i].Titulo %></p>
+              </div>
+
+            <% } %>
           </div>
 
         </div>
@@ -81,13 +94,13 @@
 
           <div class="modal-body">
 
-            <form action="/series/<%= usuario[0].Usuario %>" method="post">
+            <form action="/series/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
 
               <label class="form-label"  for="imagemInput">Imagem de capa da Série</label>
 
               <br>
 
-              <input class="form-control" type="file" name="imagemInput" id="imagemInput">
+              <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/">
 
               <br>
 

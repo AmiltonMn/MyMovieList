@@ -17,6 +17,14 @@ footer
     width: 50%;
 }
 
+.capaSerie
+{
+    width: 156px;
+    height: 230px;
+    margin: 5px;
+    border-radius: 15px;
+}
+
 #btnCadSerie
 {
     width: 70%;
@@ -27,4 +35,9 @@ footer
     width: 100%;
     display: flex;
     justify-content: center;
+}
+
+#imgLupa
+{
+    margin-right: 10px;
 }
