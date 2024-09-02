@@ -1,6 +1,9 @@
 const tabelaUsuario = require('../model/usuario');
 const tabelaSerie = require('../model/serie');
-const { Op } = require('sequelize');
+const tabelaTemporada = require('../model/temporada');
+const tabelaEp = require('../model/ep');
+const { Op, where } = require('sequelize');
+const { raw } = require('express');
 
 module.exports = {
     async getSeriesPage(req, res){
@@ -71,7 +74,7 @@ module.exports = {
         res.render('../views/series', {series, usuario});
     },
 
-    async serieSelecionada(req, res){
+    async getSerieSelecionada(req, res){
         const nomeUser = req.params.nomeUser;
         const id = req.params.id;
 
@@ -85,6 +88,18 @@ module.exports = {
             where: {Usuario: nomeUser}
         });
 
-        res.render('../views/serieSelec', {serie, usuario});
+        const temporadas = await tabelaTemporada.findAll({
+            raw: true,
+            where: {IDSerie: id}
+        });
+
+        const eps = await tabelaEp.findAll({
+            raw: true,
+            where: {IDTemporada: {
+                [Op.in]: temporadas.IDTemporada
+            }}
+        })
+
+        res.render('../views/serieSelec', {serie, usuario, temporadas, eps});
     }
 }

@@ -40,7 +40,7 @@ route.post('/series/:nomeUser', multer(config).single("imagemInput"), series.add
 route.post('/buscaSeries/:nomeUser', series.buscarSeries);
 
 // Get e Post da pagina de serie selecionada
-route.get('/serieSelec/:id/:nomeUser', series.serieSelecionada);
+route.get('/serieSelec/:id/:nomeUser', series.getSerieSelecionada);
 
 // Get e Post da home
 route.get('/', home.getHome);
