@@ -6,9 +6,14 @@ module.exports = {
 
         const usuario = await tabelaUsuario.findAll({
             raw: true,
-            attributes: ['IDUsuario', 'Usuario', 'Nome', 'DtNasc', 'Senha', 'Email', 'ISAdmin', 'Imagem'],
             where: {Usuario: nomeUser}
         });
+        console.log(usuario);
+        // usuario[0].DtNasc++;
+        
+        // parseInt(usuario[0].DtNasc) += 1;
+        
+        // console.log(usuario);
 
         res.render('../views/perfil', {usuario});
     },

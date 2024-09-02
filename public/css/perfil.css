@@ -1,3 +1,8 @@
+@media (min-width:999px) 
+{   
+    .modal-lg {max-width: 70%;}
+}
+
 footer
 {
     display: flex;
@@ -60,7 +65,7 @@ body
 
 #informacoes
 {
-    height: cal(100%);
+    height: calc(100%);
 }
 
 .btn
