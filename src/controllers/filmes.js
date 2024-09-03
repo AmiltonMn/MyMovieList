@@ -2,9 +2,9 @@ const tabelaUsuario = require('../model/usuario');
 const tabelaFilmes = require('../model/filme');
 const tabelaGeneros = require('../model/genero');
 const tabelaGenerosFilme = require('../model/generoFilme');
+const tabelaListaFilmes = require('../model/listaFilme');
 const { Op, where } = require('sequelize');
 const { raw } = require('express');
-const filme = require('../model/filme');
 
 module.exports = {
     async getFilmesPage(req, res){
@@ -130,6 +130,25 @@ module.exports = {
             where: {Usuario: nomeUser}
         });
 
+        const idGenerosFilme = await tabelaGenerosFilme.findAll({
+            raw: true,
+            attributes: ['IDGenero'],
+            where: {IDFilme: id}
+        });
+
+        let listaGeneros = [];
+
+        for(let i = 0; i < idGenerosFilme.length; i++)
+        {
+            listaGeneros[i] = idGenerosFilme[i].IDGenero;
+        }
+
+        const generosFilme = await tabelaGeneros.findAll({
+            raw: true,
+            attributes: ['Nome'],
+            where: { IDGenero: listaGeneros }
+        })
+
         const dataLancamento = new Date(filme[0].Lancamento);
 
         dataLancamento.setDate(dataLancamento.getDate() + 2);
@@ -140,10 +159,66 @@ module.exports = {
 
         console.log(filme[0].Lancamento);
 
-        res.render('../views/filmeSelec', {filme, usuario});
+        res.render('../views/filmeSelec', {filme, usuario, generosFilme, flag: 0});
     },
 
     async addFilmeLista(req, res){
-        
+        const dados = req.body
+        const id = req.params.id
+        const nomeUser = req.params.nomeUser
+
+        const user = await tabelaUsuario.findAll({
+            raw: true,
+            attributes: ['IDUsuario'],
+            where: {Usuario: nomeUser}
+        });
+
+        const filme = await tabelaFilmes.findAll({
+            raw: true,
+            where: {IDFilme: id}
+        });
+
+        const usuario = await tabelaUsuario.findAll({
+            raw: true,
+            where: {Usuario: nomeUser}
+        });
+
+        const idGenerosFilme = await tabelaGenerosFilme.findAll({
+            raw: true,
+            attributes: ['IDGenero'],
+            where: {IDFilme: id}
+        });
+
+        let listaGeneros = [];
+
+        for(let i = 0; i < idGenerosFilme.length; i++)
+        {
+            listaGeneros[i] = idGenerosFilme[i].IDGenero;
+        }
+
+        const generosFilme = await tabelaGeneros.findAll({
+            raw: true,
+            attributes: ['Nome'],
+            where: { IDGenero: listaGeneros }
+        })
+
+        await tabelaListaFilmes.create({
+            Comentario: dados.comentarioInput,
+            Nota: dados.notaInput,
+            IDFilme: id,
+            IDUsuario: user[0].IDUsuario
+        });
+
+        const dataLancamento = new Date(filme[0].Lancamento);
+
+        dataLancamento.setDate(dataLancamento.getDate() + 2);
+
+        console.log(dataLancamento);
+
+        filme[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
+
+        console.log(filme[0].Lancamento);
+
+        res.render('../views/filmeSelec', {user, filme, usuario, generosFilme, flag: 1})
     }
 }

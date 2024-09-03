@@ -18,7 +18,7 @@ const listaSerie = database.define('listaSerie', {
 
     Comentario: {
         type: Sequelize.STRING(1000),
-        allowNull: false
+        allowNull: true
     },
 
     Nota: {

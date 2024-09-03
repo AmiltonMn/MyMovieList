@@ -19,7 +19,7 @@ const listaFilme = database.define('listaFilme', {
 
     Comentario: {
         type: Sequelize.STRING(1000),
-        allowNull: false
+        allowNull: true
     },
 
     Nota: {

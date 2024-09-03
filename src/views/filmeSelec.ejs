@@ -6,7 +6,14 @@
     <link rel="stylesheet" href="/css/filmeSelec.css">
     <title>My Movie List</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  </head>
+
+    <script src="/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
+
     <body>
       
     <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
@@ -52,7 +59,18 @@
 
               <hr>
 
-              <p><%= filme[0].Sinopse %></p>
+              <p class="text-justify"><%= filme[0].Sinopse %></p>
+
+              <div class="d-flex flex-row">
+                <% for (let i = 0; i < generosFilme.length; i ++) { %>
+                  <div class="generos">
+                    <%= generosFilme[i].Nome %> 
+                  </div>
+                <% } %>
+              </div>
+
+              <br>
+              
               <p><%= filme[0].Lancamento %></p>
 
               <div class="d-flex justify-content-between">
@@ -65,16 +83,18 @@
                 </div>
                 
                 <% if(usuario[0].ISAdmin == 1) { %>
+
                   <div class="" id="btnsAdmin">
     
                     <button type="button" class="btn btn-outline-primary">Editar</button>
                     <button type="button" class="btn btn-outline-primary">Excluir</button>
     
                   </div>
+
                 <% } %>
 
               </div>
-
+              
             </div>
             
           </div>
@@ -89,6 +109,8 @@
 
     </footer>
 
+    <!-- Modal de add lista -->
+     
     <div class="modal" tabindex="-1" id="adicionarLista">
       
       <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -105,7 +127,7 @@
 
           <div class="modal-body">
 
-            <form action="/updatePerfil/<%= usuario[0].Usuario %>" method="post">
+            <form action="/addLista/<%= filme[0].IDFilme %>/<%= usuario[0].Usuario %>" method="post">
               
               <label for="comentarioInput">Comentário</label>
 
@@ -115,13 +137,25 @@
 
               <br>
 
-              <label for="notaInput">Nota</label>
+              <div class="estrelas">
+
+                <input type="radio" id="cm_star-empty" name="notaInput" value="" checked/>
+                <label for="cm_star-1"><i class="fa"></i></label>
+                <input type="radio" id="cm_star-1" name="notaInput" value="1"/>
+                <label for="cm_star-2"><i class="fa"></i></label>
+                <input type="radio" id="cm_star-2" name="notaInput" value="2"/>
+                <label for="cm_star-3"><i class="fa"></i></label>
+                <input type="radio" id="cm_star-3" name="notaInput" value="3"/>
+                <label for="cm_star-4"><i class="fa"></i></label>
+                <input type="radio" id="cm_star-4" name="notaInput" value="4"/>
+                <label for="cm_star-5"><i class="fa"></i></label>
+                <input type="radio" id="cm_star-5" name="notaInput" value="5"/>
+
+              </div>
 
               <br>
 
-              <input type="number" name="notaInput" id="notaInput" class="form-control" required>
-
-              <button type="submit" class="btn btn-primary" id="Atualizar" data-bs-dismiss="modal" aria-label="Close">Adicionar</button>
+              <button type="submit" class="btn btn-primary" id="Atualizar" data-bs-dismiss="modal">Adicionar</button>
 
             </form>
 
@@ -133,7 +167,41 @@
       
     </div>
 
-    <script src="js/script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Modal de Sucesso -->
+
+    <div class="modal" tabindex="-1" id="sucesso">
+      
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        
+        <div class="modal-content">
+
+          <div class="modal-header">
+
+            <h5 class="modal-title">Filme adicionado</h5>
+
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          </div>
+
+          <div class="modal-body">
+
+            <p>O filme <%= filme[0].Titulo %> foi adicionado à sua lista!</p>
+
+          </div>
+
+        </div>
+
+      </div>
+      
+    </div>
+
+    <button class="d-none" id="abrirSucesso" data-bs-toggle="modal" data-bs-target="#sucesso"></button>
+
+    <% if(flag == 1) { %>
+      <script>
+        document.getElementById("abrirSucesso").click()
+      </script>
+    <% } %>
+
 </body>
 </html>
