@@ -38,6 +38,8 @@ route.get('/filmeSelec/:id/:nomeUser', filmes.filmeSelecionado);
 route.get('/series/:nomeUser', series.getSeriesPage);
 route.post('/series/:nomeUser', multer(config).single("imagemInput"), series.addSerie);
 route.post('/buscaSeries/:nomeUser', series.buscarSeries);
+route.post('/updateSeries/:id/:nomeUser', multer(config).single("imagemInput"), series.atualizarSerie);
+route.post('/addTemp/:id/:nomeUser', multer(config).single("imagemInput"), series.addTemp);
 
 // Get e Post da pagina de serie selecionada
 route.get('/serieSelec/:id/:nomeUser', series.getSerieSelecionada);

@@ -4,6 +4,7 @@ const tabelaTemporada = require('../model/temporada');
 const tabelaEp = require('../model/ep');
 const { Op, where } = require('sequelize');
 const { raw } = require('express');
+const usuario = require('../model/usuario');
 
 module.exports = {
     async getSeriesPage(req, res){
@@ -93,13 +94,64 @@ module.exports = {
             where: {IDSerie: id}
         });
 
-        const eps = await tabelaEp.findAll({
-            raw: true,
-            where: {IDTemporada: {
-                [Op.in]: temporadas.IDTemporada
-            }}
-        })
+        // const eps = await tabelaEp.findAll({
+        //     raw: true,
+        //     where: {IDTemporada: {
+        //         [Op.in]: await tabelaTemporada.findAll({
+        //             raw: true,
+        //             attributes: ['IDTemporada'],
+        //             where: {IDSerie: id}
+        //         })
+        //     }}
+        // })
 
-        res.render('../views/serieSelec', {serie, usuario, temporadas, eps});
+        res.render('../views/serieSelec', {serie, usuario, temporadas});
+    },
+
+    async atualizarSerie(req, res){
+        const dados = req.body;
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+        let capaSerie = 'noImage.png';
+
+        if (req.file) {
+            capaSerie = req.file.filename;
+        }
+
+        await tabelaSerie.update({
+            Titulo: dados.tituloInput,
+            Sinopse: dados.sinopseInput,
+            Lancamento: dados.lancamentoInput,
+            NotaGeral: 0,
+            IdadeIndicativa: dados.idadeIndicativaInput,
+            Imagem: capaSerie,
+        },
+        {
+            where: { IDSerie: id }
+        });
+        res.redirect('/serieSelec/' + id + '/' + nomeUser);
+    },
+
+    async addTemp(req, res){
+        const dados = req.body;
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+        let capaSerie = 'noImage.png';
+
+        if (req.file) {
+            capaSerie = req.file.filename;
+        }
+
+        await tabelaTemporada.create({
+            Titulo: dados.tituloInput,
+            Sinopse: dados.sinopseInput,
+            Lancamento: dados.lancamentoInput,
+            NotaGeral: 0,
+            IdadeIndicativa: dados.idadeIndicativaInput,
+            Imagem: capaSerie,
+            IDSerie: id
+        });
+
+        res.redirect('/serieSelec/' + id + '/' + nomeUser);
     }
 }

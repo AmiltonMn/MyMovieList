@@ -57,6 +57,19 @@
 
               <button type="button" class="btn btn-outline-primary">Add Lista</button>
               <button type="button" class="btn btn-outline-primary">Quero Assistir</button>
+
+              <% if(usuario[0].ISAdmin == 1) { %>
+                <div class="" id="btnsAdmin">
+  
+                  <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addTemp">Adicionar Temporada</button>
+
+                  <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#atualizarSerie">Atualizar Serie</button>
+
+                  <form action="delSerie/" method="post"></form>
+                  <button type="button" class="btn btn-outline-primary">Excluir</button>
+  
+                </div>
+              <% } %>
             </div>
 
           </div>
@@ -66,6 +79,108 @@
       </div>
     
     </main>
+
+    <!-- Modal Atualizar Serie-->
+
+    <div class="modal" tabindex="-1" id="atualizarSerie">
+      
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        
+        <div class="modal-content">
+
+          <div class="modal-header">
+
+            <h5 class="modal-title">Preencha os campos!</h5>
+
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          </div>
+
+          <div class="modal-body">
+
+            <form action="/updateSeries/<%= serie[0].IDSerie %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
+
+              <label class="form-label"  for="imagemInput">Imagem de capa da Série</label>
+              <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/" value="/img/<%= serie[0].Imagem %>">
+
+              <label class="form-label"  for="tituloInput">Titulo da Série</label>
+              <input class="form-control" type="text"  name="tituloInput" name="tituloInput" value="<%= serie[0].Titulo %>">
+  
+              <label class="form-label" for="sinopseInput" >Sinopse da Série</label>
+              <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2" aria-valuenow="<%= serie[0].Sinopse %>"></textarea>
+
+              <label class="form-label" for="lancamentoInput">Data de Lançamento</label>
+              <input class="form-control" type="date" name="lancamentoInput" id="lancamentoInput" value="<%= serie[0].Lancamento %>">
+
+              <label class="form-label" for="idadeIndicativaInput">Idade Indicativa</label>
+              <select class="form-control" name="idadeIndicativaInput" id="idadeIndicativaInput" required>
+
+                <option value="1">AL</option>
+                <option value="2">A10</option>
+                <option value="3">A12</option>
+                <option value="4">A14</option>
+                <option value="5">A16</option>
+                <option value="6">A18</option>
+
+              </select>
+
+              <br>
+
+              <div id="btnDiv">
+                <button type="submit" id="btnCadSerie" class="btn btn-primary">Atualizar</button>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Adicionar Temporada-->
+
+    <div class="modal" tabindex="-1" id="addTemp">
+      
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        
+        <div class="modal-content">
+
+          <div class="modal-header">
+
+            <h5 class="modal-title">Preencha os campos!</h5>
+
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          </div>
+
+          <div class="modal-body">
+
+            <form action="/addTemp/<%= serie[0].IDSerie %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
+
+              <label class="form-label"  for="imagemInput">Imagem de capa da Temporada</label>
+              <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/">
+
+              <label class="form-label"  for="tituloInput">Titulo da Temporada</label>
+              <input class="form-control" type="text"  name="tituloInput" name="tituloInput">
+  
+              <label class="form-label" for="sinopseInput" >Sinopse da Temporada</label>
+              <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2"></textarea>
+
+              <label class="form-label" for="lancamentoInput">Data de Lançamento</label>
+              <input class="form-control" type="date" name="lancamentoInput" id="lancamentoInput">
+
+              <br>
+
+              <div id="btnDiv">
+                <button type="submit" id="btnCadSerie" class="btn btn-primary">Adicionar</button>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
 
     <footer class="border border-black">
 
