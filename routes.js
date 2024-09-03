@@ -30,10 +30,12 @@ route.post('/updatePerfil/:nomeUser', perfil.atualizarPerfil);
 route.get('/filmes/:nomeUser', filmes.getFilmesPage);
 route.post('/filmes/:nomeUser', multer(config).single("imagemInput"), filmes.addFilme);
 route.post('/buscaFilmes/:nomeUser', filmes.buscarFilmes);
-route.post('/addLista/:id/:nomeUser', filmes.addFilmeLista)
 
 // Get e Post da pagina de filme selecionado
 route.get('/filmeSelec/:id/:nomeUser', filmes.filmeSelecionado);
+route.post('/addLista/:id/:nomeUser', filmes.addFilmeLista);
+route.post('/deletarFilme/:id/:nomeUser', filmes.deletarFilme);
+route.post('/editarFilme/:id/:nomeUser', multer(config).single("novaImagem"), filmes.editarFilme);
 
 // Get e Post da Series
 route.get('/series/:nomeUser', series.getSeriesPage);

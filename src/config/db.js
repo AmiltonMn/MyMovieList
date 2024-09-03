@@ -1,14 +1,16 @@
-const Sequelize = require('sequelize');
+const sequelize = require('sequelize');
 
-const database = new Sequelize('MML', 'MMLAdmin', 'mmladmin123456',
+const database = new sequelize('MML', 'MMLAdmin', 'mmladmin123456',
     {
-        // dialect: 'mssql', host:'localhost', port: 51032, // Sala sem janela port do Amilton
+        dialect: 'mssql', host:'localhost', port: 51032
 
-        // dialect: 'mssql', host:'localhost', port: 56732, // Sala sem janela port do Fernando
+        // dialect: 'mssql', host:'localhost', port: 56732
 
-        dialect: 'mssql', host:'localhost', port: 1433, // Sala Original
-
-        // dialect: 'mssql', host:'localhost', port: 58770 // Casa Amilton
+        /* 
+            Config com o banco de dados da sala original no pc do Amilton
+        */
+        // dialect: 'mssql', host:'localhost', port: 1433
+        // dialect: 'mssql', host:'localhost', port: 51032
     }
 );
 database.sync();

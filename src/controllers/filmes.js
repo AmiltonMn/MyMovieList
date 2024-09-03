@@ -147,7 +147,12 @@ module.exports = {
             raw: true,
             attributes: ['Nome'],
             where: { IDGenero: listaGeneros }
-        })
+        });
+
+        const generos = await tabelaGeneros.findAll({
+            raw: true,
+            attributes: ['Nome']
+        });
 
         const dataLancamento = new Date(filme[0].Lancamento);
 
@@ -159,7 +164,7 @@ module.exports = {
 
         console.log(filme[0].Lancamento);
 
-        res.render('../views/filmeSelec', {filme, usuario, generosFilme, flag: 0});
+        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 0});
     },
 
     async addFilmeLista(req, res){
@@ -183,6 +188,11 @@ module.exports = {
             where: {Usuario: nomeUser}
         });
 
+        const generos = await tabelaGeneros.findAll({
+            raw: true,
+            attributes: ['Nome']
+        });
+        
         const idGenerosFilme = await tabelaGenerosFilme.findAll({
             raw: true,
             attributes: ['IDGenero'],
@@ -213,12 +223,66 @@ module.exports = {
 
         dataLancamento.setDate(dataLancamento.getDate() + 2);
 
-        console.log(dataLancamento);
-
         filme[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
 
-        console.log(filme[0].Lancamento);
+        res.render('../views/filmeSelec', {user, filme, usuario, generosFilme, generos, flag: 1})
+    },
 
-        res.render('../views/filmeSelec', {user, filme, usuario, generosFilme, flag: 1})
+    async deletarFilme(req, res){
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+        
+        await tabelaFilmes.destroy({where: {IDFilme: id}})
+
+        res.redirect('/filmes/' + nomeUser)
+    },
+
+    async editarFilme(req, res){
+        const dados = req.body;
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser
+
+        console.log(dados);
+
+        console.log(dados.novosGeneros);
+
+        await tabelaFilmes.update({
+            Imagem: dados.novaImagem,
+            Titulo: dados.novoTitulo,
+            Sinopse: dados.novaSinopse,
+            Lancamento: dados.novoLancamento,
+            IdadeIndicativa: dados.novaIdadeIndicativa
+        },
+        {
+            where: {IDFilme: id}
+        });
+
+        let listaNovosGeneros = []
+
+        const IDSgeneros = await tabelaGeneros.findAll({
+            raw: true,
+            attributes: ['IDGenero'],
+            where: {Nome: [dados.novosGeneros]}
+        })
+
+        for (let i = 0; i < IDSgeneros.length; i++) {
+            listaNovosGeneros[i] = IDSgeneros[i].IDGenero;
+        }
+
+        console.log(listaNovosGeneros);
+
+        await tabelaGenerosFilme.destroy({
+            where: {IDFilme: id}
+        })
+
+        for (let i = 0; i < listaNovosGeneros.length; i++) {
+
+            await tabelaGenerosFilme.create({
+                IDFilme: id,
+                IDGenero: listaNovosGeneros[i]
+            })
+        }
+
+        res.redirect('/filmeSelec/' + id + '/' + nomeUser)
     }
 }

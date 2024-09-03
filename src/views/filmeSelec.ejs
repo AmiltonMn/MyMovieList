@@ -85,9 +85,10 @@
                 <% if(usuario[0].ISAdmin == 1) { %>
 
                   <div class="" id="btnsAdmin">
-    
-                    <button type="button" class="btn btn-outline-primary">Editar</button>
-                    <button type="button" class="btn btn-outline-primary">Excluir</button>
+
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarFilme" >Editar</button>
+
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#deletarFilme" >Excluir</button>
     
                   </div>
 
@@ -195,12 +196,147 @@
       
     </div>
 
+    <!-- Modal de editar -->
+
+    <div class="modal" tabindex="-1" id="editarFilme">
+      
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+
+        <div class="modal-content">
+
+          <div class="modal-header">
+
+            <h5 class="modal-title">Preencha os campos!</h5>
+
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          </div>
+
+          <div class="modal-body">
+
+            <form action="/editarFilme/<%= filme[0].IDFilme %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
+
+              <label class="form-label"  for="novaImagem">Imagem de capa do filme</label>
+
+              <br>
+
+              <input class="form-control" type="file" name="novaImagem" value="<%= filme[0].Imagem %>" accept="image/" required>
+
+              <br>
+
+              <label class="form-label"  for="novoTitulo">Titulo do Filme</label>
+
+              <br>
+
+              <input class="form-control" type="text" name="novoTitulo" value="<%= filme[0].Titulo %>" placeholder="Digite o nome do filme" required>
+  
+              <br>
+
+              <label class="form-label" for="novaSinopse" required>Sinopse do Filme</label>
+
+              <br>
+              <textarea class="form-control" name="novaSinopse" rows="2"><%= filme[0].Sinopse %></textarea>
+
+              <br>
+
+              <label class="form-label" for="novoLancamento">Data de Lançamento</label>
+
+              <br>
+
+              <input class="form-control" type="date" name="novoLancamento" value="" id="lancamentoInput">
+
+              <br>
+
+              <label class="form-label" for="novaIdadeIndicativa">Idade Indicativa</label>
+
+              <br>
+
+              <select class="form-control" name="novaIdadeIndicativa" required>
+
+                <option value="1" <%= (1 === filme[0].IdadeIndicativa) ? "selected" : "" %>>AL</option>
+                <option value="2" <%= (2 === filme[0].IdadeIndicativa) ? "selected" : "" %>>A10</option>
+                <option value="3" <%= (3 === filme[0].IdadeIndicativa) ? "selected" : "" %>>A12</option>
+                <option value="4" <%= (4 === filme[0].IdadeIndicativa) ? "selected" : "" %>>A14</option>
+                <option value="5" <%= (5 === filme[0].IdadeIndicativa) ? "selected" : "" %>>A16</option>
+                <option value="6" <%= (6 === filme[0].IdadeIndicativa) ? "selected" : "" %>>A18</option>
+
+              </select>
+
+              <br>
+
+              <select class="form-control multiselect" name="novosGeneros" multiple required>
+
+                <% for(let i = 0; i < generos.length; i++) { %>
+                  
+                  <option value="<%= generos[i].Nome %>"><%= generos[i].Nome %></option>
+
+                <% } %>
+
+              </select>
+
+              <br>
+
+              <button type="submit" id="btnEditar" class="btn btn-primary">Editar</button>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Excluir Filme -->
+
+    <div class="modal" tabindex="-1" id="deletarFilme">
+      
+      <div class="modal-dialog modal-dialog-centered modal-sm">
+        
+        <div class="modal-content">
+
+          <div class="modal-header d-flex">
+
+            <h5 class="modal-title">Excluir Filme</h5>
+
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          </div>
+
+          <div class="modal-body">
+
+            <h5>Você está excluindo o filme <%= filme[0].Titulo %></h5>
+
+            <br>
+
+            <p>Você confirma a exclusão?</p>
+
+            <div class="d-flex justify-content-between">
+
+              <form action="/deletarFilme/<%= filme[0].IDFilme %>/<%= usuario[0].Usuario %>" method="post">
+                <button type="submit" class="btn btn-danger m-3">Confirmar</button>
+              </form>
+
+              <button type="button" class="btn btn-secondary m-3" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+      
+    </div>
+
     <button class="d-none" id="abrirSucesso" data-bs-toggle="modal" data-bs-target="#sucesso"></button>
 
     <% if(flag == 1) { %>
+
       <script>
         document.getElementById("abrirSucesso").click()
       </script>
+
     <% } %>
 
 </body>
