@@ -84,14 +84,22 @@
                   
                   <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addEp<%= i %>">Adicionar Episodio</button>
                   
-                  <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#atualizarTemp<%= i %>">Atualizar Temporada</button>
+                  <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateTemp<%= i %>">Atualizar Temporada</button>
                   
                   <button type="button" class="btn btn-outline-primary">Excluir Temporada</button>
                   
                 <% } %>
                   <div class="collapse" id="temp<%= i %>">
                     <div class="card card-body">
-                      Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                      <p>Eps: </p>
+                      <% for (let j = 0; j < ep.length; j++) { %>
+                        <% if (ep[j].IDTemporada == temporada[i].IDTemporada) { %>
+
+                          <p><%= ep[j].Titulo %></p>
+
+                        <% } %>
+                      <% } %>
+                
                     </div>
                   </div>
                 </div>
@@ -205,7 +213,7 @@
 
     <% for(let i = 0; i < temporada.length; i++) { %>
 
-    <!-- Modal Adicionar Episodio nao feito-->
+    <!-- Modal Adicionar Episodio -->
 
     <div class="modal" tabindex="-1" id="addEp<%= i %>">
       
@@ -223,15 +231,15 @@
 
           <div class="modal-body">
 
-            <form action="/addTemp/<%= serie[0].IDSerie %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
+            <form action="/addEp/<%= temporada[i].IDTemporada %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
 
-              <label class="form-label"  for="imagemInput">Imagem de capa da Temporada</label>
+              <label class="form-label"  for="imagemInput">Imagem de capa do Episodio</label>
               <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/">
 
-              <label class="form-label"  for="tituloInput">Titulo da Temporada</label>
+              <label class="form-label"  for="tituloInput">Titulo do Episodio</label>
               <input class="form-control" type="text"  name="tituloInput" name="tituloInput">
   
-              <label class="form-label" for="sinopseInput" >Sinopse da Temporada</label>
+              <label class="form-label" for="sinopseInput" >Sinopse do Episodio</label>
               <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2"></textarea>
 
               <label class="form-label" for="lancamentoInput">Data de Lançamento</label>
@@ -252,7 +260,7 @@
 
     <!-- Modal Atualizar Temporada nao feito-->
 
-    <div class="modal" tabindex="-1" id="updateTemp">
+    <div class="modal" tabindex="-1" id="updateTemp<%= i %>">
       
       <div class="modal-dialog modal-dialog-centered modal-lg">
         
@@ -301,7 +309,7 @@
 
     </footer>
 
-    <script src="js/script.js"></script>
+    <script src="/js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

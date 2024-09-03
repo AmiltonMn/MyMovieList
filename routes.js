@@ -40,6 +40,7 @@ route.post('/series/:nomeUser', multer(config).single("imagemInput"), series.add
 route.post('/buscaSeries/:nomeUser', series.buscarSeries);
 route.post('/updateSeries/:id/:nomeUser', multer(config).single("imagemInput"), series.atualizarSerie);
 route.post('/addTemp/:id/:nomeUser', multer(config).single("imagemInput"), series.addTemp);
+route.post('/addEp/:id/:nomeUser', multer(config).single("imagemInput"), series.addEp);
 
 // Get e Post da pagina de serie selecionada
 route.get('/serieSelec/:id/:nomeUser', series.getSerieSelecionada);

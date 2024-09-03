@@ -94,18 +94,20 @@ module.exports = {
             where: {IDSerie: id}
         });
 
-        // const eps = await tabelaEp.findAll({
-        //     raw: true,
-        //     where: {IDTemporada: {
-        //         [Op.in]: await tabelaTemporada.findAll({
-        //             raw: true,
-        //             attributes: ['IDTemporada'],
-        //             where: {IDSerie: id}
-        //         })
-        //     }}
-        // })
+        var temporadaIDS = []
 
-        res.render('../views/serieSelec', {serie, usuario, temporada});
+        for (let i = 0; i < temporada.length; i++) {
+            temporadaIDS[i] = temporada[i].IDTemporada;   
+        }
+
+        const ep = await tabelaEp.findAll({
+            raw: true,
+            where: {IDTemporada: {
+                [Op.in]: temporadaIDS
+            }}
+        })
+
+        res.render('../views/serieSelec', {serie, usuario, temporada, ep});
     },
 
     async atualizarSerie(req, res){
@@ -136,10 +138,10 @@ module.exports = {
         const dados = req.body;
         const id = req.params.id;
         const nomeUser = req.params.nomeUser;
-        let capaSerie = 'noImage.png';
+        let capaTemp = 'noImage.png';
 
         if (req.file) {
-            capaSerie = req.file.filename;
+            capaTemp = req.file.filename;
         }
 
         await tabelaTemporada.create({
@@ -147,11 +149,37 @@ module.exports = {
             Sinopse: dados.sinopseInput,
             Lancamento: dados.lancamentoInput,
             NotaGeral: 0,
-            IdadeIndicativa: dados.idadeIndicativaInput,
-            Imagem: capaSerie,
+            Imagem: capaTemp,
             IDSerie: id
         });
 
         res.redirect('/serieSelec/' + id + '/' + nomeUser);
+    },
+
+    async addEp(req, res){
+        const dados = req.body;
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+        let capaEp = 'noImage.png';
+
+        if (req.file) {
+            capaEp = req.file.filename;
+        }
+
+        await tabelaEp.create({
+            Titulo: dados.tituloInput,
+            Sinopse: dados.sinopseInput,
+            Lancamento: dados.lancamentoInput,
+            NotaGeral: 0,
+            Imagem: capaEp,
+            IDTemporada: id
+        });
+
+        const idSerie = await tabelaTemporada.findAll({
+            raw: true,
+            where: {IDTemporada: id}
+        })
+
+        res.redirect('/serieSelec/' + idSerie[0].IDSerie + '/' + nomeUser);
     }
 }
