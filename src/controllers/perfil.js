@@ -10,22 +10,16 @@ module.exports = {
 
         const usuario = await tabelaUsuario.findAll({
             raw: true,
+            attributes: ['IDUsuario', 'Usuario', 'Nome', 'DtNasc', 'Senha', 'Email', 'ISAdmin', 'Imagem'],
             where: {Usuario: nomeUser}
         });
-
-        console.log(usuario)
-
-        console.log(usuario[0].DtNasc)
         
         const dataNascimento = new Date(usuario[0].DtNasc);
     
         dataNascimento.setDate(dataNascimento.getDate() + 2);
 
         usuario[0].DtNasc = dataNascimento.toLocaleDateString('pt-BR');
-
-        console.log(usuario[0].IDUsuario)
         
-
         const lista = await tabelaListaFilme.findAll({
             raw: true,
             where: {IDUsuario: usuario[0].IDUsuario}
