@@ -89,7 +89,7 @@ module.exports = {
             where: {Usuario: nomeUser}
         });
 
-        const temporadas = await tabelaTemporada.findAll({
+        const temporada = await tabelaTemporada.findAll({
             raw: true,
             where: {IDSerie: id}
         });
@@ -105,7 +105,7 @@ module.exports = {
         //     }}
         // })
 
-        res.render('../views/serieSelec', {serie, usuario, temporadas});
+        res.render('../views/serieSelec', {serie, usuario, temporada});
     },
 
     async atualizarSerie(req, res){
