@@ -4,7 +4,6 @@ const tabelaGeneros = require('../model/genero');
 const tabelaGenerosFilme = require('../model/generoFilme');
 const tabelaListaFilmes = require('../model/listaFilme');
 const { Op, where } = require('sequelize');
-const { raw } = require('express');
 
 module.exports = {
     async getFilmesPage(req, res){
