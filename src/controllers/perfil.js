@@ -10,6 +10,7 @@ module.exports = {
 
         const usuario = await tabelaUsuario.findAll({
             raw: true,
+            attributes: ['IDUsuario', 'Usuario', 'Nome', 'DtNasc', 'Senha', 'Email', 'ISAdmin', 'Imagem'],
             where: {Usuario: nomeUser}
         });
         
