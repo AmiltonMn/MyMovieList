@@ -181,5 +181,33 @@ module.exports = {
         })
 
         res.redirect('/serieSelec/' + idSerie[0].IDSerie + '/' + nomeUser);
-    }
+    },
+
+    async atualizarTemporada(req, res){
+        const dados = req.body;
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+        let capaTemp = 'noImage.png';
+
+        if (req.file) {
+            capaTemp = req.file.filename;
+        }
+
+        const idSerie = await tabelaTemporada.findAll({
+            raw: true,
+            where: {IDTemporada: id}
+        })
+
+        await tabelaTemporada.update({
+            Titulo: dados.tituloInput,
+            Sinopse: dados.sinopseInput,
+            Lancamento: dados.lancamentoInput,
+            NotaGeral: 0,
+            Imagem: capaTemp,
+        },
+        {
+            where: { IDSerie: idSerie[0].IDSerie }
+        });
+        res.redirect('/serieSelec/' + idSerie[0].IDSerie + '/' + nomeUser);
+    },
 }
