@@ -414,7 +414,7 @@
   
             <div class="modal-body">
   
-              <form action="/updateEp/<%= ep[0].IDEp %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
+              <form action="/updateEp/<%= ep[j].IDEp %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
   
                 <label class="form-label"  for="imagemInput">Imagem de capa do Episodio</label>
                 <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/" value="<%= ep[j].Imagem %>">

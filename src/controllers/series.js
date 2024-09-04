@@ -2,6 +2,7 @@ const tabelaUsuario = require('../model/usuario');
 const tabelaSerie = require('../model/serie');
 const tabelaTemporada = require('../model/temporada');
 const tabelaEp = require('../model/ep');
+const tabelaGeneros = require('../model/genero');
 const { Op, where } = require('sequelize');
 const { raw } = require('express');
 const usuario = require('../model/usuario');
@@ -12,7 +13,6 @@ module.exports = {
 
         const usuario = await tabelaUsuario.findAll({
             raw: true,
-            attributes: ['IDUsuario', 'Usuario', 'Nome', 'DtNasc', 'Senha', 'Email', 'ISAdmin', 'Imagem'],
             where: {Usuario: nomeUser}
         });
 
@@ -20,7 +20,11 @@ module.exports = {
             raw: true,
         })
 
-        res.render('../views/series', {usuario, series});
+        const generos = await tabelaGeneros.findAll({
+            raw: true
+        });
+
+        res.render('../views/series', {usuario, series, generos});
     },
 
     async addSerie(req, res){

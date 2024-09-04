@@ -142,7 +142,23 @@
               </select>
 
               <br>
-
+              
+              <label class="form-check-label" for="generos">Generos</label>
+              <div class="overflow-y-auto" style="height: 200px;">
+                <ul class="list-group" id="generos">
+                  <% for(let i = 0; i < generos.length; i++) { %>
+                    
+                    <li class="list-group-item">
+                      <input class="form-check-input me-1" type="checkbox" value="<%= generos[i].IDGenero %>" id="checkbox<%= i %>" name="genero<%= i %>">
+                      <label class="form-check-label" for="checkbox<%= i %>"><%= generos[i].Nome %></label>
+                    </li>
+  
+                  <% } %>
+                </ul>
+              </div>
+              
+              <br>
+              
               <div id="btnDiv">
                 <button type="submit" id="btnCadSerie" class="btn btn-primary">Adicionar</button>
               </div>
