@@ -92,14 +92,13 @@
                 <% } %>
                   <div class="collapse" id="temp<%= i %>">
                     <div class="card card-body">
-                      Eps: 
+                      Eps: <br>
                       <% for (let j = 0; j < ep.length; j++) { %>
-                        <% console.log(i + ' ' + j) %>
                         <% if (ep[j].IDTemporada == temporada[i].IDTemporada) { %>
                           <!-- Episodios -->
                           <%= ep[j].Titulo %>
 
-                          <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateEp<%= i %><%= i %>">Atualizar Episodio</button>
+                          <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateEp<%= i %><%= j %>">Atualizar Episodio</button>
                   
                           <button type="button" class="btn btn-outline-primary">Excluir Episodio</button>
 
@@ -332,24 +331,24 @@
       
                 <div class="modal-body">
       
-                  <form action="/updateEp/<%= serie[0].IDSerie %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
+                  <form action="/updateEp/<%= ep[0].IDEp %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
       
-                    <label class="form-label"  for="imagemInput">Imagem de capa da Temporada</label>
-                    <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/">
+                    <label class="form-label"  for="imagemInput">Imagem de capa do Episodio</label>
+                    <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/" value="<%= ep[j].Imagem %>">
       
-                    <label class="form-label"  for="tituloInput">Titulo da Temporada</label>
-                    <input class="form-control" type="text"  name="tituloInput" name="tituloInput">
+                    <label class="form-label"  for="tituloInput">Titulo do Episodio</label>
+                    <input class="form-control" type="text"  name="tituloInput" name="tituloInput" value="<%= ep[j].Titulo %>">
         
-                    <label class="form-label" for="sinopseInput" >Sinopse da Temporada</label>
-                    <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2"></textarea>
+                    <label class="form-label" for="sinopseInput" >Sinopse do Episodio</label>
+                    <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2"><%= ep[j].Sinopse %></textarea>
       
                     <label class="form-label" for="lancamentoInput">Data de Lançamento</label>
-                    <input class="form-control" type="date" name="lancamentoInput" id="lancamentoInput">
+                    <input class="form-control" type="date" name="lancamentoInput" id="lancamentoInput" value="<%= ep[j].Lancamento %>">
       
                     <br>
       
                     <div id="btnDiv">
-                      <button type="submit" id="btnCadSerie" class="btn btn-primary">Adicionar</button>
+                      <button type="submit" id="btnCadSerie" class="btn btn-primary">Atualizar</button>
                     </div>
       
                   </form>

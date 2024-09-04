@@ -206,8 +206,41 @@ module.exports = {
             Imagem: capaTemp,
         },
         {
-            where: { IDSerie: idSerie[0].IDSerie }
+            where: { IDTemporada: id }
         });
         res.redirect('/serieSelec/' + idSerie[0].IDSerie + '/' + nomeUser);
     },
+
+    async atualizarEp(req, res){
+        const dados = req.body;
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+        let capaEp = 'noImage.png';
+
+        if (req.file) {
+            capaEp = req.file.filename;
+        }
+
+        const idTemporada = await tabelaEp.findAll({
+            raw: true,
+            where: {IDEp: id}
+        });
+
+        const idSerie = await tabelaTemporada.findAll({
+            raw: true,
+            where: {IDTemporada: idTemporada[0].IDTemporada}
+        });
+
+        await tabelaEp.update({
+            Titulo: dados.tituloInput,
+            Sinopse: dados.sinopseInput,
+            Lancamento: dados.lancamentoInput,
+            NotaGeral: 0,
+            Imagem: capaEp,
+        },
+        {
+            where: { IDEp: id }
+        });
+        res.redirect('/serieSelec/' + idSerie[0].IDSerie + '/' + nomeUser);
+    }
 }
