@@ -10,7 +10,6 @@ module.exports = {
 
         const usuario = await tabelaUsuario.findAll({
             raw: true,
-            attributes: ['IDUsuario', 'Usuario', 'Nome', 'DtNasc', 'Senha', 'Email', 'ISAdmin', 'Imagem'],
             where: {Usuario: nomeUser}
         });
         
@@ -45,8 +44,6 @@ module.exports = {
             include: [{model: tabelaFilmes}],
             where: {IDUsuario: usuario[0].IDUsuario}
         });
-
-        console.log(filmes)
         
         res.render('../views/perfil', {usuario, filmes, lista, IDSFilmes});
     },
