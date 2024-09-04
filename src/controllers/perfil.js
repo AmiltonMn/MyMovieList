@@ -3,15 +3,19 @@ const tabelaListaFilme = require('../model/listaFilme');
 const tabelaFilmes = require('../model/filme');
 
 module.exports = {
-    async getPerfilPage(req, res){
+    async getPerfilPage(req, res)
+    {
         const nomeUser = req.params.nomeUser;
+        const id = req.params.id;
 
         const usuario = await tabelaUsuario.findAll({
             raw: true,
-            attributes: ['IDUsuario', 'Usuario', 'Nome', 'DtNasc', 'Senha', 'Email', 'ISAdmin', 'Imagem'],
             where: {Usuario: nomeUser}
         });
+
         console.log(usuario)
+
+        console.log(usuario[0].DtNasc)
         
         const dataNascimento = new Date(usuario[0].DtNasc);
     
@@ -19,7 +23,9 @@ module.exports = {
 
         usuario[0].DtNasc = dataNascimento.toLocaleDateString('pt-BR');
 
+        console.log(usuario[0].IDUsuario)
         
+
         const lista = await tabelaListaFilme.findAll({
             raw: true,
             where: {IDUsuario: usuario[0].IDUsuario}
@@ -40,14 +46,15 @@ module.exports = {
             
         console.log(IDSFilmes)
         
-        const filmes = await tabelaFilmes.findAll({
+        const filmes = await tabelaListaFilme.findAll({
             raw: true,
-            where: {IDFilme: [IDSFilmes]}
-        })
+            include: [{model: tabelaFilmes}],
+            where: {IDUsuario: usuario[0].IDUsuario}
+        });
         
-        res.render('../views/perfil', {usuario, filmes, lista});
-        },
-        
+        res.render('../views/perfil', {usuario, filmes, lista, IDSFilmes});
+    },
+
         async atualizarPerfil(req, res){
             const dados = req.body;
             const nomeUser = req.params.nomeUser;
@@ -62,6 +69,7 @@ module.exports = {
         {
             where: { Usuario: nomeUser }
         });
+
         res.redirect('/perfil/' + nomeUser);
     }
 }
