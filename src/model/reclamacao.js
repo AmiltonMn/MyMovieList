@@ -10,11 +10,11 @@ const reclamacao = database.define('reclamacao', {
         primaryKey: true
     },
     Descricao: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(1000),
         allowNull: false
     },
     Resposta: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(1000),
         allowNull: true
     }
 });

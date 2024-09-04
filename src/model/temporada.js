@@ -13,8 +13,8 @@ const temporada = database.define('temporada', {
         type: Sequelize.STRING(255),
         allowNull: false
     },
-    Sinopes: {
-        type: Sequelize.STRING(255),
+    Sinopse: {
+        type: Sequelize.STRING(1000),
         allowNull: false
     },
     Lancamento: {

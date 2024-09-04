@@ -41,9 +41,14 @@ route.post('/editarFilme/:id/:nomeUser', multer(config).single("novaImagem"), fi
 route.get('/series/:nomeUser', series.getSeriesPage);
 route.post('/series/:nomeUser', multer(config).single("imagemInput"), series.addSerie);
 route.post('/buscaSeries/:nomeUser', series.buscarSeries);
+route.post('/updateSeries/:id/:nomeUser', multer(config).single("imagemInput"), series.atualizarSerie);
+route.post('/addTemp/:id/:nomeUser', multer(config).single("imagemInput"), series.addTemp);
+route.post('/addEp/:id/:nomeUser', multer(config).single("imagemInput"), series.addEp);
+route.post('/updateTemp/:id/:nomeUser', multer(config).single("imagemInput"), series.atualizarTemporada);
+route.post('/updateEp/:id/:nomeUser', multer(config).single("imagemInput"), series.atualizarEp);
 
 // Get e Post da pagina de serie selecionada
-route.get('/serieSelec/:id/:nomeUser', series.serieSelecionada);
+route.get('/serieSelec/:id/:nomeUser', series.getSerieSelecionada);
 
 // Get e Post da home
 route.get('/', home.getHome);

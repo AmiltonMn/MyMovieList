@@ -7,7 +7,7 @@
     <title>My Movie List</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
-    <body>
+<body>
       
     <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
 
@@ -62,11 +62,295 @@
 
           </div>
 
-        </div>
+          <div class="d-flex flex-column gap-2 mt-2">
+            <% for(let i = 0; i < temporada.length; i++) { %>
+              <!-- Temporadas -->
+              <div>
 
+                <a class="btn btn-primary w-25" data-bs-toggle="collapse" href="#temp<%= i %>" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  <%= temporada[i].Titulo %>
+                </a>
+                <% if(usuario[0].ISAdmin == 1) { %>
+                  
+                  <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addEp<%= i %>">Adicionar Episodio</button>
+                  
+                  <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateTemp<%= i %>">Atualizar Temporada</button>
+                  
+                  <button type="button" class="btn btn-outline-primary">Excluir Temporada</button>
+                  
+                <% } %>
+                  <div class="collapse" id="temp<%= i %>">
+                    <div class="card card-body">
+                      Eps: <br>
+                      <% for (let j = 0; j < ep.length; j++) { %>
+                        <% if (ep[j].IDTemporada == temporada[i].IDTemporada) { %>
+                          <!-- Episodios -->
+                          <%= ep[j].Titulo %>
+
+                          <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateEp<%= i %><%= j %>">Atualizar Episodio</button>
+                  
+                          <button type="button" class="btn btn-outline-primary">Excluir Episodio</button>
+
+                        <% } %>
+                      <% } %>
+                
+                    </div>
+                  </div>
+                </div>
+            <% } %>
+          </div>
+        </div>
+        
+      </main>
+
+    <!-- Modal Atualizar Serie-->
+
+    <div class="modal" tabindex="-1" id="atualizarSerie">
+      
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        
+        <div class="modal-content">
+
+          <div class="modal-header">
+
+            <h5 class="modal-title">Preencha os campos!</h5>
+
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          </div>
+
+          <div class="modal-body">
+
+            <form action="/updateSeries/<%= serie[0].IDSerie %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
+
+              <label class="form-label"  for="imagemInput">Imagem de capa da Série</label>
+              <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/" value="/img/<%= serie[0].Imagem %>">
+
+              <label class="form-label"  for="tituloInput">Titulo da Série</label>
+              <input class="form-control" type="text"  name="tituloInput" name="tituloInput" value="<%= serie[0].Titulo %>">
+  
+              <label class="form-label" for="sinopseInput" >Sinopse da Série</label>
+              <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2" aria-valuenow="<%= serie[0].Sinopse %>"></textarea>
+
+              <label class="form-label" for="lancamentoInput">Data de Lançamento</label>
+              <input class="form-control" type="date" name="lancamentoInput" id="lancamentoInput" value="<%= serie[0].Lancamento %>">
+
+              <label class="form-label" for="idadeIndicativaInput">Idade Indicativa</label>
+              <select class="form-control" name="idadeIndicativaInput" id="idadeIndicativaInput" required>
+
+                <option value="1">AL</option>
+                <option value="2">A10</option>
+                <option value="3">A12</option>
+                <option value="4">A14</option>
+                <option value="5">A16</option>
+                <option value="6">A18</option>
+
+              </select>
+
+              <br>
+
+              <div id="btnDiv">
+                <button type="submit" id="btnCadSerie" class="btn btn-primary">Atualizar</button>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
       </div>
-    
-    </main>
+    </div>
+
+    <!-- Modal Adicionar Temporada-->
+
+    <div class="modal" tabindex="-1" id="addTemp">
+      
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        
+        <div class="modal-content">
+
+          <div class="modal-header">
+
+            <h5 class="modal-title">Preencha os campos!</h5>
+
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          </div>
+
+          <div class="modal-body">
+
+            <form action="/addTemp/<%= serie[0].IDSerie %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
+
+              <label class="form-label"  for="imagemInput">Imagem de capa da Temporada</label>
+              <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/">
+
+              <label class="form-label"  for="tituloInput">Titulo da Temporada</label>
+              <input class="form-control" type="text"  name="tituloInput" name="tituloInput">
+  
+              <label class="form-label" for="sinopseInput" >Sinopse da Temporada</label>
+              <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2"></textarea>
+
+              <label class="form-label" for="lancamentoInput">Data de Lançamento</label>
+              <input class="form-control" type="date" name="lancamentoInput" id="lancamentoInput">
+
+              <br>
+
+              <div id="btnDiv">
+                <button type="submit" id="btnCadSerie" class="btn btn-primary">Adicionar</button>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% for(let i = 0; i < temporada.length; i++) { %>
+
+    <!-- Modal Adicionar Episodio -->
+
+    <div class="modal" tabindex="-1" id="addEp<%= i %>">
+      
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        
+        <div class="modal-content">
+
+          <div class="modal-header">
+
+            <h5 class="modal-title">Preencha os campos!</h5>
+
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          </div>
+
+          <div class="modal-body">
+
+            <form action="/addEp/<%= temporada[i].IDTemporada %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
+
+              <label class="form-label"  for="imagemInput">Imagem de capa do Episodio</label>
+              <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/">
+
+              <label class="form-label"  for="tituloInput">Titulo do Episodio</label>
+              <input class="form-control" type="text"  name="tituloInput" name="tituloInput">
+  
+              <label class="form-label" for="sinopseInput" >Sinopse do Episodio</label>
+              <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2"></textarea>
+
+              <label class="form-label" for="lancamentoInput">Data de Lançamento</label>
+              <input class="form-control" type="date" name="lancamentoInput" id="lancamentoInput">
+
+              <br>
+
+              <div id="btnDiv">
+                <button type="submit" id="btnCadSerie" class="btn btn-primary">Adicionar</button>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Atualizar Temporada -->
+
+    <div class="modal" tabindex="-1" id="updateTemp<%= i %>">
+      
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        
+        <div class="modal-content">
+
+          <div class="modal-header">
+
+            <h5 class="modal-title">Preencha os campos!</h5>
+
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          </div>
+
+          <div class="modal-body">
+
+            <form action="/updateTemp/<%= temporada[0].IDTemporada %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
+
+              <label class="form-label"  for="imagemInput">Imagem de capa da Temporada</label>
+              <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/" value="<%= temporada[i].IDTemporada %>">
+
+              <label class="form-label"  for="tituloInput">Titulo da Temporada</label>
+              <input class="form-control" type="text"  name="tituloInput" name="tituloInput" value="<%= temporada[i].Titulo %>">
+  
+              <label class="form-label" for="sinopseInput" >Sinopse da Temporada</label>
+              <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2"><%= temporada[i].Sinopse %></textarea>
+
+              <label class="form-label" for="lancamentoInput">Data de Lançamento</label>
+              <input class="form-control" type="date" name="lancamentoInput" id="lancamentoInput" value="<%= temporada[i].Lancamento %>">
+
+              <br>
+
+              <div id="btnDiv">
+                <button type="submit" id="btnCadSerie" class="btn btn-primary">Atualizar</button>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% } %>
+
+    <% for(let i = 0; i < temporada.length; i++) { %>
+      <% for (let j = 0; j < ep.length; j++) { %>
+        <% if (ep[j].IDTemporada == temporada[i].IDTemporada) { %>
+
+          <!-- Modal atualizar Episodio nao feito-->
+          <div class="modal" tabindex="-1" id="updateEp<%= i %><%= j %>">
+      
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+              
+              <div class="modal-content">
+      
+                <div class="modal-header">
+      
+                  <h5 class="modal-title">Preencha os campos!</h5>
+      
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      
+                </div>
+      
+                <div class="modal-body">
+      
+                  <form action="/updateEp/<%= ep[0].IDEp %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
+      
+                    <label class="form-label"  for="imagemInput">Imagem de capa do Episodio</label>
+                    <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/" value="<%= ep[j].Imagem %>">
+      
+                    <label class="form-label"  for="tituloInput">Titulo do Episodio</label>
+                    <input class="form-control" type="text"  name="tituloInput" name="tituloInput" value="<%= ep[j].Titulo %>">
+        
+                    <label class="form-label" for="sinopseInput" >Sinopse do Episodio</label>
+                    <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2"><%= ep[j].Sinopse %></textarea>
+      
+                    <label class="form-label" for="lancamentoInput">Data de Lançamento</label>
+                    <input class="form-control" type="date" name="lancamentoInput" id="lancamentoInput" value="<%= ep[j].Lancamento %>">
+      
+                    <br>
+      
+                    <div id="btnDiv">
+                      <button type="submit" id="btnCadSerie" class="btn btn-primary">Atualizar</button>
+                    </div>
+      
+                  </form>
+      
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <% } %>
+      <% } %>
+    <% } %>
+
 
     
 
@@ -74,7 +358,7 @@
 
     </footer>
 
-    <script src="js/script.js"></script>
+    <script src="/js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
