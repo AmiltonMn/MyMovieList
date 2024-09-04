@@ -58,6 +58,18 @@
               <button type="button" class="btn btn-outline-primary">Add Lista</button>
               <button type="button" class="btn btn-outline-primary">Quero Assistir</button>
 
+              <% if(usuario[0].ISAdmin == 1) { %>
+                <div class="" id="btnsAdmin">
+  
+                  <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addTemp">Adicionar Temporada</button>
+
+                  <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#atualizarSerie">Atualizar Serie</button>
+
+                  <button type="button" class="btn btn-outline-primary">Excluir</button>
+  
+                </div>
+              <% } %>
+
             </div>
 
           </div>
@@ -85,12 +97,15 @@
                       <% for (let j = 0; j < ep.length; j++) { %>
                         <% if (ep[j].IDTemporada == temporada[i].IDTemporada) { %>
                           <!-- Episodios -->
-                          <%= ep[j].Titulo %>
+                          <p><%= ep[j].Titulo %></p>
 
-                          <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateEp<%= i %><%= j %>">Atualizar Episodio</button>
-                  
-                          <button type="button" class="btn btn-outline-primary">Excluir Episodio</button>
+                          <% if(usuario[0].ISAdmin == 1) { %>
 
+                            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateEp<%= i %><%= j %>">Atualizar Episodio</button>
+                    
+                            <button type="button" class="btn btn-outline-primary">Excluir Episodio</button>
+                            
+                          <% } %>
                         <% } %>
                       <% } %>
                 
@@ -303,7 +318,7 @@
       <% for (let j = 0; j < ep.length; j++) { %>
         <% if (ep[j].IDTemporada == temporada[i].IDTemporada) { %>
 
-          <!-- Modal atualizar Episodio nao feito-->
+          <!-- Modal atualizar Episodio -->
           <div class="modal" tabindex="-1" id="updateEp<%= i %><%= j %>">
       
             <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -350,9 +365,6 @@
         <% } %>
       <% } %>
     <% } %>
-
-
-    
 
     <footer class="border border-black">
 
