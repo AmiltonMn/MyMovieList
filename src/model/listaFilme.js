@@ -23,7 +23,7 @@ const listaFilme = database.define('listaFilme', {
     },
 
     Nota: {
-        type: Sequelize.FLOAT,
+        type: Sequelize.INTEGER,
         allowNull: false
     }
 

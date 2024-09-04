@@ -171,20 +171,42 @@ module.exports = {
         const id = req.params.id
         const nomeUser = req.params.nomeUser
 
-        const user = await tabelaUsuario.findAll({
+        const usuario = await tabelaUsuario.findAll({
             raw: true,
-            attributes: ['IDUsuario'],
             where: {Usuario: nomeUser}
         });
 
-        const filme = await tabelaFilmes.findAll({
+        await tabelaListaFilmes.create({
+            Comentario: dados.comentarioInput,
+            Nota: dados.notaInput,
+            IDFilme: id,
+            IDUsuario: usuario[0].IDUsuario
+        });
+
+        const notas = await tabelaListaFilmes.findAll({
             raw: true,
             where: {IDFilme: id}
         });
 
-        const usuario = await tabelaUsuario.findAll({
+        let notaFilme = 0;
+
+        for (let i = 0; i < notas.length; i++) {
+            notaFilme += notas[i].Nota;
+        };
+
+        notaFilme = notaFilme / notas.length;
+
+        await tabelaFilmes.update({
+            NotaGeral: notaFilme
+        },
+        {
+            where: {IDFilme: id}
+        });
+
+        const filme = await tabelaListaFilmes.findAll({
             raw: true,
-            where: {Usuario: nomeUser}
+            where: {IDFilme: id},
+            include: [{model: tabelaFilmes}]
         });
 
         const generos = await tabelaGeneros.findAll({
@@ -211,20 +233,13 @@ module.exports = {
             where: { IDGenero: listaGeneros }
         })
 
-        await tabelaListaFilmes.create({
-            Comentario: dados.comentarioInput,
-            Nota: dados.notaInput,
-            IDFilme: id,
-            IDUsuario: user[0].IDUsuario
-        });
-
         const dataLancamento = new Date(filme[0].Lancamento);
 
         dataLancamento.setDate(dataLancamento.getDate() + 2);
 
         filme[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
 
-        res.render('../views/filmeSelec', {user, filme, usuario, generosFilme, generos, flag: 1})
+        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 1})
     },
 
     async deletarFilme(req, res){

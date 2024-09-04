@@ -3,10 +3,16 @@
     .modal-lg {max-width: 70%;}
 }
 
+main
+{
+    margin-top: 80px;
+}
+
 footer
 {
     display: flex;
-    position: fixed;
+    background-color: brown;
+    position:fixed;
     bottom: 0;
     width: 100%;
     max-height: fit-content;
@@ -62,11 +68,52 @@ body
 {
     width: 100%;
     height: calc(80%);
+    margin-top: 10px;
+}
+
+#lista::-webkit-scrollbar
+{
+    width: 12px;
+}
+
+#lista::-webkit-scrollbar-thumb
+{
+    background-color: rgb(226, 43, 43);
+    border-radius: 999px;
+}
+
+
+body::-webkit-scrollbar
+{
+    width: 12px;
+}
+
+body::-webkit-scrollbar-thumb
+{
+    background-color: rgb(226, 43, 43);
+    border-radius: 999px;
 }
 
 #informacoes
 {
     height: calc(100%);
+}
+
+.imagemFilme
+{
+    width: 156px;
+    height: 230px;
+    border-radius: 15px;
+}
+
+.infoFilme
+{
+    margin-left: 15px;
+}
+
+.filme
+{
+    margin-bottom: 20px;
 }
 
 .btn
