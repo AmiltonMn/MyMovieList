@@ -51,6 +51,8 @@ module.exports = {
             include: [{model: tabelaFilmes}],
             where: {IDUsuario: usuario[0].IDUsuario}
         });
+
+        console.log(filmes)
         
         res.render('../views/perfil', {usuario, filmes, lista, IDSFilmes});
     },

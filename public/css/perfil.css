@@ -18,6 +18,17 @@ footer
     max-height: fit-content;
 }
 
+body::-webkit-scrollbar
+{
+    width: 12px;
+}
+
+body::-webkit-scrollbar-thumb
+{
+    background-color: rgb(226, 43, 43);
+    border-radius: 999px;
+}
+
 body
 {
     margin-bottom: 100px;
@@ -83,18 +94,33 @@ body
 }
 
 
-body::-webkit-scrollbar
-{
-    width: 12px;
-}
-
-body::-webkit-scrollbar-thumb
-{
-    background-color: rgb(226, 43, 43);
-    border-radius: 999px;
-}
-
 #informacoes
+{
+    height: calc(100%);
+}
+
+#btnsLista
+{
+    margin-bottom: 15px;
+}
+
+#btnsLista button
+{
+    margin-right: 15px;
+}
+
+#btnsEdit 
+{
+    width: 100%;
+}
+
+
+#btnsEdit button
+{
+    margin-right: 15px;
+}
+
+#estrelas
 {
     height: calc(100%);
 }
@@ -109,11 +135,13 @@ body::-webkit-scrollbar-thumb
 .infoFilme
 {
     margin-left: 15px;
+    width: 100%;
 }
 
 .filme
 {
     margin-bottom: 20px;
+    width: 100%;
 }
 
 .btn

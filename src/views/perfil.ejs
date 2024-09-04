@@ -85,40 +85,55 @@
           </div>
 
           <div class="container p-0 overflow-y-auto" id="lista">
-            <% for(let i = 0; i < lista.length; i++) { %>
 
-              <% console.log(filmes[0].filme) %>
+          <div class="d-flex" id="btnsLista">
+            <button>Assistidos</button>
+            <button>Quero Assistir</button>
+          </div>
 
-              <div class="filme d-flex flex-row">
-                <a href="/filmeSelec/<%= lista[i].IDFilme %>/<%= usuario[0].Usuario %>">
-                  <img  class="imagemFilme" src="/img/<%= `$(filme[i].filme.Imagem)` %>" alt="Imagem não encontrada">
-                </a>
-
-                <div class="infoFilme d-flex flex-column justify-content-start">
-                  <div>
-                    <h2><%= filmes[i].Titulo %></h2>
-                    <hr>
-                  </div>
-
-                  <div>
-                    
-                    <p>
-                      <%= lista[i].Comentario %>
-                      <%= filmes[i].NotaGeral %>
-                    </p>
+          <div>
+            <% try { %>
+              <% for(let i = 0; i < lista.length; i++) { %>
+  
+                <div class="filme d-flex flex-row">
+                  <a href="/filmeSelec/<%= lista[i].IDFilme %>/<%= usuario[0].Usuario %>">
+                    <img  class="imagemFilme" src="/img/<%= filmes[i]['filme.Imagem'] %>" alt="Imagem não encontrada">
+                  </a>
+  
+                  <div class="infoFilme d-flex flex-column justify-content-between">
+                    <div>
+                      <h2><%= filmes[i]['filme.Titulo'] %></h2>
+                      <hr>
+                    </div>
   
                     <div>
-                    <% for(let j = 0; j < 5; j++) { %>
-                        <i class="fa fa-star" <%= (j < lista[i].Nota) ? 'style=color:#FC0' : "" %>></i>
-                    <% } %>
+                      
+                      <p>
+                        <%= lista[i].Comentario %>
+                        <%= filmes[i]['filme.NotaGeral'] %>
+                      </p>
+    
+                    </div>
+                    
+                    <div class="d-flex justify-content-between align-items-end gap-1">
+                      <% for(let j = 0; j < 5; j++) { %>
+                          <i class="fa fa-star" <%= (j < lista[i].Nota) ? 'style=color:#FC0' : "" %>></i>
+                      <% } %>
+
+                      <div class="d-flex justify-content-end" id="btnsEdit">
+                        <button>Editar</button>
+                        <button>Excluir</button>
+                      </div>
                     </div>
 
                   </div>
-
+  
                 </div>
-
-              </div>
+              <% } %>
+            <% } catch (error) { %>
+              <p>Lista Vazia!</p>
             <% } %>
+            </div>
           </div>
 
       </div>
