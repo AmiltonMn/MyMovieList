@@ -3,6 +3,7 @@ const tabelaSerie = require('../model/serie');
 const tabelaTemporada = require('../model/temporada');
 const tabelaEp = require('../model/ep');
 const tabelaGeneros = require('../model/genero');
+const tabelaGenerosSerie = require('../model/generoSerie');
 const { Op, where } = require('sequelize');
 const { raw } = require('express');
 const usuario = require('../model/usuario');
@@ -45,6 +46,18 @@ module.exports = {
             Imagem: capaSerie,
         });
 
+        const IDNovaSerie = await tabelaSerie.findAll({
+            raw: true,
+            where: {Titulo: dados.tituloInput}
+        });
+
+        for (let i = 0; i < dados.inputGenero.length; i++) {
+            await tabelaGenerosSerie.create({
+                IDSerie: IDNovaSerie[0].IDSerie,
+                IDGenero: dados.inputGenero[i]
+            });
+        }
+
         const series = await tabelaSerie.findAll({
             raw: true,
             attributes: ['IDSerie', 'Titulo', 'Sinopse', 'Lancamento', 'NotaGeral', 'IdadeIndicativa', 'Imagem']
@@ -57,7 +70,7 @@ module.exports = {
             where: {Usuario: nomeUser}
         });
 
-        res.render('../views/series', {series, usuario});
+        res.redirect('/series/' + nomeUser);
     },
 
     async buscarSeries(req, res){
