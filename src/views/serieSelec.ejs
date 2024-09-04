@@ -145,7 +145,7 @@
           <input class="form-control" type="text"  name="tituloInput" name="tituloInput" value="<%= serie[0].Titulo %>">
 
           <label class="form-label" for="sinopseInput" >Sinopse da Série</label>
-          <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2" aria-valuenow="<%= serie[0].Sinopse %>"></textarea>
+          <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2"><%= serie[0].Sinopse %></textarea>
 
           <label class="form-label" for="lancamentoInput">Data de Lançamento</label>
           <input class="form-control" type="date" name="lancamentoInput" id="lancamentoInput" value="<%= serie[0].Lancamento %>">
