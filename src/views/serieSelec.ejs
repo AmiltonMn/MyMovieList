@@ -9,368 +9,489 @@
 </head>
 <body>
       
-    <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
 
-      <div class="container-fluid d-flex justify-content-around">
+  <div class="container-fluid d-flex justify-content-around">
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <% try { %>
-          <% usuario[0].Usuario %>
-          <div class="collapse navbar-collapse">
-            <a class="navbar-brand" href="/<%= usuario[0].Usuario %>" id="tituloNav" >My Movie List</a>
-          </div>
-          <a class="navbar-brand" href="/perfil/<%= usuario[0].Usuario %>"><%= usuario[0].Usuario %></a>
-          <a class="navbar-brand" href="/filmes/<%= usuario[0].Usuario %>">Filmes</a>
-          <a class="navbar-brand" href="/series/<%= usuario[0].Usuario %>">Series</a>
-        <% } catch (error) { %>
-          <a class="navbar-brand" href="/">ERRO</a>
-        <% } %>
+    <% try { %>
+      <% usuario[0].Usuario %>
+      <div class="collapse navbar-collapse">
+        <a class="navbar-brand" href="/<%= usuario[0].Usuario %>" id="tituloNav" >My Movie List</a>
+      </div>
+      <a class="navbar-brand" href="/perfil/<%= usuario[0].Usuario %>"><%= usuario[0].Usuario %></a>
+      <a class="navbar-brand" href="/filmes/<%= usuario[0].Usuario %>">Filmes</a>
+      <a class="navbar-brand" href="/series/<%= usuario[0].Usuario %>">Series</a>
+    <% } catch (error) { %>
+      <a class="navbar-brand" href="/">ERRO</a>
+    <% } %>
+
+  </div>
+</nav>
+
+<main class="container d-flex">
+
+  <div class="p-0" id="fotoInfo">
+
+      <br>
+
+      <div class="p-2 container d-inline-flex border border-black" id="informacoes">
+        
+        <div class="container d-flex flex-column align-items-center">
+
+          <img id="serieCapa" src="/img/<%= serie[0].Imagem %>" alt="">
+
+        </div>
+
+        <div>
+
+          <h1 class=""><%= serie[0].Titulo %></h1>
+
+          <hr>
+
+          <p><%= serie[0].Sinopse %></p>
+          <p><%= serie[0].Lancamento %></p>
+
+          <button type="button" class="btn btn-outline-primary">Add Lista</button>
+          <button type="button" class="btn btn-outline-primary">Quero Assistir</button>
+
+          <% if(usuario[0].ISAdmin == 1) { %>
+            <div class="" id="btnsAdmin">
+
+              <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addTemp">Adicionar Temporada</button>
+
+              <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#atualizarSerie">Atualizar Serie</button>
+
+              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#deletarSerie" >Excluir</button>
+
+            </div>
+          <% } %>
+
+        </div>
 
       </div>
-    </nav>
 
-    <main class="container d-flex position-absolute top-50 start-50 translate-middle">
+      <div class="d-flex flex-column gap-2 mt-2">
+        <% for(let i = 0; i < temporada.length; i++) { %>
+          <!-- Temporadas -->
+          <div>
 
-      <div class="p-0" id="fotoInfo">
+            <a class="btn btn-primary w-25" data-bs-toggle="collapse" href="#temp<%= i %>" role="button" aria-expanded="false" aria-controls="collapseExample">
+              <%= temporada[i].Titulo %>
+            </a>
+            <% if(usuario[0].ISAdmin == 1) { %>
+              
+              <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addEp<%= i %>">Adicionar Episodio</button>
+              
+              <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateTemp<%= i %>">Atualizar Temporada</button>
+              
+              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#deletarTemp<%= i %>" >Excluir Temporada</button>
+              
+            <% } %>
+              <div class="collapse" id="temp<%= i %>">
+                <div class="card card-body">
+                  Eps: <br>
+                  <% for (let j = 0; j < ep.length; j++) { %>
+                    <% if (ep[j].IDTemporada == temporada[i].IDTemporada) { %>
+                      <!-- Episodios -->
+                      <p><%= ep[j].Titulo %></p>
+
+                      <% if(usuario[0].ISAdmin == 1) { %>
+
+                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateEp<%= i %><%= j %>">Atualizar Episodio</button>
+                
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#deletarEp<%= i %><%= j %>" >Excluir Episodio</button>
+                        
+                      <% } %>
+                    <% } %>
+                  <% } %>
+            
+                </div>
+              </div>
+            </div>
+        <% } %>
+      </div>
+    </div>
+    
+  </main>
+
+<!-- Modal Atualizar Serie-->
+
+<div class="modal" tabindex="-1" id="atualizarSerie">
+  
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <h5 class="modal-title">Preencha os campos!</h5>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+      </div>
+
+      <div class="modal-body">
+
+        <form action="/updateSeries/<%= serie[0].IDSerie %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
+
+          <label class="form-label"  for="imagemInput">Imagem de capa da Série</label>
+          <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/" value="/img/<%= serie[0].Imagem %>">
+
+          <label class="form-label"  for="tituloInput">Titulo da Série</label>
+          <input class="form-control" type="text"  name="tituloInput" name="tituloInput" value="<%= serie[0].Titulo %>">
+
+          <label class="form-label" for="sinopseInput" >Sinopse da Série</label>
+          <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2" aria-valuenow="<%= serie[0].Sinopse %>"></textarea>
+
+          <label class="form-label" for="lancamentoInput">Data de Lançamento</label>
+          <input class="form-control" type="date" name="lancamentoInput" id="lancamentoInput" value="<%= serie[0].Lancamento %>">
+
+          <label class="form-label" for="idadeIndicativaInput">Idade Indicativa</label>
+          <select class="form-control" name="idadeIndicativaInput" id="idadeIndicativaInput" required>
+
+            <option value="1">AL</option>
+            <option value="2">A10</option>
+            <option value="3">A12</option>
+            <option value="4">A14</option>
+            <option value="5">A16</option>
+            <option value="6">A18</option>
+
+          </select>
 
           <br>
 
-          <div class="p-2 container d-inline-flex border border-black" id="informacoes">
-            
-            <div class="container d-flex flex-column align-items-center">
+          <div id="btnDiv">
+            <button type="submit" id="btnCadSerie" class="btn btn-primary">Atualizar</button>
+          </div>
 
-              <img id="serieCapa" src="/img/<%= serie[0].Imagem %>" alt="">
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Adicionar Temporada-->
+
+<div class="modal" tabindex="-1" id="addTemp">
+  
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <h5 class="modal-title">Preencha os campos!</h5>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+      </div>
+
+      <div class="modal-body">
+
+        <form action="/addTemp/<%= serie[0].IDSerie %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
+
+          <label class="form-label"  for="imagemInput">Imagem de capa da Temporada</label>
+          <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/">
+
+          <label class="form-label"  for="tituloInput">Titulo da Temporada</label>
+          <input class="form-control" type="text"  name="tituloInput" name="tituloInput">
+
+          <label class="form-label" for="sinopseInput" >Sinopse da Temporada</label>
+          <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2"></textarea>
+
+          <label class="form-label" for="lancamentoInput">Data de Lançamento</label>
+          <input class="form-control" type="date" name="lancamentoInput" id="lancamentoInput">
+
+          <br>
+
+          <div id="btnDiv">
+            <button type="submit" id="btnCadSerie" class="btn btn-primary">Adicionar</button>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Excluir Serie -->
+
+<div class="modal" tabindex="-1" id="deletarSerie">
+
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    
+    <div class="modal-content">
+
+      <div class="modal-header d-flex">
+
+        <h5 class="modal-title">Excluir Serie</h5>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+      </div>
+
+      <div class="modal-body">
+
+        <h5>Você está excluindo o serie <%= serie[0].Titulo %></h5>
+
+        <br>
+
+        <p>Você confirma a exclusão?</p>
+
+        <div class="d-flex justify-content-between">
+
+          <form action="/deletarSerie/<%= serie[0].IDSerie %>/<%= usuario[0].Usuario %>" method="post">
+            <button type="submit" class="btn btn-danger m-3">Confirmar</button>
+          </form>
+
+          <button type="button" class="btn btn-secondary m-3" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<% for(let i = 0; i < temporada.length; i++) { %>
+
+  <!-- Modal Adicionar Episodio -->
+
+  <div class="modal" tabindex="-1" id="addEp<%= i %>">
+    
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      
+      <div class="modal-content">
+
+        <div class="modal-header">
+
+          <h5 class="modal-title">Preencha os campos!</h5>
+
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+        </div>
+
+        <div class="modal-body">
+
+          <form action="/addEp/<%= temporada[i].IDTemporada %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
+
+            <label class="form-label"  for="imagemInput">Imagem de capa do Episodio</label>
+            <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/">
+
+            <label class="form-label"  for="tituloInput">Titulo do Episodio</label>
+            <input class="form-control" type="text"  name="tituloInput" name="tituloInput">
+
+            <label class="form-label" for="sinopseInput" >Sinopse do Episodio</label>
+            <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2"></textarea>
+
+            <label class="form-label" for="lancamentoInput">Data de Lançamento</label>
+            <input class="form-control" type="date" name="lancamentoInput" id="lancamentoInput">
+
+            <br>
+
+            <div id="btnDiv">
+              <button type="submit" id="btnCadSerie" class="btn btn-primary">Adicionar</button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Atualizar Temporada -->
+
+  <div class="modal" tabindex="-1" id="updateTemp<%= i %>">
+    
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      
+      <div class="modal-content">
+
+        <div class="modal-header">
+
+          <h5 class="modal-title">Preencha os campos!</h5>
+
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+        </div>
+
+        <div class="modal-body">
+
+          <form action="/updateTemp/<%= temporada[0].IDTemporada %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
+
+            <label class="form-label"  for="imagemInput">Imagem de capa da Temporada</label>
+            <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/" value="<%= temporada[i].IDTemporada %>">
+
+            <label class="form-label"  for="tituloInput">Titulo da Temporada</label>
+            <input class="form-control" type="text"  name="tituloInput" name="tituloInput" value="<%= temporada[i].Titulo %>">
+
+            <label class="form-label" for="sinopseInput" >Sinopse da Temporada</label>
+            <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2"><%= temporada[i].Sinopse %></textarea>
+
+            <label class="form-label" for="lancamentoInput">Data de Lançamento</label>
+            <input class="form-control" type="date" name="lancamentoInput" id="lancamentoInput" value="<%= temporada[i].Lancamento %>">
+
+            <br>
+
+            <div id="btnDiv">
+              <button type="submit" id="btnCadSerie" class="btn btn-primary">Atualizar</button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Excluir Temporada -->
+
+  <div class="modal" tabindex="-1" id="deletarTemp<%= i %>">
+    
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      
+      <div class="modal-content">
+
+        <div class="modal-header d-flex">
+
+          <h5 class="modal-title">Excluir Temp</h5>
+
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+        </div>
+
+        <div class="modal-body">
+
+          <h5>Você está excluindo o temp <%= temporada[i].Titulo %></h5>
+
+          <br>
+
+          <p>Você confirma a exclusão?</p>
+
+          <div class="d-flex justify-content-between">
+
+            <form action="/deletarTemp/<%= temporada[i].IDTemporada %>/<%= usuario[0].Usuario %>" method="post">
+              <button type="submit" class="btn btn-danger m-3">Confirmar</button>
+            </form>
+
+            <button type="button" class="btn btn-secondary m-3" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+    
+  </div>
+
+  <% for (let j = 0; j < ep.length; j++) { %>
+    <% if (ep[j].IDTemporada == temporada[i].IDTemporada) { %>
+
+      <!-- Modal atualizar Episodio -->
+      <div class="modal" tabindex="-1" id="updateEp<%= i %><%= j %>">
+  
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          
+          <div class="modal-content">
+  
+            <div class="modal-header">
+  
+              <h5 class="modal-title">Preencha os campos!</h5>
+  
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  
+            </div>
+  
+            <div class="modal-body">
+  
+              <form action="/updateEp/<%= ep[0].IDEp %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
+  
+                <label class="form-label"  for="imagemInput">Imagem de capa do Episodio</label>
+                <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/" value="<%= ep[j].Imagem %>">
+  
+                <label class="form-label"  for="tituloInput">Titulo do Episodio</label>
+                <input class="form-control" type="text"  name="tituloInput" name="tituloInput" value="<%= ep[j].Titulo %>">
+    
+                <label class="form-label" for="sinopseInput" >Sinopse do Episodio</label>
+                <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2"><%= ep[j].Sinopse %></textarea>
+  
+                <label class="form-label" for="lancamentoInput">Data de Lançamento</label>
+                <input class="form-control" type="date" name="lancamentoInput" id="lancamentoInput" value="<%= ep[j].Lancamento %>">
+  
+                <br>
+  
+                <div id="btnDiv">
+                  <button type="submit" id="btnCadSerie" class="btn btn-primary">Atualizar</button>
+                </div>
+  
+              </form>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Excluir Episodio -->
+
+      <div class="modal" tabindex="-1" id="deletarEp<%= i %><%= j %>">
+        
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+          
+          <div class="modal-content">
+
+            <div class="modal-header d-flex">
+
+              <h5 class="modal-title">Excluir Episodio</h5>
+
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
             </div>
 
-            <div>
+            <div class="modal-body">
 
-              <h1 class=""><%= serie[0].Titulo %></h1>
+              <h5>Você está excluindo o episodio <%= ep[j].Titulo %></h5>
 
-              <hr>
+              <br>
 
-              <p><%= serie[0].Sinopse %></p>
-              <p><%= serie[0].Lancamento %></p>
+              <p>Você confirma a exclusão?</p>
 
-              <button type="button" class="btn btn-outline-primary">Add Lista</button>
-              <button type="button" class="btn btn-outline-primary">Quero Assistir</button>
+              <div class="d-flex justify-content-between">
 
-              <% if(usuario[0].ISAdmin == 1) { %>
-                <div class="" id="btnsAdmin">
-  
-                  <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addTemp">Adicionar Temporada</button>
+                <form action="/deletarEp/<%= ep[j].IDEp %>/<%= usuario[0].Usuario %>" method="post">
+                  <button type="submit" class="btn btn-danger m-3">Confirmar</button>
+                </form>
 
-                  <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#atualizarSerie">Atualizar Serie</button>
-
-                  <button type="button" class="btn btn-outline-primary">Excluir</button>
-  
-                </div>
-              <% } %>
+                <button type="button" class="btn btn-secondary m-3" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
+              </div>
 
             </div>
 
           </div>
 
-          <div class="d-flex flex-column gap-2 mt-2">
-            <% for(let i = 0; i < temporada.length; i++) { %>
-              <!-- Temporadas -->
-              <div>
-
-                <a class="btn btn-primary w-25" data-bs-toggle="collapse" href="#temp<%= i %>" role="button" aria-expanded="false" aria-controls="collapseExample">
-                  <%= temporada[i].Titulo %>
-                </a>
-                <% if(usuario[0].ISAdmin == 1) { %>
-                  
-                  <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addEp<%= i %>">Adicionar Episodio</button>
-                  
-                  <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateTemp<%= i %>">Atualizar Temporada</button>
-                  
-                  <button type="button" class="btn btn-outline-primary">Excluir Temporada</button>
-                  
-                <% } %>
-                  <div class="collapse" id="temp<%= i %>">
-                    <div class="card card-body">
-                      Eps: <br>
-                      <% for (let j = 0; j < ep.length; j++) { %>
-                        <% if (ep[j].IDTemporada == temporada[i].IDTemporada) { %>
-                          <!-- Episodios -->
-                          <p><%= ep[j].Titulo %></p>
-
-                          <% if(usuario[0].ISAdmin == 1) { %>
-
-                            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateEp<%= i %><%= j %>">Atualizar Episodio</button>
-                    
-                            <button type="button" class="btn btn-outline-primary">Excluir Episodio</button>
-                            
-                          <% } %>
-                        <% } %>
-                      <% } %>
-                
-                    </div>
-                  </div>
-                </div>
-            <% } %>
-          </div>
         </div>
         
-      </main>
-
-    <!-- Modal Atualizar Serie-->
-
-    <div class="modal" tabindex="-1" id="atualizarSerie">
-      
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        
-        <div class="modal-content">
-
-          <div class="modal-header">
-
-            <h5 class="modal-title">Preencha os campos!</h5>
-
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-          </div>
-
-          <div class="modal-body">
-
-            <form action="/updateSeries/<%= serie[0].IDSerie %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
-
-              <label class="form-label"  for="imagemInput">Imagem de capa da Série</label>
-              <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/" value="/img/<%= serie[0].Imagem %>">
-
-              <label class="form-label"  for="tituloInput">Titulo da Série</label>
-              <input class="form-control" type="text"  name="tituloInput" name="tituloInput" value="<%= serie[0].Titulo %>">
-  
-              <label class="form-label" for="sinopseInput" >Sinopse da Série</label>
-              <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2" aria-valuenow="<%= serie[0].Sinopse %>"></textarea>
-
-              <label class="form-label" for="lancamentoInput">Data de Lançamento</label>
-              <input class="form-control" type="date" name="lancamentoInput" id="lancamentoInput" value="<%= serie[0].Lancamento %>">
-
-              <label class="form-label" for="idadeIndicativaInput">Idade Indicativa</label>
-              <select class="form-control" name="idadeIndicativaInput" id="idadeIndicativaInput" required>
-
-                <option value="1">AL</option>
-                <option value="2">A10</option>
-                <option value="3">A12</option>
-                <option value="4">A14</option>
-                <option value="5">A16</option>
-                <option value="6">A18</option>
-
-              </select>
-
-              <br>
-
-              <div id="btnDiv">
-                <button type="submit" id="btnCadSerie" class="btn btn-primary">Atualizar</button>
-              </div>
-
-            </form>
-
-          </div>
-        </div>
       </div>
-    </div>
-
-    <!-- Modal Adicionar Temporada-->
-
-    <div class="modal" tabindex="-1" id="addTemp">
-      
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        
-        <div class="modal-content">
-
-          <div class="modal-header">
-
-            <h5 class="modal-title">Preencha os campos!</h5>
-
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-          </div>
-
-          <div class="modal-body">
-
-            <form action="/addTemp/<%= serie[0].IDSerie %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
-
-              <label class="form-label"  for="imagemInput">Imagem de capa da Temporada</label>
-              <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/">
-
-              <label class="form-label"  for="tituloInput">Titulo da Temporada</label>
-              <input class="form-control" type="text"  name="tituloInput" name="tituloInput">
-  
-              <label class="form-label" for="sinopseInput" >Sinopse da Temporada</label>
-              <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2"></textarea>
-
-              <label class="form-label" for="lancamentoInput">Data de Lançamento</label>
-              <input class="form-control" type="date" name="lancamentoInput" id="lancamentoInput">
-
-              <br>
-
-              <div id="btnDiv">
-                <button type="submit" id="btnCadSerie" class="btn btn-primary">Adicionar</button>
-              </div>
-
-            </form>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <% for(let i = 0; i < temporada.length; i++) { %>
-
-    <!-- Modal Adicionar Episodio -->
-
-    <div class="modal" tabindex="-1" id="addEp<%= i %>">
-      
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        
-        <div class="modal-content">
-
-          <div class="modal-header">
-
-            <h5 class="modal-title">Preencha os campos!</h5>
-
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-          </div>
-
-          <div class="modal-body">
-
-            <form action="/addEp/<%= temporada[i].IDTemporada %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
-
-              <label class="form-label"  for="imagemInput">Imagem de capa do Episodio</label>
-              <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/">
-
-              <label class="form-label"  for="tituloInput">Titulo do Episodio</label>
-              <input class="form-control" type="text"  name="tituloInput" name="tituloInput">
-  
-              <label class="form-label" for="sinopseInput" >Sinopse do Episodio</label>
-              <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2"></textarea>
-
-              <label class="form-label" for="lancamentoInput">Data de Lançamento</label>
-              <input class="form-control" type="date" name="lancamentoInput" id="lancamentoInput">
-
-              <br>
-
-              <div id="btnDiv">
-                <button type="submit" id="btnCadSerie" class="btn btn-primary">Adicionar</button>
-              </div>
-
-            </form>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal Atualizar Temporada -->
-
-    <div class="modal" tabindex="-1" id="updateTemp<%= i %>">
-      
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        
-        <div class="modal-content">
-
-          <div class="modal-header">
-
-            <h5 class="modal-title">Preencha os campos!</h5>
-
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-          </div>
-
-          <div class="modal-body">
-
-            <form action="/updateTemp/<%= temporada[0].IDTemporada %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
-
-              <label class="form-label"  for="imagemInput">Imagem de capa da Temporada</label>
-              <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/" value="<%= temporada[i].IDTemporada %>">
-
-              <label class="form-label"  for="tituloInput">Titulo da Temporada</label>
-              <input class="form-control" type="text"  name="tituloInput" name="tituloInput" value="<%= temporada[i].Titulo %>">
-  
-              <label class="form-label" for="sinopseInput" >Sinopse da Temporada</label>
-              <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2"><%= temporada[i].Sinopse %></textarea>
-
-              <label class="form-label" for="lancamentoInput">Data de Lançamento</label>
-              <input class="form-control" type="date" name="lancamentoInput" id="lancamentoInput" value="<%= temporada[i].Lancamento %>">
-
-              <br>
-
-              <div id="btnDiv">
-                <button type="submit" id="btnCadSerie" class="btn btn-primary">Atualizar</button>
-              </div>
-
-            </form>
-
-          </div>
-        </div>
-      </div>
-    </div>
 
     <% } %>
+  <% } %>
+<% } %>
 
-    <% for(let i = 0; i < temporada.length; i++) { %>
-      <% for (let j = 0; j < ep.length; j++) { %>
-        <% if (ep[j].IDTemporada == temporada[i].IDTemporada) { %>
 
-          <!-- Modal atualizar Episodio -->
-          <div class="modal" tabindex="-1" id="updateEp<%= i %><%= j %>">
-      
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-              
-              <div class="modal-content">
-      
-                <div class="modal-header">
-      
-                  <h5 class="modal-title">Preencha os campos!</h5>
-      
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      
-                </div>
-      
-                <div class="modal-body">
-      
-                  <form action="/updateEp/<%= ep[0].IDEp %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
-      
-                    <label class="form-label"  for="imagemInput">Imagem de capa do Episodio</label>
-                    <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/" value="<%= ep[j].Imagem %>">
-      
-                    <label class="form-label"  for="tituloInput">Titulo do Episodio</label>
-                    <input class="form-control" type="text"  name="tituloInput" name="tituloInput" value="<%= ep[j].Titulo %>">
-        
-                    <label class="form-label" for="sinopseInput" >Sinopse do Episodio</label>
-                    <textarea class="form-control" name="sinopseInput" id="sinopseInput" rows="2"><%= ep[j].Sinopse %></textarea>
-      
-                    <label class="form-label" for="lancamentoInput">Data de Lançamento</label>
-                    <input class="form-control" type="date" name="lancamentoInput" id="lancamentoInput" value="<%= ep[j].Lancamento %>">
-      
-                    <br>
-      
-                    <div id="btnDiv">
-                      <button type="submit" id="btnCadSerie" class="btn btn-primary">Atualizar</button>
-                    </div>
-      
-                  </form>
-      
-                </div>
-              </div>
-            </div>
-          </div>
+<footer class="border border-black">
 
-        <% } %>
-      <% } %>
-    <% } %>
+</footer>
 
-    <footer class="border border-black">
-
-    </footer>
-
-    <script src="/js/script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="/js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

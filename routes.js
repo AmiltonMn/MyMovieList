@@ -46,6 +46,9 @@ route.post('/addTemp/:id/:nomeUser', multer(config).single("imagemInput"), serie
 route.post('/addEp/:id/:nomeUser', multer(config).single("imagemInput"), series.addEp);
 route.post('/updateTemp/:id/:nomeUser', multer(config).single("imagemInput"), series.atualizarTemporada);
 route.post('/updateEp/:id/:nomeUser', multer(config).single("imagemInput"), series.atualizarEp);
+route.post('/deletarSerie/:id/:nomeUser', series.deletarSerie);
+route.post('/deletarTemp/:id/:nomeUser', series.deletarTemp);
+route.post('/deletarEp/:id/:nomeUser', series.deletarEp);
 
 // Get e Post da pagina de serie selecionada
 route.get('/serieSelec/:id/:nomeUser', series.getSerieSelecionada);

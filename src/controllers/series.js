@@ -242,5 +242,51 @@ module.exports = {
             where: { IDEp: id }
         });
         res.redirect('/serieSelec/' + idSerie[0].IDSerie + '/' + nomeUser);
-    }
+    },
+
+    async deletarSerie(req, res){
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+        
+        await tabelaSerie.destroy({where: {IDSerie: id}})
+
+        res.redirect('/series/' + nomeUser)
+    },
+
+    async deletarTemp(req, res){
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+
+        let idSerie = await tabelaTemporada.findAll({
+            raw: true,
+            where: {IDTemporada: id}
+        })
+
+        idSerie = idSerie[0].IDSerie;
+        
+        await tabelaTemporada.destroy({where: {IDTemporada: id}})
+
+        res.redirect('/serieSelec/' + idSerie + '/' + nomeUser);
+    },
+
+    async deletarEp(req, res){
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+
+        const idTemporada = await tabelaEp.findAll({
+            raw: true,
+            where: {IDEp: id}
+        });
+
+        let idSerie = await tabelaTemporada.findAll({
+            raw: true,
+            where: {IDTemporada: idTemporada[0].IDTemporada}
+        });
+
+        idSerie = idSerie[0].IDSerie;
+        
+        await tabelaEp.destroy({where: {IDEp: id}})
+
+        res.redirect('/serieSelec/' + idSerie + '/' + nomeUser);
+    },
 }
