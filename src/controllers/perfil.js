@@ -10,7 +10,6 @@ module.exports = {
 
         const usuario = await tabelaUsuario.findAll({
             raw: true,
-            attributes: ['IDUsuario', 'Usuario', 'Nome', 'DtNasc', 'Senha', 'Email', 'ISAdmin', 'Imagem'],
             where: {Usuario: nomeUser}
         });
         
@@ -20,6 +19,7 @@ module.exports = {
 
         usuario[0].DtNasc = dataNascimento.toLocaleDateString('pt-BR');
         
+
         const lista = await tabelaListaFilme.findAll({
             raw: true,
             where: {IDUsuario: usuario[0].IDUsuario}
