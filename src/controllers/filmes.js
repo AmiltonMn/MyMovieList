@@ -256,12 +256,23 @@ module.exports = {
         const id = req.params.id;
         const nomeUser = req.params.nomeUser
 
-        console.log(dados);
+        var novaImagem = await tabelaFilmes.findAll({
+            raw: true,
+            attributes: ['Imagem'],
+            where: {IDFilme: id}
+        });
 
-        console.log(dados.novosGeneros);
+        console.log(novaImagem)
+
+        if (req.file) {
+            novaImagem = req.file.filename;
+        }
+
+        console.log(novaImagem)
+
 
         await tabelaFilmes.update({
-            Imagem: dados.novaImagem,
+            Imagem: novaImagem,
             Titulo: dados.novoTitulo,
             Sinopse: dados.novaSinopse,
             Lancamento: dados.novoLancamento,

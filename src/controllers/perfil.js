@@ -6,12 +6,13 @@ module.exports = {
     async getPerfilPage(req, res)
     {
         const nomeUser = req.params.nomeUser;
-        const id = req.params.id;
 
         const usuario = await tabelaUsuario.findAll({
             raw: true,
             where: {Usuario: nomeUser}
         });
+
+        console.log(usuario)
         
         const dataNascimento = new Date(usuario[0].DtNasc);
     
@@ -19,7 +20,6 @@ module.exports = {
 
         usuario[0].DtNasc = dataNascimento.toLocaleDateString('pt-BR');
         
-
         const lista = await tabelaListaFilme.findAll({
             raw: true,
             where: {IDUsuario: usuario[0].IDUsuario}
@@ -37,35 +37,74 @@ module.exports = {
         {
             IDSFilmes[i] = listaIDFilmes[i].IDFilme;
         }
-            
-        console.log(IDSFilmes)
         
         const filmes = await tabelaListaFilme.findAll({
             raw: true,
             include: [{model: tabelaFilmes}],
             where: {IDUsuario: usuario[0].IDUsuario}
         });
-
-        console.log(filmes)
         
-        res.render('../views/perfil', {usuario, filmes, lista, IDSFilmes});
+        res.render('../views/perfil', {usuario, filmes, lista, flag: 0});
     },
 
         async atualizarPerfil(req, res){
             const dados = req.body;
             const nomeUser = req.params.nomeUser;
+
+            console.log(nomeUser)
+
+            let imagemPerfil = 'noImage.png'
+
+            if (req.file) {
+                imagemPerfil = req.file.filename;
+            }
             
             await tabelaUsuario.update({
-            Usuario: dados.usuarioInput,
-            Nome: dados.nomeInput,
-            DtNasc: dados.dtNascInput,
-            Senha: dados.senhaInput,
-            Email: dados.emailInput
+                Usuario: dados.usuarioInput,
+                Nome: dados.nomeInput,
+                DtNasc: dados.dtNascInput,
+                Senha: dados.senhaInput,
+                Email: dados.emailInput,
+                Imagem: imagemPerfil
         },
         {
             where: { Usuario: nomeUser }
         });
 
-        res.redirect('/perfil/' + nomeUser);
+        res.redirect('/perfil/' + dados.usuarioInput);
+    },
+
+    async deletarReview(req, res)
+    {
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+        let flag = 0;
+
+        const usuario = await tabelaUsuario.findAll({
+            raw: true,
+            where: {Usuario: nomeUser}
+        })
+
+        try {
+            await tabelaListaFilme.destroy({
+                where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
+            })
+            flag = 1;
+        } catch (error) {
+            flag = 2;
+        }
+
+        const filmes = await tabelaListaFilme.findAll({
+            raw: true,
+            include: [{model: tabelaFilmes}],
+            where: {IDUsuario: usuario[0].IDUsuario}
+        });
+
+        const lista = await tabelaListaFilme.findAll({
+            raw: true,
+            where: {IDUsuario: usuario[0].IDUsuario}
+        })
+
+        res.render('../views/perfil', {id, usuario, flag, filmes, lista})
     }
 }
