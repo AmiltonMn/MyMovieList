@@ -1,5 +1,5 @@
 const tabelaUsuario = require('../model/usuario');
-const tabelaListaFilme = require('../model/listaFilme');
+const tabelaListaFilmes = require('../model/listaFilme');
 const tabelaFilmes = require('../model/filme');
 
 module.exports = {
@@ -20,12 +20,12 @@ module.exports = {
 
         usuario[0].DtNasc = dataNascimento.toLocaleDateString('pt-BR');
         
-        const lista = await tabelaListaFilme.findAll({
+        const lista = await tabelaListaFilmes.findAll({
             raw: true,
             where: {IDUsuario: usuario[0].IDUsuario}
         })
         
-        const listaIDFilmes = await tabelaListaFilme.findAll({
+        const listaIDFilmes = await tabelaListaFilmes.findAll({
             raw: true,
             attributes: ['IDFilme'],
             where: {IDUsuario: usuario[0].IDUsuario}
@@ -38,7 +38,7 @@ module.exports = {
             IDSFilmes[i] = listaIDFilmes[i].IDFilme;
         }
         
-        const filmes = await tabelaListaFilme.findAll({
+        const filmes = await tabelaListaFilmes.findAll({
             raw: true,
             include: [{model: tabelaFilmes}],
             where: {IDUsuario: usuario[0].IDUsuario}
@@ -48,24 +48,23 @@ module.exports = {
     },
 
         async atualizarPerfil(req, res){
+
             const dados = req.body;
             const nomeUser = req.params.nomeUser;
 
-            console.log(nomeUser)
-
-            let imagemPerfil = 'noImage.png'
+            let novaImagem = 'noImage.png';
 
             if (req.file) {
-                imagemPerfil = req.file.filename;
+                novaImagem = req.file.filename;
             }
-            
+
             await tabelaUsuario.update({
                 Usuario: dados.usuarioInput,
                 Nome: dados.nomeInput,
                 DtNasc: dados.dtNascInput,
                 Senha: dados.senhaInput,
                 Email: dados.emailInput,
-                Imagem: imagemPerfil
+                Imagem: novaImagem
         },
         {
             where: { Usuario: nomeUser }
@@ -94,17 +93,78 @@ module.exports = {
             flag = 2;
         }
 
-        const filmes = await tabelaListaFilme.findAll({
+        const notas = await tabelaListaFilmes.findAll({
+            raw: true,
+            where: {IDFilme: id}
+        });
+
+        let notaFilme = 0;
+
+        for (let i = 0; i < notas.length; i++) {
+            notaFilme += notas[i].Nota;
+        };
+
+        notaFilme = notaFilme / notas.length;
+
+        await tabelaFilmes.update({
+        NotaGeral: notaFilme
+        },
+        {
+            where: {IDFilme: id}
+        });
+
+        const filmes = await tabelaListaFilmes.findAll({
             raw: true,
             include: [{model: tabelaFilmes}],
             where: {IDUsuario: usuario[0].IDUsuario}
         });
 
-        const lista = await tabelaListaFilme.findAll({
+        const lista = await tabelaListaFilmes.findAll({
             raw: true,
             where: {IDUsuario: usuario[0].IDUsuario}
         })
 
         res.render('../views/perfil', {id, usuario, flag, filmes, lista})
+    },
+
+    async updateReview(req, res){
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+        const dados = req.body;
+
+        const usuario = await tabelaUsuario.findAll({
+            raw: true,
+            where: {Usuario: nomeUser}
+        });
+
+        await tabelaListaFilmes.update({
+            Comentario: dados.novoComentario,
+            Nota: dados.novaNota,
+        },
+        {
+            where: {IDUsuario: usuario[0].IDUsuario, IDFilme: id}   
+        })
+
+        const notas = await tabelaListaFilmes.findAll({
+            raw: true,
+            where: {IDFilme: id}
+        });
+
+        let notaFilme = 0;
+
+        for (let i = 0; i < notas.length; i++) {
+            notaFilme += notas[i].Nota;
+        };
+
+        notaFilme = notaFilme / notas.length;
+
+        await tabelaFilmes.update({
+        NotaGeral: notaFilme
+        },
+        {
+            where: {IDFilme: id}
+        });
+
+        res.redirect('/perfil/' + nomeUser)
     }
 }

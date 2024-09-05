@@ -198,7 +198,7 @@ module.exports = {
         notaFilme = notaFilme / notas.length;
 
         await tabelaFilmes.update({
-            NotaGeral: notaFilme
+        NotaGeral: notaFilme
         },
         {
             where: {IDFilme: id}

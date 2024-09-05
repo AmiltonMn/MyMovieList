@@ -24,8 +24,9 @@ route.post('/cadastrar', cadastro.postCadPage);
 
 // Get e Post do perfil
 route.get('/perfil/:nomeUser', perfil.getPerfilPage);
-route.post('/updatePerfil/:nomeUser', multer(config).single("imagemInput"), perfil.atualizarPerfil);
-route.post('/deleteReview/:id/:nomeUser', perfil.deletarReview)
+route.post('/updatePerfil/:nomeUser', multer(config).single("newImage"), perfil.atualizarPerfil);
+route.post('/deleteReview/:id/:nomeUser', perfil.deletarReview);
+route.post('/updateReview/:id/:nomeUser', perfil.updateReview);
 
 // Get e Post da Filmes
 route.get('/filmes/:nomeUser', filmes.getFilmesPage);

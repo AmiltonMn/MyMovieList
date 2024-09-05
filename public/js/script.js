@@ -4,6 +4,8 @@ npm init -y
 npm install express mssql sequelize nodemon ejs
 npm install multer
 */
+const newImage = document.getElementById('newImage');
+const userImage = document.getElementById('novaImagemPerfil');
 
 const mode = localStorage;
 
@@ -23,5 +25,24 @@ function mudarDarkMode(){
 
 function updateIcone(){
     const iconeMode = document.getElementById("icone");
-    iconeMode.innerText = (mode.getItem("mode") == "white") ? "light_mode" : "dark_mode";
+    iconeMode.innerText = (mode.getItem("mode") == "white") ? "dark_mode" : "light_mode";
 }
+
+function imgClick()
+{
+    newImage.click();
+}
+
+newImage.addEventListener('change', () =>
+{
+    if(newImage.files.length == 0)
+    {
+        return 0;
+    }
+    let reader = new FileReader();
+    reader.readAsDataURL(newImage.files[0]);
+    reader.onload = () => 
+    (
+        userImage.src = reader.result
+    )
+});
