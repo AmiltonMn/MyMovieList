@@ -112,11 +112,6 @@ module.exports = {
             notaFilme = notaFilme / notas.length;
         }
 
-        console.log(notaFilme)
-
-        console.log(typeof(notaFilme))
-
-
         await tabelaFilmes.update({
         NotaGeral: notaFilme
         },

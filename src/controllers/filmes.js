@@ -119,6 +119,7 @@ module.exports = {
     async filmeSelecionado(req, res){
         const nomeUser = req.params.nomeUser;
         const id = req.params.id;
+        let lista = 0;
 
         const filme = await tabelaFilmes.findAll({
             raw: true,
@@ -170,12 +171,14 @@ module.exports = {
 
         console.log(filme[0].Lancamento);
 
+        console.log(idFilme)
+
         try {
             if(idFilme[0].IDFilme != id){
-                lista = 0;
+                lista = 1;
             }
         } catch (error) {
-            lista = 1;
+            lista = 0;
         }
 
         res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 0, lista});        
@@ -186,6 +189,7 @@ module.exports = {
         const dados = req.body
         const id = req.params.id
         const nomeUser = req.params.nomeUser
+        let lista = 0;
 
         const usuario = await tabelaUsuario.findAll({
             raw: true,
@@ -254,7 +258,15 @@ module.exports = {
             where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
         })
 
-        console.log(filme)
+        console.log(idFilme)
+
+        try {
+            if(idFilme[0].IDFilme != id){
+                lista = 1;
+            }
+        } catch (error) {
+            lista = 0;
+        }
 
         const dataLancamento = new Date(filme[0].Lancamento);
 
@@ -262,7 +274,7 @@ module.exports = {
 
         filme[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
 
-        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 1, lista: (idFilme[0].IDFilme != id) ? 0 : 1})
+        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 1, lista})
     },
 
     async deletarFilme(req, res){
