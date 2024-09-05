@@ -4,6 +4,7 @@ const tabelaGeneros = require('../model/genero');
 const tabelaGenerosFilme = require('../model/generoFilme');
 const tabelaListaFilmes = require('../model/listaFilme');
 const { Op, where } = require('sequelize');
+const { raw } = require('express');
 
 module.exports = {
     async getFilmesPage(req, res){
@@ -153,6 +154,12 @@ module.exports = {
             attributes: ['Nome']
         });
 
+        const idFilme = await tabelaListaFilmes.findAll({
+            raw: true,
+            attributes: ['IDFilme'],
+            where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
+        })
+
         const dataLancamento = new Date(filme[0].Lancamento);
 
         dataLancamento.setDate(dataLancamento.getDate() + 2);
@@ -163,7 +170,7 @@ module.exports = {
 
         console.log(filme[0].Lancamento);
 
-        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 0});
+        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 0, lista: (idFilme[0].IDFilme != id) ? 0 : 1});        
     },
 
     async addFilmeLista(req, res){
@@ -233,6 +240,12 @@ module.exports = {
             where: { IDGenero: listaGeneros }
         })
 
+        const idFilme = await tabelaListaFilmes.findAll({
+            raw: true,
+            attributes: ['IDFilme'],
+            where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
+        })
+
         console.log(filme)
 
         const dataLancamento = new Date(filme[0].Lancamento);
@@ -241,7 +254,7 @@ module.exports = {
 
         filme[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
 
-        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 1})
+        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 1, lista: (idFilme[0].IDFilme != id) ? 0 : 1})
     },
 
     async deletarFilme(req, res){

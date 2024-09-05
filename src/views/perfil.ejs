@@ -76,7 +76,9 @@
               <p>Nome: <%= usuario[0].Nome %></p>
               <p>Data de Nascimento: <%= usuario[0].DtNasc %></p>
               <p>Email: <%= usuario[0].Email %></p>
-                <button data-bs-toggle="modal" data-bs-target="#atualizarPerfil">Atualizar Perfil</button>
+              <div class="d-flex justify-content-center">
+                <button data-bs-toggle="modal" data-bs-target="#atualizarPerfil" style="background: transparent; border: none;"><span class="material-symbols-outlined">edit</span></button>
+              </div>
             <% } catch (error) { %>
               <p>ERRO</p>
             <% } %>
@@ -86,8 +88,9 @@
 
       </div>
 
-      <div class="container row p-0 d-flex align-items-start justify-content-center" id="listasContainer">
+      <div class="container row p-0 d-flex flex-column align-items-start" id="listasContainer">
 
+        <div class="d-flex row flex-row">
           <div class="container d-flex align-items-end justify-content-center p-0" id="bttnListaFilmes">
             <button type="button" class="btn btn-primary d-flex align-items-end justify-content-center fs-2">Lista de Filmes</button>
           </div>
@@ -95,13 +98,17 @@
           <div class="container d-flex align-items-end justify-content-center p-0" id="bttnListaSeries">
             <button type="button" class="btn btn-primary d-flex align-items-end justify-content-center fs-2">Lista de Series</button>
           </div>
+        </div>
           
           
           <div class="container p-0 overflow-y-auto d-flex flex-column" id="lista">
             
             <div id="btnsLista">
-              <button class="btn btn-primary w-50" type="button" data-bs-toggle="collapse" data-bs-target="#filmesAssistidos" aria-expanded="false" aria-controls="collapseExample">
+              <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#filmesAssistidos" aria-expanded="false" aria-controls="collapseExample">
                 Assistidos
+              </button>
+              <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#pretendoAssistir" aria-expanded="false" aria-controls="collapseExample">
+                Pretendo Assistir
               </button>
             </div>
 
@@ -135,8 +142,10 @@
                           <% } %>
     
                           <div class="d-flex justify-content-end" id="btnsEdit">
-                            <button data-bs-toggle="modal" data-bs-target="#editarReview<%=i%>">Editar</button>
-                            <button data-bs-toggle="modal" data-bs-target="#excluirReview<%=i%>">Excluir</button>
+                            <button class="d-flex justify-content-center" data-bs-toggle="modal" data-bs-target="#editarReview<%=i%>" style="background: transparent; border: none;"><span class="material-symbols-outlined">edit_note</span></button>
+                            <button class="d-flex justify-content-center" data-bs-toggle="modal" data-bs-target="#excluirReview<%=i%>" style="background: transparent; border: none; color: red;"><span class="material-symbols-outlined">
+                              delete
+                              </span></button>
                           </div>
     
                         </div>
@@ -156,11 +165,6 @@
     
     </main>
 
-    <p class="d-inline-flex gap-1">
-      <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-        Link with href
-      </a>
-    </p>
 
     <footer class="border border-black">
 
