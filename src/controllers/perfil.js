@@ -85,7 +85,7 @@ module.exports = {
         })
 
         try {
-            await tabelaListaFilme.destroy({
+            await tabelaListaFilmes.destroy({
                 where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
             })
             flag = 1;
@@ -102,9 +102,20 @@ module.exports = {
 
         for (let i = 0; i < notas.length; i++) {
             notaFilme += notas[i].Nota;
+            console.log(notas[i].Nota)
+            console.log(notaFilme)
         };
 
-        notaFilme = notaFilme / notas.length;
+        if (notas.length == 0) {
+            notaFilme = 0;
+        } else {
+            notaFilme = notaFilme / notas.length;
+        }
+
+        console.log(notaFilme)
+
+        console.log(typeof(notaFilme))
+
 
         await tabelaFilmes.update({
         NotaGeral: notaFilme
