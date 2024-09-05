@@ -170,7 +170,15 @@ module.exports = {
 
         console.log(filme[0].Lancamento);
 
-        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 0, lista: (idFilme[0].IDFilme != id) ? 0 : 1});        
+        try {
+            if(idFilme[0].IDFilme != id){
+                lista = 0;
+            }
+        } catch (error) {
+            lista = 1;
+        }
+
+        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 0, lista});        
     },
 
     async addFilmeLista(req, res){
