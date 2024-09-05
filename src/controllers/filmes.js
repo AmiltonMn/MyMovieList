@@ -167,6 +167,7 @@ module.exports = {
     },
 
     async addFilmeLista(req, res){
+
         const dados = req.body
         const id = req.params.id
         const nomeUser = req.params.nomeUser
@@ -203,10 +204,9 @@ module.exports = {
             where: {IDFilme: id}
         });
 
-        const filme = await tabelaListaFilmes.findAll({
+        const filme = await tabelaFilmes.findAll({
             raw: true,
-            where: {IDFilme: id},
-            include: [{model: tabelaFilmes}]
+            where: {IDFilme: id}
         });
 
         const generos = await tabelaGeneros.findAll({
@@ -232,6 +232,8 @@ module.exports = {
             attributes: ['Nome'],
             where: { IDGenero: listaGeneros }
         })
+
+        console.log(filme)
 
         const dataLancamento = new Date(filme[0].Lancamento);
 

@@ -45,6 +45,8 @@
 
       <div class="p-0" id="fotoInfo">
 
+        <% console.log(filme) %>
+
           <br>
 
           <div class="p-2 container d-flex border border-black position-absolute top-50 start-50 translate-middle" id="containerInformacoes">
@@ -130,7 +132,7 @@
 
           <div class="modal-body">
 
-            <form action="/addLista/<%= filme[0].IDFilme %>/<%= usuario[0].Usuario %>" method="post">
+            <form action="/filmeSelec/<%= filme[0].IDFilme %>/<%= usuario[0].Usuario %>" method="post">
               
               <label for="comentarioInput">Comentário</label>
 

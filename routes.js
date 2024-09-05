@@ -34,7 +34,7 @@ route.post('/buscaFilmes/:nomeUser', filmes.buscarFilmes);
 
 // Get e Post da pagina de filme selecionado
 route.get('/filmeSelec/:id/:nomeUser', filmes.filmeSelecionado);
-route.post('/addLista/:id/:nomeUser', filmes.addFilmeLista);
+route.post('/filmeSelec/:id/:nomeUser', filmes.addFilmeLista);
 route.post('/deletarFilme/:id/:nomeUser', filmes.deletarFilme);
 route.post('/editarFilme/:id/:nomeUser', multer(config).single("novaImagem"), filmes.editarFilme);
 

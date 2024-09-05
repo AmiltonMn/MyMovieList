@@ -207,6 +207,7 @@
     <!-- Editar Review -->
     
     <% for(let i = 0; i < lista.length; i ++) { %>
+
       <div class="modal" tabindex="-1" id="editarReview<%=i%>">
         
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -307,7 +308,7 @@
             
             <h5 class="modal-title"></h5>
             
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeModal"></button>
             
           </div>
           
@@ -329,7 +330,7 @@
         const modal = document.getElementById('reviewExcluida')
         modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)'
         modal.style.display = 'block'
-        const close = document.getElementById('close')
+        const close = document.getElementById('closeModal')
   
         close.addEventListener('click', () => {
           modal.style.display = 'none'
