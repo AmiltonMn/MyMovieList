@@ -50,14 +50,14 @@ module.exports = {
 
             const usuario = await tabelaUsuario.findAll({
                 raw: true,
-                attributes: ['IDUsuario', 'Usuario', 'Nome', 'DtNasc', 'Senha', 'Email', 'ISAdmin', 'Imagem'],
                 where: {Usuario: nomeUser}
             });
 
             usuario.DtNasc = new Date(usuario.DtNasc).toLocaleString('pt-BR');
-
+console.log("ta certo");
             res.render('../views/home', {usuario, filmesMaisRecentes});
         } catch (error) {
+            console.log("ta errado");
             res.render('../views/home', {usuario: [], filmesMaisRecentes});
         }
     }
