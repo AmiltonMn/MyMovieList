@@ -2,8 +2,9 @@ const tabelaUsuario = require('../model/usuario');
 const tabelaSerie = require('../model/serie');
 const tabelaTemporada = require('../model/temporada');
 const tabelaEp = require('../model/ep');
-const tabelaGeneros = require('../model/genero');
-const tabelaGenerosSerie = require('../model/generoSerie');
+const tabelaGenero = require('../model/genero');
+const tabelaGeneroSerie = require('../model/generoSerie');
+const tabelaListaSerie = require('../model/listaSerie');
 const { Op, where } = require('sequelize');
 const { raw } = require('express');
 const usuario = require('../model/usuario');
@@ -21,7 +22,7 @@ module.exports = {
             raw: true,
         })
 
-        const generos = await tabelaGeneros.findAll({
+        const generos = await tabelaGenero.findAll({
             raw: true
         });
 
@@ -52,7 +53,7 @@ module.exports = {
         });
 
         for (let i = 0; i < dados.inputGenero.length; i++) {
-            await tabelaGenerosSerie.create({
+            await tabelaGeneroSerie.create({
                 IDSerie: IDNovaSerie[0].IDSerie,
                 IDGenero: dados.inputGenero[i]
             });
@@ -124,7 +125,13 @@ module.exports = {
             }}
         })
 
-        res.render('../views/serieSelec', {serie, usuario, temporada, ep});
+        const genero = await tabelaGeneroSerie.findAll({
+            raw: true,
+            include: [{model: tabelaGenero}],
+            where: {IDSerie: id}
+        });
+
+        res.render('../views/serieSelec', {serie, usuario, temporada, ep, genero});
     },
 
     async atualizarSerie(req, res){
@@ -306,4 +313,82 @@ module.exports = {
 
         res.redirect('/serieSelec/' + idSerie + '/' + nomeUser);
     },
+
+    async addSerieLista(req, res){
+        const dados = req.body
+        const id = req.params.id
+        const nomeUser = req.params.nomeUser
+
+        const usuario = await tabelaUsuario.findAll({
+            raw: true,
+            where: {Usuario: nomeUser}
+        });
+
+        await tabelaListaSerie.create({
+            Comentario: dados.comentarioInput,
+            Nota: dados.notaInput,
+            IDSerie: id,
+            IDUsuario: usuario[0].IDUsuario
+        });
+
+        const notas = await tabelaListaSerie.findAll({
+            raw: true,
+            where: {IDSerie: id}
+        });
+
+        let notaSerie = 0;
+
+        for (let i = 0; i < notas.length; i++) {
+            notaSerie += notas[i].Nota;
+        };
+
+        notaSerie = notaSerie / notas.length;
+
+        await tabelaSerie.update({
+            NotaGeral: notaSerie
+        },
+        {
+            where: {IDSerie: id}
+        });
+
+        const serie = await tabelaSerie.findAll({
+            raw: true,
+            where: {IDSerie: id}
+        });
+
+        const genero = await tabelaGeneroSerie.findAll({
+            raw: true,
+            include: [{model: tabelaGenero}],
+            where: {IDSerie: id}
+        });
+        
+        const idGenerosSerie = await tabelaGeneroSerie.findAll({
+            raw: true,
+            attributes: ['IDGenero'],
+            where: {IDSerie: id}
+        });
+
+        let listaGeneros = [];
+
+        for(let i = 0; i < idGenerosSerie.length; i++)
+        {
+            listaGeneros[i] = idGenerosSerie[i].IDGenero;
+        }
+
+        const generosSerie = await tabelaGenero.findAll({
+            raw: true,
+            attributes: ['Nome'],
+            where: { IDGenero: listaGeneros }
+        })
+
+        console.log(serie)
+
+        const dataLancamento = new Date(serie[0].Lancamento);
+
+        dataLancamento.setDate(dataLancamento.getDate() + 2);
+
+        serie[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
+
+        res.redirect('/serieSelec/' + id + '/' + nomeUser);
+    }
 }
