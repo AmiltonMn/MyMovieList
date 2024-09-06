@@ -4,6 +4,12 @@
     height: 460px;
 }
 
+#imagemFilme
+{
+  width: 161px;
+  height: 230px;
+}
+
 #infosDoFilme
 {
     margin-left: 45px;

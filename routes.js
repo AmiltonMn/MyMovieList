@@ -37,7 +37,8 @@ route.post('/buscaFilmes/:nomeUser', filmes.buscarFilmes);
 route.get('/filmeSelec/:id/:nomeUser', filmes.filmeSelecionado);
 route.post('/filmeSelec/:id/:nomeUser', filmes.addFilmeLista);
 route.post('/deletarFilme/:id/:nomeUser', filmes.deletarFilme);
-route.post('/editarFilme/:id/:nomeUser', multer(config).single("novaImagem"), filmes.editarFilme);
+route.post('/editarFilme/:id/:nomeUser', multer(config).single("novaImagemFilme"), filmes.editarFilme);
+route.post('/addQueroAssistir/:id/:nomeUser', filmes.addPretendoAssistir)
 
 // Get e Post da Series
 route.get('/series/:nomeUser', series.getSeriesPage);

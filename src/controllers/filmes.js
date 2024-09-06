@@ -3,8 +3,9 @@ const tabelaFilmes = require('../model/filme');
 const tabelaGeneros = require('../model/genero');
 const tabelaGenerosFilme = require('../model/generoFilme');
 const tabelaListaFilmes = require('../model/listaFilme');
+const tabelaPretendoAssistir = require('../model/pretendeAssistirFilme')
 const { Op, where } = require('sequelize');
-const { raw } = require('express');
+
 
 module.exports = {
     async getFilmesPage(req, res){
@@ -115,7 +116,9 @@ module.exports = {
     async filmeSelecionado(req, res){
         const nomeUser = req.params.nomeUser;
         const id = req.params.id;
-        let adicionado = 0;
+        let adicionadoPretendoAssistir = false
+        let adicionadoFilmeAssistido = false
+        let listaGeneros = [];
 
         const filme = await tabelaFilmes.findAll({
             raw: true,
@@ -133,8 +136,6 @@ module.exports = {
             where: {IDFilme: id}
         });
 
-        let listaGeneros = [];
-
         for(let i = 0; i < idGenerosFilme.length; i++)
         {
             listaGeneros[i] = idGenerosFilme[i].IDGenero;
@@ -151,7 +152,13 @@ module.exports = {
             attributes: ['Nome']
         });
 
-        const idFilme = await tabelaListaFilmes.findAll({
+        const idFilmeAssistido = await tabelaListaFilmes.findAll({
+            raw: true,
+            attributes: ['IDFilme'],
+            where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
+        })
+
+        const idFilmePretendoAssistir = await tabelaPretendoAssistir.findAll({
             raw: true,
             attributes: ['IDFilme'],
             where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
@@ -165,17 +172,29 @@ module.exports = {
 
         filme[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
 
+        // Verificação para ver se está na lista de filmes
         try {
-            if (idFilme[0].IDFilme != id) {
-                adicionado = 0
+            if (idFilmeAssistido[0].IDFilme != id) {
+                adicionadoFilmeAssistido = false
             } else {
-                adicionado = 1
+                adicionadoFilmeAssistido = true
             }
         } catch (error) {
-            adicionado = 0;
+            adicionadoFilmeAssistido = false;
+        }
+
+        // Verificação para ver se já está na lista "Quero Assistir"
+        try {
+            if (idFilmePretendoAssistir[0].IDFilme != id) {
+                adicionadoPretendoAssistir = false
+            } else {
+                adicionadoPretendoAssistir = true
+            }
+        } catch (error) {
+            adicionadoPretendoAssistir = false;
         }
         
-        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 0, adicionado});        
+        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 0, adicionadoPretendoAssistir, adicionadoFilmeAssistido});        
     },
 
     async addFilmeLista(req, res){
@@ -183,12 +202,19 @@ module.exports = {
         const dados = req.body
         const id = req.params.id
         const nomeUser = req.params.nomeUser
-        let lista = 0;
+        let adicionadoPretendoAssistir = false
+        let adicionadoFilmeAssistido = false
+        let notaFilme = 0;
 
         const usuario = await tabelaUsuario.findAll({
             raw: true,
             where: {Usuario: nomeUser}
         });
+
+        await tabelaPretendoAssistir.destroy({
+            raw: true,
+            where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
+        })
 
         await tabelaListaFilmes.create({
             Comentario: dados.comentarioInput,
@@ -202,8 +228,6 @@ module.exports = {
             where: {IDFilme: id}
         });
 
-        let notaFilme = 0;
-
         for (let i = 0; i < notas.length; i++) {
             notaFilme += notas[i].Nota;
         };
@@ -211,7 +235,7 @@ module.exports = {
         notaFilme = notaFilme / notas.length;
 
         await tabelaFilmes.update({
-        NotaGeral: notaFilme
+            NotaGeral: notaFilme
         },
         {
             where: {IDFilme: id}
@@ -246,23 +270,17 @@ module.exports = {
             where: { IDGenero: listaGeneros }
         })
 
-        const idFilme = await tabelaListaFilmes.findAll({
+        const idFilmeAssistido = await tabelaListaFilmes.findAll({
             raw: true,
             attributes: ['IDFilme'],
             where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
         })
 
-        console.log(idFilme)
-
-        try {
-            lista = idFilme[0].IDFilme
-            console.log('Deu certo ' + idFilme[0].IDFilme)
-        } catch (error) {
-            console.log('Deu Errado ' + idFilme[0].IDFilme)
-            lista = 1;
-        }
-
-        console.log(lista)
+        const idFilmePretendoAssistir = await tabelaPretendoAssistir.findAll({
+            raw: true,
+            attributes: ['IDFilme'],
+            where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
+        })
 
         const dataLancamento = new Date(filme[0].Lancamento);
 
@@ -270,17 +288,29 @@ module.exports = {
 
         filme[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
 
+        // Verificação para ver se está na lista de filmes
         try {
-            if (idFilme[0].IDFilme != id) {
-                adicionado = 0
+            if (idFilmeAssistido[0].IDFilme != id) {
+                adicionadoFilmeAssistido = false
             } else {
-                adicionado = 1
+                adicionadoFilmeAssistido = true
             }
         } catch (error) {
-            adicionado = 0;
+            adicionadoFilmeAssistido = false;
         }
 
-        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 1, adicionado})
+        // Verificação para ver se já está na lista "Quero Assistir"
+        try {
+            if (idFilmePretendoAssistir[0].IDFilme != id) {
+                adicionadoPretendoAssistir = false
+            } else {
+                adicionadoPretendoAssistir = true
+            }
+        } catch (error) {
+            adicionadoPretendoAssistir = false;
+        }
+
+        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 1, adicionadoFilmeAssistido, adicionadoPretendoAssistir})
     },
 
     async deletarFilme(req, res){
@@ -293,6 +323,7 @@ module.exports = {
     },
 
     async editarFilme(req, res){
+
         const dados = req.body;
         const id = req.params.id;
         const nomeUser = req.params.nomeUser
@@ -311,7 +342,6 @@ module.exports = {
 
         console.log(novaImagem)
 
-
         await tabelaFilmes.update({
             Imagem: novaImagem,
             Titulo: dados.novoTitulo,
@@ -328,7 +358,7 @@ module.exports = {
         const IDSgeneros = await tabelaGeneros.findAll({
             raw: true,
             attributes: ['IDGenero'],
-            where: {Nome: [dados.novosGeneros]}
+            where: {Nome: dados.novosGeneros}
         })
 
         for (let i = 0; i < IDSgeneros.length; i++) {
@@ -350,5 +380,96 @@ module.exports = {
         }
 
         res.redirect('/filmeSelec/' + id + '/' + nomeUser)
+    },
+
+    async addPretendoAssistir(req, res)
+    {
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+        let adicionadoPretendoAssistir = false
+        let adicionadoFilmeAssistido = false
+
+
+        const usuario = await tabelaUsuario.findAll({
+            raw: true,
+            where: {Usuario: nomeUser}
+        });
+
+        await tabelaPretendoAssistir.create({
+            IDFilme: id,
+            IDUsuario: usuario[0].IDUsuario
+        })
+
+        const filme = await tabelaFilmes.findAll({
+            raw: true,
+            where: {IDFilme: id}
+        });
+
+        const generos = await tabelaGeneros.findAll({
+            raw: true,
+            attributes: ['Nome']
+        });
+        
+        const idGenerosFilme = await tabelaGenerosFilme.findAll({
+            raw: true,
+            attributes: ['IDGenero'],
+            where: {IDFilme: id}
+        });
+
+        let listaGeneros = [];
+
+        for(let i = 0; i < idGenerosFilme.length; i++)
+        {
+            listaGeneros[i] = idGenerosFilme[i].IDGenero;
+        }
+
+        const generosFilme = await tabelaGeneros.findAll({
+            raw: true,
+            attributes: ['Nome'],
+            where: { IDGenero: listaGeneros }
+        })
+
+        const idFilmeAssistido = await tabelaListaFilmes.findAll({
+            raw: true,
+            attributes: ['IDFilme'],
+            where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
+        })
+
+        const idFilmePretendoAssistir = await tabelaPretendoAssistir.findAll({
+            raw: true,
+            attributes: ['IDFilme'],
+            where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
+        })
+
+        const dataLancamento = new Date(filme[0].Lancamento);
+
+        dataLancamento.setDate(dataLancamento.getDate() + 2);
+
+        filme[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
+
+        // Verificação para ver se está na lista de filmes
+        try {
+            if (idFilmeAssistido[0].IDFilme != id) {
+                adicionadoFilmeAssistido = false
+            } else {
+                adicionadoFilmeAssistido = true
+            }
+        } catch (error) {
+            adicionadoFilmeAssistido = false;
+        }
+
+        // Verificação para ver se já está na lista "Quero Assistir"
+        try {
+            if (idFilmePretendoAssistir[0].IDFilme != id) {
+                adicionadoPretendoAssistir = false
+            } else {
+                adicionadoPretendoAssistir = true
+            }
+        } catch (error) {
+            adicionadoPretendoAssistir = false;
+        }
+
+        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 1, adicionadoFilmeAssistido, adicionadoPretendoAssistir})
+        
     }
 }

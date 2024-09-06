@@ -4,8 +4,11 @@ npm init -y
 npm install express mssql sequelize nodemon ejs
 npm install multer
 */
+
 const newImage = document.getElementById('newImage');
 const userImage = document.getElementById('novaImagemPerfil');
+const novaImagemFilme = document.getElementById('novaImagemFilme');
+const ImagemFilme = document.getElementById('imagemFilme');
 
 const mode = localStorage;
 
@@ -30,12 +33,18 @@ function imgClick()
     newImage.click();
 }
 
+function imgFilmeClick()
+{
+    novaImagemFilme.click()
+}
+
 newImage.addEventListener('change', () =>
 {
     if(newImage.files.length == 0)
     {
         return 0;
     }
+
     let reader = new FileReader();
     reader.readAsDataURL(newImage.files[0]);
     reader.onload = () => 
@@ -43,3 +52,20 @@ newImage.addEventListener('change', () =>
         userImage.src = reader.result
     )
 });
+
+novaImagemFilme.addEventListener('change', () =>
+    {
+        if(novaImagemFilme.files.length == 0)
+        {
+            return 0;
+        }
+    
+        let reader = new FileReader();
+        reader.readAsDataURL(novaImagemFilme.files[0]);
+        reader.onload = () => 
+        (
+            console.log(novaImagemFilme.files[0]),
+            ImagemFilme.src = reader.result
+        )
+});
+    
