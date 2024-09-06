@@ -1,6 +1,8 @@
 const tabelaUsuario = require('../model/usuario');
 const tabelaListaFilmes = require('../model/listaFilme');
+const tabelaListaSeries = require('../model/listaSerie');
 const tabelaFilmes = require('../model/filme');
+const tabelaSeries = require('../model/serie');
 const { raw } = require('express');
 
 module.exports = {
@@ -12,8 +14,6 @@ module.exports = {
             raw: true,
             where: {Usuario: nomeUser}
         });
-
-        console.log(usuario)
         
         const dataNascimento = new Date(usuario[0].DtNasc);
     
@@ -21,7 +21,7 @@ module.exports = {
 
         usuario[0].DtNasc = dataNascimento.toLocaleDateString('pt-BR');
         
-        const lista = await tabelaListaFilmes.findAll({
+        const listaFilmes = await tabelaListaFilmes.findAll({
             raw: true,
             where: {IDUsuario: usuario[0].IDUsuario}
         })
@@ -44,8 +44,38 @@ module.exports = {
             include: [{model: tabelaFilmes}],
             where: {IDUsuario: usuario[0].IDUsuario}
         });
+
+        const listaSeries = await tabelaListaSeries.findAll({
+            raw: true,
+            where: {IDUsuario: usuario[0].IDUsuario}
+        })
         
-        res.render('../views/perfil', {usuario, filmes, lista, flag: 0});
+        const listaIDSeries = await tabelaListaSeries.findAll({
+            raw: true,
+            attributes: ['IDSerie'],
+            where: {IDUsuario: usuario[0].IDUsuario}
+        })
+        
+        let IDSSeries = [];
+        
+        for (let i = 0; i < listaIDSeries.length; i++) 
+        {
+            IDSSeries[i] = listaIDSeries[i].IDSerie;
+        }
+        
+        const series = await tabelaListaSeries.findAll({
+            raw: true,
+            include: [{model: tabelaSeries}],
+            where: {IDUsuario: usuario[0].IDUsuario}
+        });
+
+        console.log(usuario);
+        console.log(filmes);
+        console.log(listaFilmes);
+        console.log(series);
+        console.log(listaSeries);
+        
+        res.render('../views/perfil', {usuario, filmes, listaFilmes, series, listaSeries, flag: 0});
     },
 
         async atualizarPerfil(req, res){
