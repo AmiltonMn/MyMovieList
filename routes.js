@@ -24,7 +24,9 @@ route.post('/cadastrar', cadastro.postCadPage);
 
 // Get e Post do perfil
 route.get('/perfil/:nomeUser', perfil.getPerfilPage);
-route.post('/updatePerfil/:nomeUser', perfil.atualizarPerfil);
+route.post('/updatePerfil/:nomeUser', multer(config).single("newImage"), perfil.atualizarPerfil);
+route.post('/deleteReview/:id/:nomeUser', perfil.deletarReview);
+route.post('/updateReview/:id/:nomeUser', perfil.updateReview);
 
 // Get e Post da Filmes
 route.get('/filmes/:nomeUser', filmes.getFilmesPage);
@@ -33,6 +35,10 @@ route.post('/buscaFilmes/:nomeUser', filmes.buscarFilmes);
 
 // Get e Post da pagina de filme selecionado
 route.get('/filmeSelec/:id/:nomeUser', filmes.filmeSelecionado);
+route.post('/filmeSelec/:id/:nomeUser', filmes.addFilmeLista);
+route.post('/deletarFilme/:id/:nomeUser', filmes.deletarFilme);
+route.post('/editarFilme/:id/:nomeUser', multer(config).single("novaImagemFilme"), filmes.editarFilme);
+route.post('/addQueroAssistir/:id/:nomeUser', filmes.addPretendoAssistir)
 
 // Get e Post da Series
 route.get('/series/:nomeUser', series.getSeriesPage);
@@ -40,12 +46,20 @@ route.post('/series/:nomeUser', multer(config).single("imagemInput"), series.add
 route.post('/buscaSeries/:nomeUser', series.buscarSeries);
 
 // Get e Post da pagina de serie selecionada
-route.get('/serieSelec/:id/:nomeUser', series.serieSelecionada);
+route.get('/serieSelec/:id/:nomeUser', series.getSerieSelecionada);
+route.post('/serieSelec/:id/:nomeUser', series.addSerieLista);
+route.post('/addTemp/:id/:nomeUser', multer(config).single("imagemInput"), series.addTemp);
+route.post('/addEp/:id/:nomeUser', multer(config).single("imagemInput"), series.addEp);
+route.post('/updateSeries/:id/:nomeUser', multer(config).single("imagemInput"), series.atualizarSerie);
+route.post('/updateTemp/:id/:nomeUser', multer(config).single("imagemInput"), series.atualizarTemporada);
+route.post('/updateEp/:id/:nomeUser', multer(config).single("imagemInput"), series.atualizarEp);
+route.post('/deletarSerie/:id/:nomeUser', series.deletarSerie);
+route.post('/deletarTemp/:id/:nomeUser', series.deletarTemp);
+route.post('/deletarEp/:id/:nomeUser', series.deletarEp);
 
 // Get e Post da home
 route.get('/', home.getHome);
 route.get('/:nomeUser', home.getHome);
-
 
 module.exports = route;
 

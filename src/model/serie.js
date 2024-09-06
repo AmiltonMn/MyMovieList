@@ -13,7 +13,7 @@ const serie = database.define('serie', {
         allowNull: false
     },
     Sinopse: {
-        type: Sequelize.STRING(255),
+        type: Sequelize.STRING(1000),
         allowNull: false
     },
     Lancamento: {

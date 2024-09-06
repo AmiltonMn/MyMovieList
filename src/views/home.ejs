@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" id="html" data-bs-theme=white>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
     <title>My Movie List</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
     <body>
@@ -20,17 +21,23 @@
         <% try { %>
           <% usuario[0].Usuario %>
           <div class="collapse navbar-collapse">
-            <a class="navbar-brand" href="/<%= usuario[0].Usuario %>" id="tituloNav" >My Movie List</a>
+            <a class="navbar-brand" href="/<%= usuario[0].Usuario %>">My Movie List</a>
           </div>
           <a class="navbar-brand" href="/perfil/<%= usuario[0].Usuario %>"><%= usuario[0].Usuario %></a>
           <a class="navbar-brand" href="/filmes/<%= usuario[0].Usuario %>">Filmes</a>
           <a class="navbar-brand" href="/series/<%= usuario[0].Usuario %>">Series</a>
+          <span class="material-symbols-outlined" onclick="mudarDarkMode()" id="icone">
+            dark_mode
+          </span>
         <% } catch (error) { %>
           <div class="collapse navbar-collapse">
             <a class="navbar-brand" href="/" id="tituloNav" >My Movie List</a>
           </div>
           <a class="navbar-brand" href="/login">Login</a>
           <a class="navbar-brand" href="/cadastrar">Registrar</a>
+          <span class="material-symbols-outlined" onclick="mudarDarkMode()" id="icone">
+            dark_mode
+          </span>
         <% } %>
           
       </div>
@@ -38,18 +45,69 @@
     </nav>
 
     <main>
-      <div class="container border border-black p-3 d-flex justify-content-end align-items-end p-1 mb-5" id="containerPesquisa">
-        <div class="container p-3 d-flex justify-content-around align-items-center">
-          <img src="/img/Lupa.svg" width="30px" height="30px" alt="">
-          <input class="form-control p-2" list="datalistOptions" id="buscaHome" placeholder="Pesquise um filme ou série">
-        </div>
+
+      <div class="container p-3 d-flex align-items-end mb-5 shadow-lg" id="containerPesquisa">
+
+        
+        <form action="/buscaFilmes/<%= usuario[0].Usuario %>" method="post" id="formPesquisa">
+          <input class="form-control p-2 align-self-center" name="buscaFilme" id="buscaFilme" placeholder="Pesquise um filme">
+        </form> 
+        
+        <span class="material-symbols-outlined" id="imgLupa">
+          search
+          </span>
+
       </div>
 
       <div class="container border border-black p-3 d-flex justify-content-center align-items-center mb-5">
         <div class="container border border-black row p-3 d-flex justify-content-around align-items-center">
           <h1>Lançamentos</h1>
           <div id="lancamentos" class="overflow-x-auto d-flex flex-row">
-              
+            <% try { %>
+              <% for(let i = 0; i < filmesMaisRecentes.length; i++) { %>
+  
+                <div class="filme d-flex flex-row">
+                  <a href="/filmeSelec/<%= filmesMaisRecentes[i].IDFilme %>/<%= usuario[0].Usuario %>">
+                    <img  class="imagemFilme" src="/img/<%= filmesMaisRecentes[i].Imagem %>" alt="Imagem não encontrada">
+                  </a>
+  
+                  <div class="infoFilme d-flex flex-column justify-content-between">
+                    <div>
+                      <h2><%= filmesMaisRecentes[i].Titulo %></h2>
+                      <hr>
+                    </div>
+  
+                    <div>
+                      
+                      <p>
+                        <%= filmesMaisRecentes[i].Comentario %>
+                        <%= filmesMaisRecentes[i].NotaGeral.toFixed(1) %>
+                      </p>
+    
+                    </div>
+                    
+                    <div class="d-flex justify-content-between align-items-end gap-1">
+                      <% for(let j = 0; j < 5; j++) { %>
+                          <i class="fa fa-star" <%= (j < filmesMaisRecentes[i].Nota) ? 'style=color:#FC0' : "" %>></i>
+                      <% } %>
+
+                      <div class="d-flex justify-content-end" id="btnsEdit">
+                        <button class="d-flex justify-content-center" data-bs-toggle="modal" data-bs-target="#editarReview<%=i%>" style="background: transparent; border: none;"><span class="material-symbols-outlined">edit_note</span></button>
+                        <button class="d-flex justify-content-center" data-bs-toggle="modal" data-bs-target="#excluirReview<%=i%>" style="background: transparent; border: none; color: red;"><span class="material-symbols-outlined">
+                          delete
+                          </span></button>
+                      </div>
+
+                    </div>
+
+                  </div>
+  
+                </div>
+              <% } %>
+            <% } catch (error) { %>
+              <% console.log(error) %>
+              <p>Lista Vazia!</p>
+            <% } %>
           </div>
         </div>
       </div>
@@ -68,7 +126,10 @@
 
       </div>
     </footer>
-    <script src="js/script.js"></script>
+    <script src="/js/script.js"></script>
+    <script>
+      adicionarMode();
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -1,12 +1,17 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" id="html" data-bs-theme=white>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/filmeSelec.css">
     <title>My Movie List</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-</head>
+    <script src="https://kit.fontawesome.com/c147ae9e45.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  </head>
+
     <body>
       
     <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
@@ -25,59 +30,88 @@
           <a class="navbar-brand" href="/perfil/<%= usuario[0].Usuario %>"><%= usuario[0].Usuario %></a>
           <a class="navbar-brand" href="/filmes/<%= usuario[0].Usuario %>">Filmes</a>
           <a class="navbar-brand" href="/series/<%= usuario[0].Usuario %>">Series</a>
+          <span class="material-symbols-outlined" onclick="mudarDarkMode()" id="icone">
+            dark_mode
+          </span>
         <% } catch (error) { %>
           <a class="navbar-brand" href="/">ERRO</a>
         <% } %>
 
       </div>
+      
     </nav>
 
     <main class="container d-flex position-absolute top-50 start-50 translate-middle">
 
       <div class="p-0" id="fotoInfo">
 
+        <% console.log(filme) %>
+
           <br>
 
-          <div class="p-2 container d-inline-flex border border-black" id="informacoes">
+          <div class="p-2 container d-flex border border-black position-absolute top-50 start-50 translate-middle" id="containerInformacoes">
             
-            <div class="container d-flex flex-column align-items-center">
+            <div class="d-flex flex-column align-items-center">
 
               <img id="filmeCapa" src="/img/<%= filme[0].Imagem %>" alt="">
 
             </div>
 
-            <div class="d-flex flex-column">
+            <div class="container d-flex flex-column justify-content-center" id="infosDoFilme">
 
               <h1 class=""><%= filme[0].Titulo %></h1>
 
               <hr>
 
-              <p><%= filme[0].Sinopse %></p>
+              <p class="text-justify"><%= filme[0].Sinopse %></p>
+
+              <div class="d-flex flex-row">
+                <% for (let i = 0; i < generosFilme.length; i ++) { %>
+                  <div class="generos">
+                    <%= generosFilme[i].Nome %> 
+                  </div>
+                <% } %>
+              </div>
+
+              <br>
+              
               <p><%= filme[0].Lancamento %></p>
 
               <div class="d-flex justify-content-between">
 
-                <div>
+                <div class="d-flex justify-content-center align-items-center">
 
-                  <button type="button" class="btn btn-outline-primary">Add Lista</button>
-                  <button type="button" class="btn btn-outline-primary">Quero Assistir</button>
-  
+                  <% if(!adicionadoFilmeAssistido) { %>
+
+                    <button type="button" class="btn btn-outline-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#adicionarLista" style="background: transparent; border: none;"><i class="fa-solid fa-circle-plus fa-xl"></i></button>
+
+                    <% if(!adicionadoPretendoAssistir) { %>
+                      <form action="/addQueroAssistir/<%= filme[0].IDFilme %>/<%= usuario[0].Usuario %>" method="post">
+                        <button type="submit" class="btn btn-outline-primary" style="border: none;">Quero Assistir</button>
+                      </form>
+                    <% } %>
+
+                  <% } else { %>
+                    <i class="changebtns fa-solid fa-circle-check fa-xl" style="color: red;"></i>
+                  <% } %>
+                    
                 </div>
                 
                 <% if(usuario[0].ISAdmin == 1) { %>
+
                   <div class="" id="btnsAdmin">
-    
-                    <button type="button" class="btn btn-outline-primary">Editar</button>
-                    <button type="button" class="btn btn-outline-primary">Excluir</button>
+
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarFilme"  style="background: transparent; border: none;"><i class="fa-solid fa-pen-to-square fa-xl"></i></button>
+
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#deletarFilme" style="background: transparent; border: none; color: red;"><i class="fa-solid fa-trash fa-xl"></i></button>
     
                   </div>
+
                 <% } %>
 
               </div>
-
-
+              
             </div>
-            
             
           </div>
 
@@ -91,7 +125,240 @@
 
     </footer>
 
-    <script src="js/script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Modal de add lista -->
+     
+    <div class="modal" tabindex="-1" id="adicionarLista">
+      
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        
+        <div class="modal-content">
+
+          <div class="modal-header">
+
+            <h5 class="modal-title">Preencha os campos!</h5>
+
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          </div>
+
+          <div class="modal-body">
+
+            <form action="/filmeSelec/<%= filme[0].IDFilme %>/<%= usuario[0].Usuario %>" method="post">
+              
+              <label for="comentarioInput">Comentário</label>
+
+              <br>
+
+              <textarea class="form-control" name="comentarioInput" id="comentarioInput" rows="2"></textarea>
+
+              <br>
+
+              <div class="estrelas">
+
+                <input type="radio" id="cm_star-empty" name="notaInput" value="" checked/>
+                <label for="cm_star-1"><i class="fa fa-star"></i></label>
+                <input type="radio" id="cm_star-1" name="notaInput" value="1"/>
+                <label for="cm_star-2"><i class="fa fa-star"></i></label>
+                <input type="radio" id="cm_star-2" name="notaInput" value="2"/>
+                <label for="cm_star-3"><i class="fa fa-star"></i></label>
+                <input type="radio" id="cm_star-3" name="notaInput" value="3"/>
+                <label for="cm_star-4"><i class="fa fa-star"></i></label>
+                <input type="radio" id="cm_star-4" name="notaInput" value="4"/>
+                <label for="cm_star-5"><i class="fa fa-star"></i></label>
+                <input type="radio" id="cm_star-5" name="notaInput" value="5"/>
+
+              </div>
+
+              <br>
+
+              <button type="submit" class="btn btn-primary" id="Atualizar" data-bs-dismiss="modal">Adicionar</button>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+      
+    </div>
+
+    <!-- Modal de Sucesso -->
+
+    <div class="modal" tabindex="-1" id="sucesso">
+      
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        
+        <div class="modal-content">
+
+          <div class="modal-header">
+
+            <h5 class="modal-title">Filme adicionado</h5>
+
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          </div>
+
+          <div class="modal-body">
+
+            <p>O filme <%= filme[0].Titulo %> foi adicionado à sua lista!</p>
+
+          </div>
+
+        </div>
+
+      </div>
+      
+    </div>
+
+    <!-- Modal de editar -->
+
+    <div class="modal" tabindex="-1" id="editarFilme">
+      
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+
+        <div class="modal-content">
+
+          <div class="modal-header">
+
+            <h5 class="modal-title">Preencha os campos!</h5>
+
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          </div>
+
+          <div class="modal-body">
+
+            <form action="/editarFilme/<%= filme[0].IDFilme %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
+
+              <div class="container p-3 d-flex justify-content-around align-items-center p-0">
+                <img src="/img/<%= filme[0].Imagem %>" id="imagemFilme" alt="Imagem do Usuário" onclick="imgFilmeClick()">
+                <input class="d-none" type="file" name="novaImagemFilme" id="novaImagemFilme" accept="image/*">
+            </div>
+
+              <br>
+
+              <label class="form-label"  for="novoTitulo">Titulo do Filme</label>
+
+              <br>
+
+              <input class="form-control" type="text" name="novoTitulo" value="<%= filme[0].Titulo %>" placeholder="Digite o nome do filme" required>
+  
+              <br>
+
+              <label class="form-label" for="novaSinopse" required>Sinopse do Filme</label>
+
+              <br>
+              <textarea class="form-control" name="novaSinopse" rows="2"><%= filme[0].Sinopse %></textarea>
+
+              <br>
+
+              <label class="form-label" for="novoLancamento">Data de Lançamento</label>
+
+              <br>
+
+              <input class="form-control" type="date" name="novoLancamento" value="" id="lancamentoInput">
+
+              <br>
+
+              <label class="form-label" for="novaIdadeIndicativa">Idade Indicativa</label>
+
+              <br>
+
+              <select class="form-control" name="novaIdadeIndicativa" required>
+
+                <option value="1" <%= (1 === filme[0].IdadeIndicativa) ? "selected" : "" %>>AL</option>
+                <option value="2" <%= (2 === filme[0].IdadeIndicativa) ? "selected" : "" %>>A10</option>
+                <option value="3" <%= (3 === filme[0].IdadeIndicativa) ? "selected" : "" %>>A12</option>
+                <option value="4" <%= (4 === filme[0].IdadeIndicativa) ? "selected" : "" %>>A14</option>
+                <option value="5" <%= (5 === filme[0].IdadeIndicativa) ? "selected" : "" %>>A16</option>
+                <option value="6" <%= (6 === filme[0].IdadeIndicativa) ? "selected" : "" %>>A18</option>
+
+              </select>
+
+              <br>
+
+              <select class="form-control multiselect" name="novosGeneros" multiple required>
+
+                <% for(let i = 0; i < generos.length; i++) { %>
+                  
+                  <option value="<%= generos[i].Nome %>"><%= generos[i].Nome %></option>
+
+                <% } %>
+
+              </select>
+
+              <br>
+
+              <button type="submit" id="btnEditar" class="btn btn-primary">Editar</button>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Excluir Filme -->
+
+    <div class="modal" tabindex="-1" id="deletarFilme">
+      
+      <div class="modal-dialog modal-dialog-centered modal-sm">
+        
+        <div class="modal-content">
+
+          <div class="modal-header d-flex">
+
+            <h5 class="modal-title">Excluir Filme</h5>
+
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          </div>
+
+          <div class="modal-body">
+
+            <h5>Você está excluindo o filme <%= filme[0].Titulo %></h5>
+
+            <br>
+
+            <p>Você confirma a exclusão?</p>
+
+            <div class="d-flex justify-content-between">
+
+              <form action="/deletarFilme/<%= filme[0].IDFilme %>/<%= usuario[0].Usuario %>" method="post">
+                <button type="submit" class="btn btn-danger m-3">Confirmar</button>
+              </form>
+
+              <button type="button" class="btn btn-secondary m-3" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+      
+    </div>
+
+    <button class="d-none" id="abrirSucesso" data-bs-toggle="modal" data-bs-target="#sucesso"></button>
+
+    <% if(flag == 1) { %>
+
+      <script>
+        document.getElementById("abrirSucesso").click()
+      </script>
+
+    <% } %>
+
+    <script src="/js/script.js"></script>
+    <script>
+      adicionarMode();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
 </body>
 </html>

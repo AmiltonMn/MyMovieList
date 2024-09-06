@@ -1,6 +1,13 @@
 const tabelaUsuario = require('../model/usuario');
 const tabelaSerie = require('../model/serie');
-const { Op } = require('sequelize');
+const tabelaTemporada = require('../model/temporada');
+const tabelaEp = require('../model/ep');
+const tabelaGenero = require('../model/genero');
+const tabelaGeneroSerie = require('../model/generoSerie');
+const tabelaListaSerie = require('../model/listaSerie');
+const { Op, where } = require('sequelize');
+const { raw } = require('express');
+const usuario = require('../model/usuario');
 
 module.exports = {
     async getSeriesPage(req, res){
@@ -8,7 +15,6 @@ module.exports = {
 
         const usuario = await tabelaUsuario.findAll({
             raw: true,
-            attributes: ['IDUsuario', 'Usuario', 'Nome', 'DtNasc', 'Senha', 'Email', 'ISAdmin', 'Imagem'],
             where: {Usuario: nomeUser}
         });
 
@@ -16,7 +22,11 @@ module.exports = {
             raw: true,
         })
 
-        res.render('../views/series', {usuario, series});
+        const generos = await tabelaGenero.findAll({
+            raw: true
+        });
+
+        res.render('../views/series', {usuario, series, generos});
     },
 
     async addSerie(req, res){
@@ -37,6 +47,18 @@ module.exports = {
             Imagem: capaSerie,
         });
 
+        const IDNovaSerie = await tabelaSerie.findAll({
+            raw: true,
+            where: {Titulo: dados.tituloInput}
+        });
+
+        for (let i = 0; i < dados.inputGenero.length; i++) {
+            await tabelaGeneroSerie.create({
+                IDSerie: IDNovaSerie[0].IDSerie,
+                IDGenero: dados.inputGenero[i]
+            });
+        }
+
         const series = await tabelaSerie.findAll({
             raw: true,
             attributes: ['IDSerie', 'Titulo', 'Sinopse', 'Lancamento', 'NotaGeral', 'IdadeIndicativa', 'Imagem']
@@ -49,7 +71,7 @@ module.exports = {
             where: {Usuario: nomeUser}
         });
 
-        res.render('../views/series', {series, usuario});
+        res.redirect('/series/' + nomeUser);
     },
 
     async buscarSeries(req, res){
@@ -71,7 +93,7 @@ module.exports = {
         res.render('../views/series', {series, usuario});
     },
 
-    async serieSelecionada(req, res){
+    async getSerieSelecionada(req, res){
         const nomeUser = req.params.nomeUser;
         const id = req.params.id;
 
@@ -85,6 +107,288 @@ module.exports = {
             where: {Usuario: nomeUser}
         });
 
-        res.render('../views/serieSelec', {serie, usuario});
+        const temporada = await tabelaTemporada.findAll({
+            raw: true,
+            where: {IDSerie: id}
+        });
+
+        var temporadaIDS = []
+
+        for (let i = 0; i < temporada.length; i++) {
+            temporadaIDS[i] = temporada[i].IDTemporada;   
+        }
+
+        const ep = await tabelaEp.findAll({
+            raw: true,
+            where: {IDTemporada: {
+                [Op.in]: temporadaIDS
+            }}
+        })
+
+        const genero = await tabelaGeneroSerie.findAll({
+            raw: true,
+            include: [{model: tabelaGenero}],
+            where: {IDSerie: id}
+        });
+
+        res.render('../views/serieSelec', {serie, usuario, temporada, ep, genero});
+    },
+
+    async atualizarSerie(req, res){
+        const dados = req.body;
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+        let capaSerie = 'noImage.png';
+
+        if (req.file) {
+            capaSerie = req.file.filename;
+        }
+
+        await tabelaSerie.update({
+            Titulo: dados.tituloInput,
+            Sinopse: dados.sinopseInput,
+            Lancamento: dados.lancamentoInput,
+            NotaGeral: 0,
+            IdadeIndicativa: dados.idadeIndicativaInput,
+            Imagem: capaSerie,
+        },
+        {
+            where: { IDSerie: id }
+        });
+        res.redirect('/serieSelec/' + id + '/' + nomeUser);
+    },
+
+    async addTemp(req, res){
+        const dados = req.body;
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+        let capaTemp = 'noImage.png';
+
+        if (req.file) {
+            capaTemp = req.file.filename;
+        }
+
+        await tabelaTemporada.create({
+            Titulo: dados.tituloInput,
+            Sinopse: dados.sinopseInput,
+            Lancamento: dados.lancamentoInput,
+            NotaGeral: 0,
+            Imagem: capaTemp,
+            IDSerie: id
+        });
+
+        res.redirect('/serieSelec/' + id + '/' + nomeUser);
+    },
+
+    async addEp(req, res){
+        const dados = req.body;
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+        let capaEp = 'noImage.png';
+
+        if (req.file) {
+            capaEp = req.file.filename;
+        }
+
+        await tabelaEp.create({
+            Titulo: dados.tituloInput,
+            Sinopse: dados.sinopseInput,
+            Lancamento: dados.lancamentoInput,
+            NotaGeral: 0,
+            Imagem: capaEp,
+            IDTemporada: id
+        });
+
+        const idSerie = await tabelaTemporada.findAll({
+            raw: true,
+            where: {IDTemporada: id}
+        })
+
+        res.redirect('/serieSelec/' + idSerie[0].IDSerie + '/' + nomeUser);
+    },
+
+    async atualizarTemporada(req, res){
+        const dados = req.body;
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+        let capaTemp = 'noImage.png';
+
+        if (req.file) {
+            capaTemp = req.file.filename;
+        }
+
+        const idSerie = await tabelaTemporada.findAll({
+            raw: true,
+            where: {IDTemporada: id}
+        })
+
+        await tabelaTemporada.update({
+            Titulo: dados.tituloInput,
+            Sinopse: dados.sinopseInput,
+            Lancamento: dados.lancamentoInput,
+            NotaGeral: 0,
+            Imagem: capaTemp,
+        },
+        {
+            where: { IDTemporada: id }
+        });
+        res.redirect('/serieSelec/' + idSerie[0].IDSerie + '/' + nomeUser);
+    },
+
+    async atualizarEp(req, res){
+        const dados = req.body;
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+        let capaEp = 'noImage.png';
+
+        if (req.file) {
+            capaEp = req.file.filename;
+        }
+
+        const idTemporada = await tabelaEp.findAll({
+            raw: true,
+            where: {IDEp: id}
+        });
+
+        const idSerie = await tabelaTemporada.findAll({
+            raw: true,
+            where: {IDTemporada: idTemporada[0].IDTemporada}
+        });
+
+        await tabelaEp.update({
+            Titulo: dados.tituloInput,
+            Sinopse: dados.sinopseInput,
+            Lancamento: dados.lancamentoInput,
+            NotaGeral: 0,
+            Imagem: capaEp,
+        },
+        {
+            where: { IDEp: id }
+        });
+        res.redirect('/serieSelec/' + idSerie[0].IDSerie + '/' + nomeUser);
+    },
+
+    async deletarSerie(req, res){
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+        
+        await tabelaSerie.destroy({where: {IDSerie: id}})
+
+        res.redirect('/series/' + nomeUser)
+    },
+
+    async deletarTemp(req, res){
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+
+        let idSerie = await tabelaTemporada.findAll({
+            raw: true,
+            where: {IDTemporada: id}
+        })
+
+        idSerie = idSerie[0].IDSerie;
+        
+        await tabelaTemporada.destroy({where: {IDTemporada: id}})
+
+        res.redirect('/serieSelec/' + idSerie + '/' + nomeUser);
+    },
+
+    async deletarEp(req, res){
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+
+        const idTemporada = await tabelaEp.findAll({
+            raw: true,
+            where: {IDEp: id}
+        });
+
+        let idSerie = await tabelaTemporada.findAll({
+            raw: true,
+            where: {IDTemporada: idTemporada[0].IDTemporada}
+        });
+
+        idSerie = idSerie[0].IDSerie;
+        
+        await tabelaEp.destroy({where: {IDEp: id}})
+
+        res.redirect('/serieSelec/' + idSerie + '/' + nomeUser);
+    },
+
+    async addSerieLista(req, res){
+        const dados = req.body
+        const id = req.params.id
+        const nomeUser = req.params.nomeUser
+
+        const usuario = await tabelaUsuario.findAll({
+            raw: true,
+            where: {Usuario: nomeUser}
+        });
+
+        await tabelaListaSerie.create({
+            Comentario: dados.comentarioInput,
+            Nota: dados.notaInput,
+            IDSerie: id,
+            IDUsuario: usuario[0].IDUsuario
+        });
+
+        const notas = await tabelaListaSerie.findAll({
+            raw: true,
+            where: {IDSerie: id}
+        });
+
+        let notaSerie = 0;
+
+        for (let i = 0; i < notas.length; i++) {
+            notaSerie += notas[i].Nota;
+        };
+
+        notaSerie = notaSerie / notas.length;
+
+        await tabelaSerie.update({
+            NotaGeral: notaSerie
+        },
+        {
+            where: {IDSerie: id}
+        });
+
+        const serie = await tabelaSerie.findAll({
+            raw: true,
+            where: {IDSerie: id}
+        });
+
+        const genero = await tabelaGeneroSerie.findAll({
+            raw: true,
+            include: [{model: tabelaGenero}],
+            where: {IDSerie: id}
+        });
+        
+        const idGenerosSerie = await tabelaGeneroSerie.findAll({
+            raw: true,
+            attributes: ['IDGenero'],
+            where: {IDSerie: id}
+        });
+
+        let listaGeneros = [];
+
+        for(let i = 0; i < idGenerosSerie.length; i++)
+        {
+            listaGeneros[i] = idGenerosSerie[i].IDGenero;
+        }
+
+        const generosSerie = await tabelaGenero.findAll({
+            raw: true,
+            attributes: ['Nome'],
+            where: { IDGenero: listaGeneros }
+        })
+
+        console.log(serie)
+
+        const dataLancamento = new Date(serie[0].Lancamento);
+
+        dataLancamento.setDate(dataLancamento.getDate() + 2);
+
+        serie[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
+
+        res.redirect('/serieSelec/' + id + '/' + nomeUser);
     }
 }

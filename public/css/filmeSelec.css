@@ -1,8 +1,43 @@
 #filmeCapa
 {
-    width: 50%;
+    width: 312px;
+    height: 460px;
 }
 
+#imagemFilme
+{
+  width: 161px;
+  height: 230px;
+}
+
+#infosDoFilme
+{
+    margin-left: 45px;
+}
+
+.generos
+{
+    background-color: aqua;
+    border-radius: 999px;
+    width: 130px;
+    text-align: center;
+    margin-right: 15px;
+}
+
+.estrelas input[type=radio] {
+    display: none;
+  }
+  .estrelas label i.fa{
+    font-size: 2.5em
+  }
+  .estrelas label i.fa:before {
+    content:'\f005';
+    color: #FC0;
+  }
+  .estrelas input[type=radio]:checked ~ label i.fa:before {
+    color: #CCC;
+  }
+ 
 hr
 {
     height: 5px;

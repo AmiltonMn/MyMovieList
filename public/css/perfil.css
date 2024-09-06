@@ -1,15 +1,33 @@
-@media (min-width:999px) 
-{   
-    .modal-lg {max-width: 70%;}
+main
+{
+    margin-top: 80px;
+}
+
+hr
+{
+    width: 98%;
 }
 
 footer
 {
     display: flex;
-    position: fixed;
+    background-color: brown;
+    position:fixed;
+    margin-top: 30px;
     bottom: 0;
     width: 100%;
     max-height: fit-content;
+}
+
+body::-webkit-scrollbar
+{
+    width: 12px;
+}
+
+body::-webkit-scrollbar-thumb
+{
+    background-color: rgb(226, 43, 43);
+    border-radius: 999px;
 }
 
 body
@@ -17,16 +35,12 @@ body
     margin-bottom: 100px;
 }
 
-#listasContainer
-{
-    float: right;
-}
-
 #imagemPerfil
 {
     max-width: 60%;
     border-radius: 50%;
     border: 1px solid black;
+    aspect-ratio: 1/1;
 }
 
 #imagemContainer
@@ -60,12 +74,84 @@ body
 #lista
 {
     width: 100%;
-    height: calc(80%);
+    max-height: 600px;
+    margin-top: 10px;
+    margin-bottom: 150px;
 }
+
+#lista::-webkit-scrollbar
+{
+    width: 12px;
+}
+
+#lista::-webkit-scrollbar-thumb
+{
+    background-color: rgb(226, 43, 43);
+    border-radius: 999px;
+}
+
 
 #informacoes
 {
+    height: fit-content;
+}
+
+#informacoes button
+{
+    width: 50%;
+}
+
+#novaImagemPerfil
+{
+    max-width: 25%;
+    border-radius: 50%;
+    border: 1px solid black;
+    aspect-ratio: 1/1;
+}
+
+#btnsLista
+{
+    margin-bottom: 15px;
+}
+
+#btnsLista button
+{
+    width: 48.5%;
+}
+
+#btnsEdit 
+{
+    width: 100%;
+}
+
+
+#btnsEdit button
+{
+    margin-right: 15px;
+}
+
+#estrelas
+{
     height: calc(100%);
+}
+
+.imagemFilme
+{
+    width: 156px;
+    height: 230px;
+    border-radius: 15px;
+}
+
+.infoFilme
+{
+    margin-left: 15px;
+    width: 100%;
+}
+
+.filme
+{
+    margin-bottom: 20px;
+    width: 100%;
 }
 
 .btn
@@ -73,3 +159,27 @@ body
     width: 100%;
     height: calc(100%);
 }
+
+.modal
+{
+    background-color: rgba(0, 0, 0, 0.432);
+}
+
+.btnEditReview
+{
+    width: 45%;
+}
+
+.estrelas input[type=radio] {
+    display: none;
+  }
+  .estrelas label i.fa{
+    font-size: 2.5em
+  }
+  .estrelas label i.fa:before {
+    content:'\f005';
+    color: #FC0;
+  }
+  .estrelas input[type=radio]:checked ~ label i.fa:before {
+    color: #CCC;
+  }

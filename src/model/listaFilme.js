@@ -10,11 +10,23 @@ const listaFilme = database.define('listaFilme', {
         allowNull: false,
         primaryKey: true
     },
+    
     Favorito: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
         allowNull: false
+    },
+
+    Comentario: {
+        type: Sequelize.STRING(1000),
+        allowNull: true
+    },
+
+    Nota: {
+        type: Sequelize.INTEGER,
+        allowNull: false
     }
+
 })
 
 listaFilme.belongsTo(filme, {
