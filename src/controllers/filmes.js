@@ -34,8 +34,6 @@ module.exports = {
         const dados = req.body
         const nomeUser = req.params.nomeUser;
 
-        console.log(dados.inputGenero)
-
         let capaFilme = 'noImage.png';
 
         const erro = await tabelaFilmes.count({
@@ -47,7 +45,6 @@ module.exports = {
             capaFilme = req.file.filename;
         }
 
-        
         if(erro == 0){
             await tabelaFilmes.create({
                 Titulo: dados.tituloInput,
@@ -88,7 +85,6 @@ module.exports = {
         })
 
         res.render('../views/filmes', {filmes, usuario, erro, generos})
-
     },
 
     async buscarFilmes(req, res){
@@ -119,7 +115,7 @@ module.exports = {
     async filmeSelecionado(req, res){
         const nomeUser = req.params.nomeUser;
         const id = req.params.id;
-        let lista = 0;
+        let adicionado = 0;
 
         const filme = await tabelaFilmes.findAll({
             raw: true,
@@ -169,19 +165,17 @@ module.exports = {
 
         filme[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
 
-        console.log(filme[0].Lancamento);
-
-        console.log(idFilme)
-
         try {
-            if(idFilme[0].IDFilme != id){
-                lista = 1;
+            if (idFilme[0].IDFilme != id) {
+                adicionado = 0
+            } else {
+                adicionado = 1
             }
         } catch (error) {
-            lista = 0;
+            adicionado = 0;
         }
-
-        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 0, lista});        
+        
+        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 0, adicionado});        
     },
 
     async addFilmeLista(req, res){
@@ -276,7 +270,17 @@ module.exports = {
 
         filme[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
 
-        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 1, lista})
+        try {
+            if (idFilme[0].IDFilme != id) {
+                adicionado = 0
+            } else {
+                adicionado = 1
+            }
+        } catch (error) {
+            adicionado = 0;
+        }
+
+        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 1, adicionado})
     },
 
     async deletarFilme(req, res){
