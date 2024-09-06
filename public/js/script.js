@@ -10,7 +10,6 @@ const userImage = document.getElementById('novaImagemPerfil');
 const mode = localStorage;
 
 function adicionarMode() {
-    console.log("adicionarMode");
     const html = document.getElementById("html");
     html.setAttribute("data-bs-theme", mode.getItem("mode"));
     updateIcone();
@@ -18,9 +17,7 @@ function adicionarMode() {
 
 function mudarDarkMode(){
     mode.setItem("mode", (localStorage.getItem("mode") == "white") ? "dark" : "white");
-    const html = document.getElementById("html");
-    html.setAttribute("data-bs-theme", mode.getItem("mode"));
-    updateIcone();
+    adicionarMode();
 };
 
 function updateIcone(){
