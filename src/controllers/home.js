@@ -15,8 +15,9 @@ const tabelaPessoa = require('../model/pessoa');
 const tabelaGenero = require('../model/genero');
 const tabelaGeneroFilme = require('../model/generoFilme');
 const tabelaGeneroSerie = require('../model/generoFilme');
-const { Op } = require('sequelize');
+const { Op, or } = require('sequelize');
 const filme = require('../model/filme');
+const usuario = require('../model/usuario');
 
 
 module.exports = {
@@ -45,20 +46,16 @@ module.exports = {
             order: [['Lancamento', 'DESC']]
         })
 
-        try {
-            const nomeUser = req.params.nomeUser;
+        const nomeUser = req.params.nomeUser;
 
+        if (typeof(nomeUser) === undefined || nomeUser == 'favicon.ico') {
+            return 0;
+        } else {
             const usuario = await tabelaUsuario.findAll({
                 raw: true,
                 where: {Usuario: nomeUser}
             });
-
-            usuario.DtNasc = new Date(usuario.DtNasc).toLocaleString('pt-BR');
-console.log("ta certo");
             res.render('../views/home', {usuario, filmesMaisRecentes});
-        } catch (error) {
-            console.log("ta errado");
-            res.render('../views/home', {usuario: [], filmesMaisRecentes});
         }
     }
 }

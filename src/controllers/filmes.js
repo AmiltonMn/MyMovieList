@@ -261,12 +261,14 @@ module.exports = {
         console.log(idFilme)
 
         try {
-            if(idFilme[0].IDFilme != id){
-                lista = 1;
-            }
+            lista = idFilme[0].IDFilme
+            console.log('Deu certo ' + idFilme[0].IDFilme)
         } catch (error) {
-            lista = 0;
+            console.log('Deu Errado ' + idFilme[0].IDFilme)
+            lista = 1;
         }
+
+        console.log(lista)
 
         const dataLancamento = new Date(filme[0].Lancamento);
 

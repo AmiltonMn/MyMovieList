@@ -1,6 +1,7 @@
 const tabelaUsuario = require('../model/usuario');
 const tabelaListaFilmes = require('../model/listaFilme');
 const tabelaFilmes = require('../model/filme');
+const { raw } = require('express');
 
 module.exports = {
     async getPerfilPage(req, res)
@@ -52,7 +53,14 @@ module.exports = {
             const dados = req.body;
             const nomeUser = req.params.nomeUser;
 
-            let novaImagem = 'noImage.png';
+            const usuario = await tabelaUsuario.findAll({
+                raw: true,
+                where: {Usuario: nomeUser}
+            })
+
+            let novaImagem = usuario[0].Imagem;
+
+            console.log(novaImagem)
 
             if (req.file) {
                 novaImagem = req.file.filename;

@@ -60,6 +60,5 @@ route.post('/deletarEp/:id/:nomeUser', series.deletarEp);
 route.get('/', home.getHome);
 route.get('/:nomeUser', home.getHome);
 
-
 module.exports = route;
 
