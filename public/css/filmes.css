@@ -6,10 +6,17 @@
 footer
 {
     display: flex;
-    position: absolute;
+    background-color: brown;
+    position: fixed;
+    margin-top: 30px;
     bottom: 0;
     width: 100%;
-    height: 100px;
+    max-height: fit-content;
+}
+
+main
+{
+    background-image: linear-gradient(to left rgb(125, 7, 7) rgb(18, 48, 103) 80%);
 }
 
 .indImage
@@ -23,6 +30,12 @@ footer
     height: 230px;
     margin: 5px;
     border-radius: 15px;
+}
+
+.capaFilme:hover
+{
+    border: 3px solid red;
+    transition: linear 0.1s;
 }
 
 #btnCadFilme
@@ -63,6 +76,18 @@ footer
 
 #filmes
 {
-    display: grid;
-    grid-template-columns: 156px 156px 156px 156px 156px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    border-radius: 56px;
+}
+
+#filmesBox
+{
+    border: 1px outset orange;
+    border-top-left-radius: 56px;
+    border-top-right-radius: 56px;
+    border-bottom: 0px;
+    box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;
 }

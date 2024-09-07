@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/c147ae9e45.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
 </head>
     <body>
 
@@ -52,31 +53,34 @@
         
         <span class="material-symbols-outlined" id="imgLupa">
           search
-          </span>
+        </span>
 
       </div>
 
-      <div class="container border border-black p-3 d-flex justify-content-center align-items-center mb-5">
+      <div class="container p-3 d-flex justify-content-center mb-5" id="filmesBox">
         
-        <div class="container border border-black row p-3 d-flex justify-content-around align-items-center">
+        <div class="container row p-3 d-flex">
 
           <div class="d-flex justify-content-between">
+
             <h1>Filmes</h1>
             <% if(usuario[0].ISAdmin == 1) { %>
               <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addFilme">Adicionar Filme</button>
             <% } %>
+
           </div>
 
-          <div class="overflow-y-auto d-flex flex-wrap" id="filmes">
+          <div class="container overflow-y-auto d-flex justify-content-between" id="filmes">
             <% for(let i = 0; i < filmes.length; i++) { %>
 
-              <div class="col text-center p-2">
+              <div class="filme p-2">
 
                 <a href="/filmeSelec/<%= filmes[i].IDFilme %>/<%= usuario[0].Usuario %>">
                   <img  class="capaFilme" src="/img/<%= filmes[i].Imagem %>" alt="Imagem não encontrada">
                 </a>
 
-                <p class=""><%= filmes[i].Titulo %></p>
+                <p class="text-center"><%= filmes[i].Titulo %></p>
+
               </div>
 
             <% } %>
@@ -158,12 +162,18 @@
 
               <br>
 
-              <select class="form-control multiselect" name="inputGenero" id="generoFilme" multiple>
-                <% for(let i = 0; i < generos.length; i++) { %>
-                  
-                  <option value="<%= generos[i].IDGenero %>"><%= generos[i].Nome %></option>
-
-                <% } %>
+              <label class="form-check-label" for="generos">Generos</label>
+              <div class="overflow-y-auto" style="height: 200px;">
+                <ul class="list-group" id="generos">
+                  <% for(let i = 0; i < generos.length; i++) { %>
+                    
+                    <li class="list-group-item">
+                      <input class="form-check-input me-1" type="checkbox" value="<%= generos[i].IDGenero %>" id="checkbox<%= i %>" name="inputGenero">
+                      <label class="form-check-label" for="checkbox<%= i %>"><%= generos[i].Nome %></label>
+                    </li>
+  
+                  <% } %>
+                </ul>
               </select>
 
               <br>
@@ -207,16 +217,6 @@
       </div>
       
     </div>
-    
-    <!-- Footer -->
-
-    <footer class="border border-black">
-
-      <div class="container border border-black">
-
-      </div>
-
-    </footer>
 
     <button class="d-none" id="abrirFilmeJaCadastrado" data-bs-toggle="modal" data-bs-target="#filmeJaCadastrado"></button>
 

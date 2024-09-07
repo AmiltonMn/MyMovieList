@@ -58,7 +58,7 @@ route.post('/deletarTemp/:id/:nomeUser', series.deletarTemp);
 route.post('/deletarEp/:id/:nomeUser', series.deletarEp);
 
 // Get e Post da home
-route.get('/', home.getHome);
+route.get('/', home.getHomeInit);
 route.get('/:nomeUser', home.getHome);
 
 module.exports = route;

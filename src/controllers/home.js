@@ -21,6 +21,21 @@ const usuario = require('../model/usuario');
 
 
 module.exports = {
+    async getHomeInit(req, res){
+        
+        const filmesMaisRecentes = await tabelaFilme.findAll ({
+            raw: true,
+            order: [['Lancamento', 'DESC']]
+        })
+
+        const filmesMelhorAvaliados = await tabelaFilme.findAll ({
+            raw: true,
+            order: [['NotaGeral', 'DESC']]
+        })
+        
+        res.render('../views/home', {usuario: '', filmesMaisRecentes, filmesMelhorAvaliados});
+    },
+
     async getHome(req, res){
 
         await tabelaAmizade
@@ -46,16 +61,26 @@ module.exports = {
             order: [['Lancamento', 'DESC']]
         })
 
+        const filmesMelhorAvaliados = await tabelaFilme.findAll ({
+            raw: true,
+            order: [['NotaGeral', 'DESC']]
+        })
+
         const nomeUser = req.params.nomeUser;
 
         if (typeof(nomeUser) === undefined || nomeUser == 'favicon.ico') {
             return 0;
         } else {
-            const usuario = await tabelaUsuario.findAll({
-                raw: true,
-                where: {Usuario: nomeUser}
-            });
-            res.render('../views/home', {usuario, filmesMaisRecentes});
+            
+            if (nomeUser != '') {
+                const usuario = await tabelaUsuario.findAll({
+                    raw: true,
+                    where: {Usuario: nomeUser}
+                });
+                res.render('../views/home', {usuario, filmesMaisRecentes, filmesMelhorAvaliados});
+            } else {
+
+            }
         }
     }
 }
