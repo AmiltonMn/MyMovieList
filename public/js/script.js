@@ -19,13 +19,13 @@ function adicionarMode() {
 }
 
 function mudarDarkMode(){
-    mode.setItem("mode", (localStorage.getItem("mode") == "white") ? "dark" : "white");
+    mode.setItem("mode", (localStorage.getItem("mode") == "dark") ? "white" : "dark");
     adicionarMode();
 };
 
 function updateIcone(){
     const iconeMode = document.getElementById("icone");
-    iconeMode.innerText = (mode.getItem("mode") == "white") ? "dark_mode" : "light_mode";
+    iconeMode.innerText = (mode.getItem("mode") == "dark") ? "light_mode" : "dark_mode";
 }
 
 function imgClick()
@@ -77,4 +77,24 @@ function listaFilmesClick(){
 function listaSeriesClick(){
     document.getElementById("listaFilmes").setAttribute("class", "collapse");
     document.getElementById("listaSeries").setAttribute("class", "collapse show");
+}
+
+function listaFilmesAssistidosClick(){
+    document.getElementById("filmesPretendoAssistir").setAttribute("class", "collapse");
+    document.getElementById("filmesAssistidos").setAttribute("class", "collapse show");
+}
+
+function listaFilmesPretendoAssistirClick(){
+    document.getElementById("filmesAssistidos").setAttribute("class", "collapse");
+    document.getElementById("filmesPretendoAssistir").setAttribute("class", "collapse show");
+}
+
+function listaSeriesAssistidosClick(){
+    document.getElementById("seriesPretendoAssistir").setAttribute("class", "collapse");
+    document.getElementById("seriesAssistidos").setAttribute("class", "collapse show");
+}
+
+function listaSeriesPretendoAssistirClick(){
+    document.getElementById("seriesAssistidos").setAttribute("class", "collapse");
+    document.getElementById("seriesPretendoAssistir").setAttribute("class", "collapse show");
 }
