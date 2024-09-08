@@ -26,7 +26,7 @@ const filme = database.define('filme', {
         allowNull: false
     },
     IdadeIndicativa: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING(255),
         allowNull: false
     },
     Imagem: {

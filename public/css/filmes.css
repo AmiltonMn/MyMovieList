@@ -3,25 +3,41 @@
     .modal-lg {max-width: 70%;}
 }
 
+*
+{
+    box-sizing: border-box;
+}
+
 footer
 {
     display: flex;
     background-color: brown;
-    position: fixed;
+    position: static;
     margin-top: 30px;
     bottom: 0;
     width: 100%;
-    max-height: fit-content;
-}
-
-main
-{
-    background-image: linear-gradient(to left rgb(125, 7, 7) rgb(18, 48, 103) 80%);
+    height: 50px;
 }
 
 .indImage
 {
     width: 100%;
+}
+
+.notaFilme
+{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    bottom: 35px;
+    right: 5px;
+    border-radius: 999px;
+    background-color: rgb(10, 10, 59);
+    color: yellow;
+    border: 1px outset orange;
 }
 
 .capaFilme
@@ -76,9 +92,11 @@ main
 
 #filmes
 {
+    display: grid;
+    grid-template-columns: 156px 156px 156px 156px 156px;
     flex-wrap: wrap;
     flex-direction: row;
-    justify-content: start;
+    justify-content: space-around;
     align-items: center;
     border-radius: 56px;
 }
