@@ -69,3 +69,12 @@ novaImagemFilme.addEventListener('change', () =>
         )
 });
     
+function listaFilmesClick(){
+    document.getElementById("listaSeries").setAttribute("class", "collapse");
+    document.getElementById("listaFilmes").setAttribute("class", "collapse show");
+}
+
+function listaSeriesClick(){
+    document.getElementById("listaFilmes").setAttribute("class", "collapse");
+    document.getElementById("listaSeries").setAttribute("class", "collapse show");
+}
