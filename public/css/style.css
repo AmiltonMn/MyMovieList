@@ -1,7 +1,7 @@
 footer
 {
     display: flex;
-    background: linear-gradient(to right, rgb(129, 18, 129), rgb(109, 1, 109) 70%, rgb(95, 8, 95));
+    background: linear-gradient(to left, rgb(40, 40, 102), rgb(10, 10, 59), rgb(7, 7, 59));
     position: static;
     margin-top: 30px;
     bottom: 0;
@@ -11,7 +11,7 @@ footer
 
 nav
 {
-    background: linear-gradient(to right, rgb(129, 18, 129), rgb(133, 12, 133) 70%, rgb(182, 30, 182));
+    background: linear-gradient(to left, rgb(40, 40, 102), rgb(10, 10, 59), rgb(7, 7, 59));
     color: orange;
     height: 70px;
 }

@@ -68,6 +68,17 @@ novaImagemFilme.addEventListener('change', () =>
             ImagemFilme.src = reader.result
         )
 });
+
+$("#lancamentos").on(
+    "hover",
+    ".imagemFilme",
+    function () 
+    {
+        const bg = $(this).getAttribute("src")
+        
+        console.log(bg)
+    }
+)
     
 function listaFilmesClick(){
     document.getElementById("listaSeries").setAttribute("class", "collapse");
