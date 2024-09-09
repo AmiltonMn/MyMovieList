@@ -56,6 +56,7 @@ route.post('/updateEp/:id/:nomeUser', multer(config).single("imagemInput"), seri
 route.post('/deletarSerie/:id/:nomeUser', series.deletarSerie);
 route.post('/deletarTemp/:id/:nomeUser', series.deletarTemp);
 route.post('/deletarEp/:id/:nomeUser', series.deletarEp);
+route.post('/addQueroAssistirSerie/:id/:nomeUser', series.addPretendoAssistir)
 
 // Get e Post da home
 route.get('/', home.getHomeInit);

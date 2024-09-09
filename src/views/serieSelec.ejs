@@ -7,11 +7,12 @@
     <title>My Movie List</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/c147ae9e45.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
 <body>
       
-<nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
 
   <div class="container-fluid d-flex justify-content-around">
 
@@ -37,102 +38,156 @@
   </div>
 </nav>
 
-<main class="container d-flex">
+<main class="container d-flex position-absolute top-50 start-50 translate-middle">
 
-  <div class="p-0" id="fotoInfo">
+  <div>
 
-      <br>
-
-      <div class="p-2 container d-inline-flex border border-black" id="informacoes">
-        
-        <div class="container d-flex flex-column align-items-center">
-
+    <div class="p-2 container d-flex" id="containerInformacoes">
+        <div class="d-flex flex-column align-items-center">
+  
           <img id="serieCapa" src="/img/<%= serie[0].Imagem %>" alt="">
-
+  
         </div>
-
-        <div>
-
-          <h1 class=""><%= serie[0].Titulo %></h1>
-
-          <hr>
-
-          <p><%= serie[0].Sinopse %></p>
-
-          <div class="d-flex flex-row">
-            <% for (let i = 0; i < genero.length; i ++) { %>
-              <div class="generos">
-                <%= genero[i]['genero.Nome'] %> 
-              </div>
-            <% } %>
-          </div>
-
-          <br>
-
-          <p><%= serie[0].Lancamento %></p>
-
-          <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#adicionarLista" >Add Lista</button>
-          <button type="button" class="btn btn-outline-primary">Quero Assistir</button>
-
-          <% if(usuario[0].ISAdmin == 1) { %>
-            <div class="" id="btnsAdmin">
-
-              <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addTemp">Adicionar Temporada</button>
-
-              <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#atualizarSerie">Atualizar Serie</button>
-
-              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#deletarSerie" >Excluir</button>
-
+  
+        <div class="container d-flex flex-column justify-content-center" id="infosDaSerie">
+  
+            <h1 class=""><%= serie[0].Titulo %></h1>
+  
+            <hr>
+  
+            <p class="text-justify"><%= serie[0].Sinopse %></p>
+  
+            <div class="d-flex flex-row">
+              <% for (let i = 0; i < genero.length; i ++) { %>
+                <div class="generos">
+                  <%= genero[i]['genero.Nome'] %> 
+                </div>
+              <% } %>
             </div>
-          <% } %>
-
-        </div>
-
-      </div>
-
-      <div class="d-flex flex-column gap-2 mt-2">
-        <% for(let i = 0; i < temporada.length; i++) { %>
-          <!-- Temporadas -->
-          <div>
-
-            <a class="btn btn-primary w-25" data-bs-toggle="collapse" href="#temp<%= i %>" role="button" aria-expanded="false" aria-controls="collapseExample">
-              <%= temporada[i].Titulo %>
-            </a>
-            <% if(usuario[0].ISAdmin == 1) { %>
+  
+            <br>
+  
+            <div class="d-flex flex-row align-items-center" style="margin-bottom: 15px;">
+              <div class="d-flex justify-content-center" style="background-color: rgb(10, 10, 10); color: rgb(255, 255, 255); width: 100px; border-radius: 999px;">
+                <%= serie[0].Lancamento %>
+              </div>
+  
+              <img src="/img/<%= serie[0].IdadeIndicativa %>.jpg" alt="idadeIndicativa" id="idadeIndicativa">
+            </div>
+  
+            <div class="d-flex justify-content-between">
+  
+              <div class="d-flex justify-content-start align-items-center" id="btnsUsuario">
+            
+            <% if(!adicionadoSerieAssistido) { %>
               
-              <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addEp<%= i %>">Adicionar Episodio</button>
+              <button type="button" class="btn btn-outline-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#adicionarLista" style="background: transparent; border: none;"><i class="fa-solid fa-circle-plus fa-xl"></i></button>
               
-              <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateTemp<%= i %>">Atualizar Temporada</button>
+              <% if(!adicionadoPretendoAssistir) { %>
+                <form action="/addQueroAssistirSerie/<%= serie[0].IDSerie %>/<%= usuario[0].Usuario %>" method="post">
+                  <button type="submit" class="btn btn-outline-primary" style="border: none;">Quero Assistir</button>
+                </form>
+                <% } %>
               
-              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#deletarTemp<%= i %>" >Excluir Temporada</button>
+                <% } else { %>
+                  <i class="changebtns fa-solid fa-circle-check fa-xl" style="color: red;"></i>
+                <% } %>
               
-            <% } %>
-              <div class="collapse" id="temp<%= i %>">
-                <div class="card card-body">
-                  Eps: <br>
-                  <% for (let j = 0; j < ep.length; j++) { %>
-                    <% if (ep[j].IDTemporada == temporada[i].IDTemporada) { %>
-                      <!-- Episodios -->
-                      <p><%= ep[j].Titulo %></p>
-
-                      <% if(usuario[0].ISAdmin == 1) { %>
-
-                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateEp<%= i %><%= j %>">Atualizar Episodio</button>
+              </div>
                 
-                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#deletarEp<%= i %><%= j %>" >Excluir Episodio</button>
-                        
+              <% if(usuario[0].ISAdmin == 1) { %> 
+                
+                <div class="" id="btnsAdmin">
+                  
+                  <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addTemp" style="background: transparent; border: none;"><i class="fa-solid fa-folder-plus fa-xl"></i></button>
+  
+                  <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#atualizarSerie" style="background: transparent; border: none;"><i class="fa-solid fa-pen-to-square fa-xl"></i></button>
+                  
+                  <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#deletarSerie" style="background: transparent; border: none; color: red;"><i class="fa-solid fa-trash fa-xl"></i></button>
+  
+                </div>
+  
+              <% } %>
+  
+          </div>
+  
+          </div>
+  
+        </div>
+            
+        <br>
+
+        <div class="d-flex flex-column gap-2 mt-2">
+          <% for(let i = 0; i < temporada.length; i++) { %>
+            <!-- Temporadas -->
+            <div>
+  
+              <a class="btn btn-primary w-25" data-bs-toggle="collapse" href="#temp<%= i %>" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <%= temporada[i].Titulo %>
+              </a>
+              <% if(usuario[0].ISAdmin == 1) { %>
+                
+                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addEp<%= i %>">Adicionar Episodio</button>
+                
+                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateTemp<%= i %>">Atualizar Temporada</button>
+                
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#deletarTemp<%= i %>" >Excluir Temporada</button>
+                
+              <% } %>
+                <div class="collapse" id="temp<%= i %>">
+                  <div class="card card-body">
+                    Eps: <br>
+                    <% for (let j = 0; j < ep.length; j++) { %>
+                      <% if (ep[j].IDTemporada == temporada[i].IDTemporada) { %>
+                        <!-- Episodios -->
+                        <p><%= ep[j].Titulo %></p>
+  
+                        <% if(usuario[0].ISAdmin == 1) { %>
+  
+                          <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#updateEp<%= i %><%= j %>">Atualizar Episodio</button>
+                  
+                          <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#deletarEp<%= i %><%= j %>" >Excluir Episodio</button>
+                          
+                        <% } %>
                       <% } %>
                     <% } %>
-                  <% } %>
-            
+              
+                  </div>
                 </div>
               </div>
-            </div>
-        <% } %>
+          <% } %>
+        </div>
       </div>
-    </div>
     
   </main>
+
+<!-- Modal de Sucesso -->
+
+<div class="modal" tabindex="-1" id="sucesso">
+      
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <h5 class="modal-title">Serie adicionada</h5>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+      </div>
+
+      <div class="modal-body">
+
+        <p>A serie <%= serie[0].Titulo %> foi adicionada à sua lista!</p>
+
+      </div>
+
+    </div>
+
+  </div>
+  
+</div>
 
 <!-- Modal Atualizar Serie-->
 
@@ -169,12 +224,12 @@
           <label class="form-label" for="idadeIndicativaInput">Idade Indicativa</label>
           <select class="form-control" name="idadeIndicativaInput" id="idadeIndicativaInput" required>
 
-            <option value="1" <%= (1 === serie[0].IdadeIndicativa) ? "selected" : "" %>>AL</option>
-            <option value="2" <%= (2 === serie[0].IdadeIndicativa) ? "selected" : "" %>>A10</option>
-            <option value="3" <%= (3 === serie[0].IdadeIndicativa) ? "selected" : "" %>>A12</option>
-            <option value="4" <%= (4 === serie[0].IdadeIndicativa) ? "selected" : "" %>>A14</option>
-            <option value="5" <%= (5 === serie[0].IdadeIndicativa) ? "selected" : "" %>>A16</option>
-            <option value="6" <%= (6 === serie[0].IdadeIndicativa) ? "selected" : "" %>>A18</option>
+            <option value="AL"  <%= ("AL"  === serie[0].IdadeIndicativa) ? "selected" : "" %>>AL</option>
+            <option value="A10" <%= ("A10" === serie[0].IdadeIndicativa) ? "selected" : "" %>>A10</option>
+            <option value="A12" <%= ("A12" === serie[0].IdadeIndicativa) ? "selected" : "" %>>A12</option>
+            <option value="A14" <%= ("A14" === serie[0].IdadeIndicativa) ? "selected" : "" %>>A14</option>
+            <option value="A16" <%= ("A16" === serie[0].IdadeIndicativa) ? "selected" : "" %>>A16</option>
+            <option value="A18" <%= ("A18" === serie[0].IdadeIndicativa) ? "selected" : "" %>>A18</option>
 
           </select>
 
@@ -561,10 +616,16 @@
 <% } %>
 
 
-<footer class="border border-black">
 
-</footer>
+<button type="button" class="d-none" id="abrirSucesso" data-bs-toggle="modal" data-bs-target="#sucesso"></button>
 
+<% if(flag == 1) { %>
+
+  <script>
+    document.getElementById("abrirSucesso").click()
+  </script>
+
+<% } %>
 <script src="/js/script.js"></script>
 <script>
   adicionarMode();

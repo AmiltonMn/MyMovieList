@@ -3,6 +3,11 @@
     .modal-lg {max-width: 70%;}
 }
 
+*
+{
+    box-sizing: border-box;
+}
+
 footer
 {
     display: flex;
@@ -16,7 +21,23 @@ footer
 
 .indImage
 {
-    width: 50%;
+    width: 100%;
+}
+
+.notaSerie
+{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    bottom: 35px;
+    right: 5px;
+    border-radius: 999px;
+    background-color: rgb(10, 10, 59);
+    color: yellow;
+    border: 1px outset orange;
 }
 
 .capaSerie
@@ -25,6 +46,12 @@ footer
     height: 230px;
     margin: 5px;
     border-radius: 15px;
+}
+
+.capaSerie:hover
+{
+    border: 3px solid red;
+    transition: linear 0.1s;
 }
 
 #btnCadSerie
@@ -41,5 +68,44 @@ footer
 
 #imgLupa
 {
-    margin-right: 10px;
+    position: relative;
+    right: 50px;
+}
+
+#buscaSerie
+{
+    width: 100%;
+    border-radius: 999px;
+}
+
+#formPesquisa
+{
+    width: 100%;
+}
+
+#containerPesquisa
+{
+    background-image: url('../img/gifMaze.gif');
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+#series
+{
+    display: grid;
+    grid-template-columns: 156px 156px 156px 156px 156px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 56px;
+}
+
+#seriesBox
+{
+    border: 1px outset orange;
+    border-top-left-radius: 56px;
+    border-top-right-radius: 56px;
+    border-bottom: 0px;
+    box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;
 }

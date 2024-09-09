@@ -1,12 +1,45 @@
 #serieCapa
 {
-    width: 312px;
-    height: 460px;
+  width: 90%;
+  height: fit-content;
+  margin: 15px;
 }
 
-#informacoes
+#infosDaSerie
 {
     margin-left: 45px;
+}
+
+#containerInformacoes
+{
+  width: 100%;
+  border: 1px outset orange;
+  height: fit-content;
+  border-top-left-radius: 50px;
+  border-top-right-radius: 50px;
+  padding: 15px;
+  box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;
+
+}
+
+#btnsUsuario
+{
+  position: relative;
+  right: 13px;
+}
+
+#idadeIndicativa
+{
+  border-radius: 4px;
+  margin-left: 10px;
+  width: 30px;
+  height: 30px;
+}
+
+#imagemSerie
+{
+  width: 100%;
+  height: 100%;
 }
 
 footer
@@ -23,17 +56,22 @@ footer
 hr
 {
     height: 5px;
-    background-color: rgb(255, 0, 0);
-    width: 80%;
+    background: linear-gradient(to right, orange, purple);
+}
+
+.modal
+{
+  position: relative;
 }
 
 .generos
 {
-    background-color: aqua;
-    border-radius: 999px;
-    width: 130px;
-    text-align: center;
-    margin-right: 15px;
+  background-color: rgb(10, 10, 10);
+  border-radius: 999px;
+  width: 130px;
+  text-align: center;
+  margin-right: 15px;
+  color: white;
 }
 
 .estrelas input[type=radio] {

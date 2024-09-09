@@ -5,6 +5,7 @@ const tabelaEp = require('../model/ep');
 const tabelaGenero = require('../model/genero');
 const tabelaGeneroSerie = require('../model/generoSerie');
 const tabelaListaSerie = require('../model/listaSerie');
+const tabelaPretendoAssistir = require('../model/pretendeAssistirSerie');
 const { Op, where } = require('sequelize');
 const { raw } = require('express');
 const usuario = require('../model/usuario');
@@ -96,6 +97,8 @@ module.exports = {
     async getSerieSelecionada(req, res){
         const nomeUser = req.params.nomeUser;
         const id = req.params.id;
+        let adicionadoPretendoAssistir = false;
+        let adicionadoSerieAssistido = false;
 
         const serie = await tabelaSerie.findAll({
             raw: true,
@@ -131,7 +134,40 @@ module.exports = {
             where: {IDSerie: id}
         });
 
-        res.render('../views/serieSelec', {serie, usuario, temporada, ep, genero});
+        const idSerieAssistido = await tabelaListaSerie.findAll({
+            raw: true,
+            attributes: ['IDSerie'],
+            where: {IDSerie: id, IDUsuario: usuario[0].IDUsuario}
+        })
+
+        const idSeriePretendoAssistir = await tabelaPretendoAssistir.findAll({
+            raw: true,
+            attributes: ['IDSerie'],
+            where: {IDSerie: id, IDUsuario: usuario[0].IDUsuario}
+        })
+
+        try {
+            if (idSerieAssistido[0].IDSerie != id) {
+                adicionadoSerieAssistido = false
+            } else {
+                adicionadoSerieAssistido = true
+            }
+        } catch (error) {
+            adicionadoSerieAssistido = false;
+        }
+
+        // Verificação para ver se já está na lista "Quero Assistir"
+        try {
+            if (idSeriePretendoAssistir[0].IDSerie != id) {
+                adicionadoPretendoAssistir = false
+            } else {
+                adicionadoPretendoAssistir = true
+            }
+        } catch (error) {
+            adicionadoPretendoAssistir = false;
+        }
+
+        res.render('../views/serieSelec', {serie, usuario, temporada, ep, genero, flag: 0, adicionadoPretendoAssistir, adicionadoSerieAssistido});
     },
 
     async atualizarSerie(req, res){
@@ -390,5 +426,120 @@ module.exports = {
         serie[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
 
         res.redirect('/serieSelec/' + id + '/' + nomeUser);
+    },
+
+    async addPretendoAssistir(req, res)
+    {
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+        let adicionadoPretendoAssistir = false
+        let adicionadoSerieAssistido = false
+
+
+        const usuario = await tabelaUsuario.findAll({
+            raw: true,
+            where: {Usuario: nomeUser}
+        });
+
+        await tabelaPretendoAssistir.create({
+            IDSerie: id,
+            IDUsuario: usuario[0].IDUsuario
+        })
+
+        const serie = await tabelaSerie.findAll({
+            raw: true,
+            where: {IDSerie: id}
+        });
+
+        const generos = await tabelaGenero.findAll({
+            raw: true,
+            attributes: ['Nome']
+        });
+
+        const genero = await tabelaGeneroSerie.findAll({
+            raw: true,
+            include: [{model: tabelaGenero}],
+            where: {IDSerie: id}
+        });
+        
+        const idGenerosSerie = await tabelaGeneroSerie.findAll({
+            raw: true,
+            attributes: ['IDGenero'],
+            where: {IDSerie: id}
+        });
+
+        let listaGeneros = [];
+
+        for(let i = 0; i < idGenerosSerie.length; i++)
+        {
+            listaGeneros[i] = idGenerosSerie[i].IDGenero;
+        }
+
+        const generosSerie = await tabelaGenero.findAll({
+            raw: true,
+            attributes: ['Nome'],
+            where: { IDGenero: listaGeneros }
+        })
+
+        const idSerieAssistido = await tabelaListaSerie.findAll({
+            raw: true,
+            attributes: ['IDSerie'],
+            where: {IDSerie: id, IDUsuario: usuario[0].IDUsuario}
+        })
+
+        const idSeriePretendoAssistir = await tabelaPretendoAssistir.findAll({
+            raw: true,
+            attributes: ['IDSerie'],
+            where: {IDSerie: id, IDUsuario: usuario[0].IDUsuario}
+        })
+
+        const dataLancamento = new Date(serie[0].Lancamento);
+
+        dataLancamento.setDate(dataLancamento.getDate() + 2);
+
+        serie[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
+
+        const temporada = await tabelaTemporada.findAll({
+            raw: true,
+            where: {IDSerie: id}
+        });
+
+        var temporadaIDS = []
+
+        for (let i = 0; i < temporada.length; i++) {
+            temporadaIDS[i] = temporada[i].IDTemporada;   
+        }
+
+        const ep = await tabelaEp.findAll({
+            raw: true,
+            where: {IDTemporada: {
+                [Op.in]: temporadaIDS
+            }}
+        })
+
+        // Verificação para ver se está na lista de filmes
+        try {
+            if (idSerieAssistido[0].IDSerie != id) {
+                adicionadoSerieAssistido = false
+            } else {
+                adicionadoSerieAssistido = true
+            }
+        } catch (error) {
+            adicionadoSerieAssistido = false;
+        }
+
+        // Verificação para ver se já está na lista "Quero Assistir"
+        try {
+            if (idSeriePretendoAssistir[0].IDSerie != id) {
+                adicionadoPretendoAssistir = false
+            } else {
+                adicionadoPretendoAssistir = true
+            }
+        } catch (error) {
+            adicionadoPretendoAssistir = false;
+        }
+
+        res.render('../views/serieSelec', {serie, usuario, genero, flag: 1, adicionadoSerieAssistido, adicionadoPretendoAssistir, temporada, ep})
+        
     }
 }
