@@ -9,6 +9,11 @@ footer
     height: 50px;
 }
 
+main
+{
+    margin-top: 50px;
+}
+
 #buscaHome
 {
     width: 95%;
@@ -16,44 +21,21 @@ footer
     padding-left: 15px;
 }
 
-#containerPesquisa
+#containerLancamentos
 {
-    height: 300px;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    border-radius: 25px;
 }
 
-#imgLupa
+#containerAvaliados
 {
-    position: relative;
-    right: 40px;
-    bottom: 13px;
-}
-
-#buscaFilme
-{
-    width: 100%;
-    border-radius: 999px;
-}
-
-#formPesquisa
-{
-    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    border-radius: 25px;
 }
 
 #tituloNav
 {
     transition: ease-in 1ms;
-}
-
-#containerPesquisa
-{
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
-}
-
-
-#formPesquisa
-{
-    width: 100%;
 }
 
 .imagemFilme

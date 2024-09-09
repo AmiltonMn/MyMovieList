@@ -49,21 +49,12 @@
 
     <main>
 
-      <div class="container p-3 d-flex align-items-end mb-5 shadow-lg" id="containerPesquisa">
-
-        <% if(usuario != '') { %>
-          <form action="/buscaFilmes/<%= usuario[0].Usuario %>" method="post" id="formPesquisa">
-            <input class="form-control p-2" name="buscaFilme" id="buscaFilme" placeholder="Pesquise um filme">
-          </form>
-        <% } %>
-        
-        <i class="fa-solid fa-magnifying-glass" id="imgLupa"></i>
-
-      </div>
-
-      <div class="container p-3 d-flex justify-content-center align-items-center mb-5">
+      <div class="container p-3 d-flex justify-content-center align-items-center mb-5" id="containerLancamentos">
         <div class="container row p-3 d-flex justify-content-around align-items-center">
-          <h1>Lançamentos</h1>
+          <div class="d-flex flex-row text-center align-items-end">
+            <h1>Lançamentos</h1>
+            <p style="margin-left: 15px;">(Filmes)</p> 
+          </div>
           <div id="lancamentos" class="overflow-x-auto overflow-y-hidden d-flex flex-row">
             <% try { %>
               <% for(let i = 0; i < filmesMaisRecentes.length; i++) { %>
@@ -88,9 +79,12 @@
         </div>
       </div>
 
-      <div class="container border border-black p-3 d-flex justify-content-center align-items-center mb-5">
-        <div class="container border border-black row p-3 d-flex justify-content-around align-items-center">
-          <h1>Melhor Avaliados</h1>
+      <div class="container p-3 d-flex justify-content-center align-items-center mb-5" id="containerAvaliados">
+        <div class="container row p-3 d-flex justify-content-around align-items-center">
+          <div class="d-flex flex-row text-center align-items-end">
+            <h1>Melhor Avaliados</h1>
+            <p style="margin-left: 15px;">(Filmes)</p> 
+          </div>
           <div id="melhorAvaliados" class="overflow-x-auto overflow-y-hidden d-flex flex-row">
             <% try { %>
               <% for(let i = 0; i < filmesMelhorAvaliados.length; i++) { %>
