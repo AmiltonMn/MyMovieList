@@ -31,12 +31,14 @@ main
 #containerLancamentos
 {
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    border: 1px outset orange;
     border-radius: 25px;
 }
 
 #containerAvaliados
 {
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    border: 1px outset orange;
     border-radius: 25px;
 }
 
@@ -51,7 +53,7 @@ main
     background-repeat: no-repeat;
     background-position: center;
     border-radius: 15px;
-    transition: ease-in-out 0.5s;
+    transition: ease-in-out 1s;
 }
 
 .imagemFilme
