@@ -85,6 +85,7 @@ module.exports = {
             include: [{model: tabelaSeries}],
             where: {IDUsuario: usuario[0].IDUsuario}
         });
+
         console.log(listaPretendeAssistirFilme);
         console.log(listaPretendeAssistirSerie);
         
@@ -176,12 +177,37 @@ module.exports = {
             where: {IDUsuario: usuario[0].IDUsuario}
         });
 
-        const lista = await tabelaListaFilmes.findAll({
+        const listaFilmes = await tabelaListaFilmes.findAll({
             raw: true,
             where: {IDUsuario: usuario[0].IDUsuario}
         })
 
-        res.render('../views/perfil', {id, usuario, flag, filmes, lista})
+        const series = await tabelaListaSeries.findAll({
+            raw: true,
+            include: [{model: tabelaSeries}],
+            where: {IDUsuario: usuario[0].IDUsuario}
+        });
+
+        const listaSeries = await tabelaListaSeries.findAll({
+            raw: true,
+            where: {IDUsuario: usuario[0].IDUsuario}
+        });
+
+        const listaPretendeAssistirFilme = await tabelaPretendeAssistirFilme.findAll({
+            raw: true,
+            attributes: ['IDFilme'],
+            include: [{model: tabelaFilmes}],
+            where: {IDUsuario: usuario[0].IDUsuario}
+        });
+
+        const listaPretendeAssistirSerie = await tabelaPretendeAssistirSerie.findAll({
+            raw: true,
+            attributes: ['IDSerie'],
+            include: [{model: tabelaSeries}],
+            where: {IDUsuario: usuario[0].IDUsuario}
+        });
+
+        res.render('../views/perfil', {usuario, filmes, listaFilmes, series, listaSeries, listaPretendeAssistirFilme, listaPretendeAssistirSerie, flag: 0});
     },
 
     async updateReview(req, res){
