@@ -65,7 +65,7 @@
               <p>Email: <%= usuario[0].Email %></p>
               <div class="d-flex justify-content-center">
                 <button data-bs-toggle="modal" data-bs-target="#atualizarPerfil" style="background: transparent; border: none;"><span class="material-symbols-outlined">edit</span></button>
-                <button data-bs-toggle="modal" data-bs-target="#logoff" style="background: transparent; border: none;"><i class="fa-solid fa-right-to-bracket fa-bounce fa-xl" style="color: #ff0101;"></i></button>
+                <button data-bs-toggle="modal" data-bs-target="#logout" style="background: transparent; border: none;"><i class="fa-solid fa-right-to-bracket fa-bounce fa-xl" style="color: #ff0101;"></i></button>
               </div>
             <% } catch (error) { %>
               <p>ERRO</p>
@@ -538,7 +538,7 @@
 
     <!-- Modal de logoff -->
 
-    <div class="modal" tabindex="-1" id="logoff">
+    <div class="modal" tabindex="-1" id="logout">
       
       <div class="modal-dialog modal-dialog-centered modal-lg">
         
