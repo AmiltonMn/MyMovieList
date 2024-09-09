@@ -194,3 +194,23 @@ body
   .estrelas input[type=radio]:checked ~ label i.fa:before {
     color: #CCC;
   }
+
+#sair {
+    background-color: red;
+    width: 209px;
+    height: 92px;
+    background-image: url("/img/1725904155491-fogo.gif");
+    border-radius: 10px;
+    a {
+        text-decoration: none;
+        color: rgb(0, 0, 0);
+    }
+}
+
+#naoSair {
+    background-color: rgb(30, 199, 30);
+    width: 209px;
+    height: 92px;
+    background-image: url("/img/1725904693511-brilhinho.gif");
+    border-radius: 10px;
+}
