@@ -3,23 +3,28 @@ main {
     justify-content: center;
 }
 
-#main {
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-}
-
-#sobreMML {
-    height: fit-content;
-    width: 50%;
-}
-
-#registro {
-    width: 50%;
-    padding: 10px;
-}
-
 #cadastrar {
     margin-top: 30px;
     width: 100%;
+}
+
+#registro {
+    width: 25%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#carousel img
+{
+    height: 897px;
+    width: 1920px;
+}
+
+#boxPage
+{
+    display: flex;
+    justify-content: end;
 }

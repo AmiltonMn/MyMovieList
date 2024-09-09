@@ -24,29 +24,46 @@
         </span>
       </div>
     </nav>
-    <main class="container d-flex align-items-center position-absolute top-50 start-50 translate-middle">
-      <div id="sobreMML" class="d-flex float-left row">
-        <h1>My Movie List</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis facere molestiae ipsam mollitia accusantium quae asperiores excepturi voluptatibus ea doloremque iste dolore, corrupti maxime ut! Animi quos voluptas labore. Ab.</p>
-      </div>
-      <div id="main" class="d-flex justify-content-end align-items-center">
-        <div id="registro">
-          <h1 class="text-center">Registrar</h1>
-          <form action="/cadastrar" method="post">
-            <label for="usuarioInput">Usuario</label>
-              <input type="text" name="usuarioInput" id="usuarioInput" class="form-control" required>
-            <label for="nomeInput">Nome</label>
-              <input type="text" name="nomeInput" id="nomeInput" class="form-control" required>
-            <label for="emailInput">Email</label>
-                <input type="email" name="emailInput" id="emailInput" class="form-control" required>
-            <label for="dtNascInput">Data de Nascimento</label>
-              <input type="date" name="dtNascInput" id="dtNascInput" class="form-control" required>
-            <label for="senhaInput">Senha</label>
-              <input type="password" name="senhaInput" id="senhaInput" class="form-control" required>
-            <button type="submit" class="btn btn-primary" id="cadastrar">Cadastrar</button>
-          </form>
+
+    <div id="boxPage">
+
+      <div id="carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="https://images7.alphacoders.com/111/1111669.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="https://cinebuzz.com.br/media/uploads/homem-aranha_atraves_do_aranhaverso_chega_as_plataformas_digitais_1.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="https://cdn.playpilot.tech/50179c36f3c811eeabfd0a58a9feac02/src/img?optimizer=image&quality=75&width=3500&aspect_ratio=16%3A9" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="https://images.wallpapersden.com/image/download/james-bond-4k-007_bWhtZmmUmZqaraWkpJRmbmdlrWZlbWU.jpg" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="https://blackcompany.com.br/wp-content/uploads/2024/08/capa.jpg" class="d-block w-100" alt="...">
+          </div>
         </div>
-    </main>
+      </div>
+    
+    <div id="registro">
+      <h1 class="text-center">Registrar</h1>
+      <form action="/cadastrar" method="post">
+        <label for="usuarioInput">Usuario</label>
+          <input type="text" name="usuarioInput" id="usuarioInput" class="form-control" required>
+        <label for="nomeInput">Nome</label>
+          <input type="text" name="nomeInput" id="nomeInput" class="form-control" required>
+        <label for="emailInput">Email</label>
+            <input type="email" name="emailInput" id="emailInput" class="form-control" required>
+        <label for="dtNascInput">Data de Nascimento</label>
+          <input type="date" name="dtNascInput" id="dtNascInput" class="form-control" required>
+        <label for="senhaInput">Senha</label>
+          <input type="password" name="senhaInput" id="senhaInput" class="form-control" required>
+        <button type="submit" class="btn btn-primary" id="cadastrar">Criar Conta</button>
+      </form>
+    </div>
+    
     <script src="/js/script.js"></script>
     <script>
       adicionarMode();
