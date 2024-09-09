@@ -11,6 +11,7 @@ module.exports = {
     async getPerfilPage(req, res)
     {
         const nomeUser = req.params.nomeUser;
+        const id = req.params.id;
 
         const usuario = await tabelaUsuario.findAll({
             raw: true,

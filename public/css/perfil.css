@@ -8,6 +8,11 @@ hr
     width: 98%;
 }
 
+main
+{
+    margin-top: 80px;
+}
+
 footer
 {
     display: flex;
@@ -140,6 +145,12 @@ body
     width: 156px;
     height: 230px;
     border-radius: 15px;
+}
+
+.imagemFilme:hover
+{
+    border: 3px solid red;
+    transition: linear 0.1s;
 }
 
 .infoFilme

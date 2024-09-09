@@ -6,7 +6,6 @@ const tabelaListaFilmes = require('../model/listaFilme');
 const tabelaPretendoAssistir = require('../model/pretendeAssistirFilme')
 const { Op, where } = require('sequelize');
 
-
 module.exports = {
     async getFilmesPage(req, res){
         const nomeUser = req.params.nomeUser;
