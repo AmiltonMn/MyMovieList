@@ -1,0 +1,22 @@
+use MML;
+
+INSERT INTO dbo.generos (Nome, createdAt, updatedAt) VALUES ('Ação', SYSDATETIMEOFFSET(), SYSDATETIMEOFFSET());
+INSERT INTO dbo.generos (Nome, createdAt, updatedAt) VALUES ('Aventura', SYSDATETIMEOFFSET(), SYSDATETIMEOFFSET());
+INSERT INTO dbo.generos (Nome, createdAt, updatedAt) VALUES ('Comédia', SYSDATETIMEOFFSET(), SYSDATETIMEOFFSET());
+INSERT INTO dbo.generos (Nome, createdAt, updatedAt) VALUES ('Drama', SYSDATETIMEOFFSET(), SYSDATETIMEOFFSET());
+INSERT INTO dbo.generos (Nome, createdAt, updatedAt) VALUES ('Ficção Científica', SYSDATETIMEOFFSET(), SYSDATETIMEOFFSET());
+INSERT INTO dbo.generos (Nome, createdAt, updatedAt) VALUES ('Romance', SYSDATETIMEOFFSET(), SYSDATETIMEOFFSET());
+INSERT INTO dbo.generos (Nome, createdAt, updatedAt) VALUES ('Terror', SYSDATETIMEOFFSET(), SYSDATETIMEOFFSET());
+INSERT INTO dbo.generos (Nome, createdAt, updatedAt) VALUES ('Fantasia', SYSDATETIMEOFFSET(), SYSDATETIMEOFFSET());
+INSERT INTO dbo.generos (Nome, createdAt, updatedAt) VALUES ('Mistério', SYSDATETIMEOFFSET(), SYSDATETIMEOFFSET());
+INSERT INTO dbo.generos (Nome, createdAt, updatedAt) VALUES ('Musical', SYSDATETIMEOFFSET(), SYSDATETIMEOFFSET());
+INSERT INTO dbo.generos (Nome, createdAt, updatedAt) VALUES ('Documentário', SYSDATETIMEOFFSET(), SYSDATETIMEOFFSET());
+INSERT INTO dbo.generos (Nome, createdAt, updatedAt) VALUES ('Biografia', SYSDATETIMEOFFSET(), SYSDATETIMEOFFSET());
+INSERT INTO dbo.generos (Nome, createdAt, updatedAt) VALUES ('Animação', SYSDATETIMEOFFSET(), SYSDATETIMEOFFSET());
+INSERT INTO dbo.generos (Nome, createdAt, updatedAt) VALUES ('Western', SYSDATETIMEOFFSET(), SYSDATETIMEOFFSET());
+INSERT INTO dbo.generos (Nome, createdAt, updatedAt) VALUES ('Suspense', SYSDATETIMEOFFSET(), SYSDATETIMEOFFSET());
+INSERT INTO dbo.generos (Nome, createdAt, updatedAt) VALUES ('Policial', SYSDATETIMEOFFSET(), SYSDATETIMEOFFSET());
+INSERT INTO dbo.generos (Nome, createdAt, updatedAt) VALUES ('Espionagem', SYSDATETIMEOFFSET(), SYSDATETIMEOFFSET());
+INSERT INTO dbo.generos (Nome, createdAt, updatedAt) VALUES ('Zumbi', SYSDATETIMEOFFSET(), SYSDATETIMEOFFSET());
+INSERT INTO dbo.generos (Nome, createdAt, updatedAt) VALUES ('Pós-apocalíptico', SYSDATETIMEOFFSET(), SYSDATETIMEOFFSET());
+INSERT INTO dbo.generos (Nome, createdAt, updatedAt) VALUES ('Comédia Romântica', SYSDATETIMEOFFSET(), SYSDATETIMEOFFSET());

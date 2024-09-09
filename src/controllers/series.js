@@ -354,11 +354,19 @@ module.exports = {
         const dados = req.body
         const id = req.params.id
         const nomeUser = req.params.nomeUser
+        let adicionadoPretendoAssistir = false
+        let adicionadoSerieAssistido = false
+        let notaFilme = 0;
 
         const usuario = await tabelaUsuario.findAll({
             raw: true,
             where: {Usuario: nomeUser}
         });
+
+        await tabelaPretendoAssistir.destroy({
+            raw: true,
+            where: {IDSerie: id, IDUsuario: usuario[0].IDUsuario}
+        })
 
         await tabelaListaSerie.create({
             Comentario: dados.comentarioInput,
@@ -417,7 +425,17 @@ module.exports = {
             where: { IDGenero: listaGeneros }
         })
 
-        console.log(serie)
+        const idSerieAssistido = await tabelaListaSerie.findAll({
+            raw: true,
+            attributes: ['IDSerie'],
+            where: {IDSerie: id, IDUsuario: usuario[0].IDUsuario}
+        })
+
+        const idSeriePretendoAssistir = await tabelaPretendoAssistir.findAll({
+            raw: true,
+            attributes: ['IDSerie'],
+            where: {IDSerie: id, IDUsuario: usuario[0].IDUsuario}
+        })
 
         const dataLancamento = new Date(serie[0].Lancamento);
 
@@ -425,7 +443,47 @@ module.exports = {
 
         serie[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
 
-        res.redirect('/serieSelec/' + id + '/' + nomeUser);
+        const temporada = await tabelaTemporada.findAll({
+            raw: true,
+            where: {IDSerie: id}
+        });
+
+        var temporadaIDS = []
+
+        for (let i = 0; i < temporada.length; i++) {
+            temporadaIDS[i] = temporada[i].IDTemporada;   
+        }
+
+        const ep = await tabelaEp.findAll({
+            raw: true,
+            where: {IDTemporada: {
+                [Op.in]: temporadaIDS
+            }}
+        })
+
+        // Verificação para ver se está na lista de filmes
+        try {
+            if (idSerieAssistido[0].IDSerie != id) {
+                adicionadoSerieAssistido = false
+            } else {
+                adicionadoSerieAssistido = true
+            }
+        } catch (error) {
+            adicionadoSerieAssistido = false;
+        }
+
+        // Verificação para ver se já está na lista "Quero Assistir"
+        try {
+            if (idSeriePretendoAssistir[0].IDSerie != id) {
+                adicionadoPretendoAssistir = false
+            } else {
+                adicionadoPretendoAssistir = true
+            }
+        } catch (error) {
+            adicionadoPretendoAssistir = false;
+        }
+
+        res.render('../views/serieSelec', {serie, usuario, generosSerie, genero, temporada, ep, flag: 1, adicionadoSerieAssistido, adicionadoPretendoAssistir});
     },
 
     async addPretendoAssistir(req, res)
