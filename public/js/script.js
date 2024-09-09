@@ -9,6 +9,7 @@ const newImage = document.getElementById('newImage');
 const userImage = document.getElementById('novaImagemPerfil');
 const novaImagemFilme = document.getElementById('novaImagemFilme');
 const ImagemFilme = document.getElementById('imagemFilme');
+const lancamentos = document.getElementById('lancamentos');
 
 const mode = localStorage;
 
@@ -38,48 +39,37 @@ function imgFilmeClick()
     novaImagemFilme.click()
 }
 
-newImage.addEventListener('change', () =>
-{
-    if(newImage.files.length == 0)
-    {
-        return 0;
-    }
+// newImage.addEventListener('change', () =>
+// {
+//     if(newImage.files.length == 0)
+//     {
+//         return 0;
+//     }
 
-    let reader = new FileReader();
-    reader.readAsDataURL(newImage.files[0]);
-    reader.onload = () => 
-    (
-        userImage.src = reader.result
-    )
-});
+//     let reader = new FileReader();
+//     reader.readAsDataURL(newImage.files[0]);
+//     reader.onload = () => 
+//     (
+//         userImage.src = reader.result
+//     )
+// });
 
-novaImagemFilme.addEventListener('change', () =>
-    {
-        if(novaImagemFilme.files.length == 0)
-        {
-            return 0;
-        }
+// novaImagemFilme.addEventListener('change', () =>
+//     {
+//         if(novaImagemFilme.files.length == 0)
+//         {
+//             return 0;
+//         }
     
-        let reader = new FileReader();
-        reader.readAsDataURL(novaImagemFilme.files[0]);
-        reader.onload = () => 
-        (
-            console.log(novaImagemFilme.files[0]),
-            ImagemFilme.src = reader.result
-        )
-});
+//         let reader = new FileReader();
+//         reader.readAsDataURL(novaImagemFilme.files[0]);
+//         reader.onload = () => 
+//         (
+//             console.log(novaImagemFilme.files[0]),
+//             ImagemFilme.src = reader.result
+//         )
+// });
 
-$("#lancamentos").on(
-    "hover",
-    ".imagemFilme",
-    function () 
-    {
-        const bg = $(this).getAttribute("src")
-        
-        console.log(bg)
-    }
-)
-    
 function listaFilmesClick(){
     document.getElementById("listaSeries").setAttribute("class", "collapse");
     document.getElementById("listaFilmes").setAttribute("class", "collapse show");

@@ -8,15 +8,29 @@
     box-sizing: border-box;
 }
 
+nav
+{
+    background: linear-gradient(to left, rgb(40, 40, 102), rgb(10, 10, 59), rgb(7, 7, 59));
+    color: orange;
+    height: 70px;
+}
+
 footer
 {
     display: flex;
-    background-color: brown;
-    position: static;
+    background: linear-gradient(to left, rgb(40, 40, 102), rgb(10, 10, 59), rgb(7, 7, 59));
+    position: fixed;
     margin-top: 30px;
     bottom: 0;
     width: 100%;
     height: 50px;
+}
+
+.titulos
+{
+    display: flex;
+    justify-content: center !important; 
+    align-items: center !important; 
 }
 
 .indImage
@@ -92,7 +106,7 @@ footer
 
 #filmes
 {
-    display: grid;
+    display: flex;
     grid-template-columns: 156px 156px 156px 156px 156px;
     flex-wrap: wrap;
     flex-direction: row;

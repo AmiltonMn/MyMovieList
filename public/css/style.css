@@ -2,7 +2,7 @@ footer
 {
     display: flex;
     background: linear-gradient(to left, rgb(40, 40, 102), rgb(10, 10, 59), rgb(7, 7, 59));
-    position: static;
+    position: fixed;
     margin-top: 30px;
     bottom: 0;
     width: 100%;
@@ -43,6 +43,15 @@ main
 #tituloNav
 {
     transition: ease-in 1ms;
+}
+
+#background
+{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 15px;
+    transition: ease-in-out 0.5s;
 }
 
 .imagemFilme

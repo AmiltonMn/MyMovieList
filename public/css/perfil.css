@@ -16,7 +16,7 @@ main
 footer
 {
     display: flex;
-    background-color: brown;
+    background: linear-gradient(to left, rgb(40, 40, 102), rgb(10, 10, 59), rgb(7, 7, 59));
     position: fixed;
     margin-top: 30px;
     bottom: 0;
@@ -38,6 +38,13 @@ body::-webkit-scrollbar-thumb
 body
 {
     margin-bottom: 100px;
+}
+
+nav
+{
+    background: linear-gradient(to left, rgb(40, 40, 102), rgb(10, 10, 59), rgb(7, 7, 59));
+    color: orange;
+    height: 70px;
 }
 
 #imagemPerfil

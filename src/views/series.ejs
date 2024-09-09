@@ -10,32 +10,39 @@
   </head>
   <body>
     
-    <nav class="navbar navbar-expand-lg bg-body-tertiary shadow">
-      
+    <nav class="navbar navbar-expand-lg shadow">
+
       <div class="container-fluid d-flex justify-content-around">
-        
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        
+
         <% try { %>
-          <% console.log("aaaad"); %>
+          <% usuario[0].Usuario %>
           <div class="collapse navbar-collapse">
-            <a class="navbar-brand" href="/<%= usuario[0].Usuario %>" id="tituloNav" >My Movie List</a>
+            <a class="navbar-brand" href="/<%= usuario[0].Usuario %>" style="color: orange;"><b>My Movie List</b></a>
           </div>
-          <a class="navbar-brand" href="/perfil/<%= usuario[0].Usuario %>"><%= usuario[0].Usuario %></a>
-          <a class="navbar-brand" href="/filmes/<%= usuario[0].Usuario %>">Filmes</a>
-          <a class="navbar-brand" href="/series/<%= usuario[0].Usuario %>">Series</a>
+          <a class="navbar-brand" href="/perfil/<%= usuario[0].Usuario %>" style="color: orange;"><b><%= usuario[0].Usuario %></b></a>
+          <a class="navbar-brand" href="/filmes/<%= usuario[0].Usuario %>" style="color: orange;"><b>Filmes</b></a>
+          <a class="navbar-brand" href="/series/<%= usuario[0].Usuario %>" style="color: orange;"><b>Series</b></a>
           <span class="material-symbols-outlined" onclick="mudarDarkMode()" id="icone">
             dark_mode
           </span>
         <% } catch (error) { %>
-            <a class="navbar-brand" href="/">ERRO</a>
-          <% } %>
-            
+          <div class="collapse navbar-collapse">
+            <a class="navbar-brand" href="/" id="tituloNav" >My Movie List</a>
           </div>
+          <a class="navbar-brand" href="/login">Login</a>
+          <a class="navbar-brand" href="/cadastrar">Registrar</a>
+          <span class="material-symbols-outlined" onclick="mudarDarkMode()" id="icone">
+            dark_mode
+          </span>
+        <% } %>
           
-        </nav>
+      </div>
+
+    </nav>
 
     <main>
       <div class="container p-3 d-flex justify-content-center align-items-center mb-5 shadow-lg" id="containerPesquisa">
