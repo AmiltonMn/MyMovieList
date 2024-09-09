@@ -78,13 +78,13 @@
 
         <div class="d-flex row flex-row">
           <div class="container d-flex align-items-end justify-content-center p-0" id="bttnListaFilmes">
-            <button class="btn btn-primary d-flex align-items-end justify-content-center fs-2" type="button" data-bs-toggle="collapse" data-bs-target="#listaFilmes" aria-expanded="false" aria-controls="collapseExample" onclick="listaFilmesClick()">
+            <button id="botaoListaFilmes" class="btn btn-primary d-flex align-items-end justify-content-center fs-2" type="button" data-bs-toggle="collapse" data-bs-target="#listaFilmes" aria-expanded="false" aria-controls="collapseExample" onclick="listaFilmesClick()">
               Lista de Filmes
             </button>
           </div>
 
           <div class="container d-flex align-items-end justify-content-center p-0" id="bttnListaSeries">
-            <button class="btn btn-primary d-flex align-items-end justify-content-center fs-2" type="button" data-bs-toggle="collapse" data-bs-target="#listaSeries" aria-expanded="false" aria-controls="collapseExample" onclick="listaSeriesClick()">
+            <button id="botaoListaSeries" class="btn btn-outline-primary d-flex align-items-end justify-content-center fs-2" type="button" data-bs-toggle="collapse" data-bs-target="#listaSeries" aria-expanded="false" aria-controls="collapseExample" onclick="listaSeriesClick()">
               Lista de Series
             </button>
           </div>
@@ -96,10 +96,10 @@
             <div class="collapse show" id="listaFilmes">
 
               <div id="btnsLista">
-                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#filmesAssistidos" aria-expanded="false" aria-controls="collapseExample" onclick="listaFilmesAssistidosClick()">
+                <button id="botaoAssistidosFilmes" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#filmesAssistidos" aria-expanded="false" aria-controls="collapseExample" onclick="listaFilmesAssistidosClick()">
                   Assistidos
                 </button>
-                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#filmesPretendoAssistir" aria-expanded="false" aria-controls="collapseExample"onclick="listaFilmesPretendoAssistirClick()">
+                <button id="botaoPretendoAssistirFilmes" class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#filmesPretendoAssistir" aria-expanded="false" aria-controls="collapseExample"onclick="listaFilmesPretendoAssistirClick()">
                   Pretendo Assistir
                 </button>
               </div>
@@ -180,10 +180,10 @@
             <div class="collapse" id="listaSeries">
 
               <div id="btnsLista">
-                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#seriesAssistidos" aria-expanded="false" aria-controls="collapseExample" onclick="listaSeriesAssistidosClick()">
+                <button id="botaoAssistidosSeries" class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#seriesAssistidos" aria-expanded="false" aria-controls="collapseExample" onclick="listaSeriesAssistidosClick()">
                   Assistidos
                 </button>
-                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#seriesPretendoAssistir" aria-expanded="false" aria-controls="collapseExample" onclick="listaSeriesPretendoAssistirClick()">
+                <button id="botaoPretendoAssistirSeries" class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" data-bs-target="#seriesPretendoAssistir" aria-expanded="false" aria-controls="collapseExample" onclick="listaSeriesPretendoAssistirClick()">
                   Pretendo Assistir
                 </button>
               </div>
