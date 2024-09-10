@@ -58,8 +58,21 @@
 
                 <img id="filmeCapa" src="/img/<%= filme[0].Imagem %>" alt="">
 
+                <div style="width: 100%; display: flex; justify-content: space-around;">
+                  <div>
+                    <i class="fa-solid fa-eye" style="color: #ff9c00; margin-right: 5px;"></i><%= assistido %>
+                  </div>
+                  <div>
+                    <i class="fa-solid fa-heart" style="color: #ff9c00; margin-right: 5px;"></i><%= favoritado %>
+                  </div>
+                  <div>
+                    <i class="fa-solid fa-tv" style="color: #ff9c00; margin-right: 5px;"></i><%= pretendeAssistir %>
+                  </div>
+                </div>
+                
               </div>
-
+              
+              
             <div class="container d-flex flex-column justify-content-center" id="infosDoFilme">
 
               <h1 class=""><%= filme[0].Titulo %></h1>
@@ -81,11 +94,9 @@
                   </div>
                 <% } %>
               </div>
-
-              <br>
-              <br>
-
               
+              <br>
+
               <div class="d-flex flex-row align-items-center" style="margin-bottom: 15px;">
                 <div class="d-flex justify-content-center" style="background-color: rgb(10, 10, 59); color: orange; width: 130px; border-radius: 999px;">
                   <b><%= filme[0].Lancamento %></b>
@@ -329,12 +340,12 @@
 
               <select class="form-control" name="novaIdadeIndicativa" required>
 
-                <option value="1" <%= (1 === filme[0].IdadeIndicativa) ? "selected" : "" %>>AL</option>
-                <option value="2" <%= (2 === filme[0].IdadeIndicativa) ? "selected" : "" %>>A10</option>
-                <option value="3" <%= (3 === filme[0].IdadeIndicativa) ? "selected" : "" %>>A12</option>
-                <option value="4" <%= (4 === filme[0].IdadeIndicativa) ? "selected" : "" %>>A14</option>
-                <option value="5" <%= (5 === filme[0].IdadeIndicativa) ? "selected" : "" %>>A16</option>
-                <option value="6" <%= (6 === filme[0].IdadeIndicativa) ? "selected" : "" %>>A18</option>
+                <option value="AL"  <%= ("AL"  === filme[0].IdadeIndicativa) ? "selected" : "" %>>AL</option>
+                <option value="A10" <%= ("A10" === filme[0].IdadeIndicativa) ? "selected" : "" %>>A10</option>
+                <option value="A12" <%= ("A12" === filme[0].IdadeIndicativa) ? "selected" : "" %>>A12</option>
+                <option value="A14" <%= ("A14" === filme[0].IdadeIndicativa) ? "selected" : "" %>>A14</option>
+                <option value="A16" <%= ("A16" === filme[0].IdadeIndicativa) ? "selected" : "" %>>A16</option>
+                <option value="A18" <%= ("A18" === filme[0].IdadeIndicativa) ? "selected" : "" %>>A18</option>
 
               </select>
 
@@ -345,7 +356,8 @@
                   <% for(let i = 0; i < generos.length; i++) { %>
                     
                     <li class="list-group-item">
-                      <input class="form-check-input me-1" type="checkbox" value="<%= generos[i].IDGenero %>" id="checkbox<%= i %>" name="inputGenero">
+                      <input class="form-check-input me-1" type="checkbox" value="<%= generos[i].Nome %>" id="checkbox<%= i %>" name="novosGeneros">
+
                       <label class="form-check-label" for="checkbox<%= i %>"><%= generos[i].Nome %></label>
                     </li>
                     

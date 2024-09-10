@@ -24,7 +24,8 @@ module.exports = {
         
         const listaFilmes = await tabelaListaFilmes.findAll({
             raw: true,
-            where: {IDUsuario: usuario[0].IDUsuario}
+            where: {IDUsuario: usuario[0].IDUsuario},
+            order: [['Favorito', 'DESC']]
         })
         
         const listaIDFilmes = await tabelaListaFilmes.findAll({
@@ -43,7 +44,8 @@ module.exports = {
         const filmes = await tabelaListaFilmes.findAll({
             raw: true,
             include: [{model: tabelaFilmes}],
-            where: {IDUsuario: usuario[0].IDUsuario}
+            where: {IDUsuario: usuario[0].IDUsuario},
+            order: [['Favorito', 'DESC']]
         });
 
         const listaSeries = await tabelaListaSeries.findAll({
@@ -86,9 +88,11 @@ module.exports = {
 
         const reviewFeitas = await tabelaListaFilmes.count({
             raw: true,
-            where: {IDUsuario: usuario[0].IDUsuario},
-            order: [['Favorito', 'ASC']]
+            where: {IDUsuario: usuario[0].IDUsuario}
         });
+
+        console.log(listaPretendeAssistirFilme);
+        console.log(listaPretendeAssistirSerie);
         
         res.render('../views/perfil', {usuario, filmes, listaFilmes, series, listaSeries, listaPretendeAssistirFilme, listaPretendeAssistirSerie, reviewFeitas,flag: 0});
     },
@@ -210,8 +214,7 @@ module.exports = {
 
         const reviewFeitas = await tabelaListaFilmes.count({
             raw: true,
-            where: {IDUsuario: usuario[0].IDUsuario},
-            order: [['Favorito', 'DESC']]
+            where: {IDUsuario: usuario[0].IDUsuario}
         });
 
         res.render('../views/perfil', {usuario, filmes, listaFilmes, series, listaSeries, listaPretendeAssistirFilme, listaPretendeAssistirSerie, reviewFeitas,flag: 0});

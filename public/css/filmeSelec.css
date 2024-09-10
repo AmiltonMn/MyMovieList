@@ -1,3 +1,9 @@
+hr
+{
+    height: 5px;
+    background: linear-gradient(to right, orange, purple);
+}
+
 footer
 {
     display: flex;
@@ -21,6 +27,7 @@ nav
   width: 312px;
   height: 456px;
   margin: 15px;
+  border-radius: 5px;
 }
 
 #addLista
@@ -115,9 +122,3 @@ nav
   .estrelas input[type=radio]:checked ~ label i.fa:before {
     color: #CCC;
   }
- 
-hr
-{
-    height: 5px;
-    background: linear-gradient(to right, orange, purple);
-}

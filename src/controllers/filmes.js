@@ -5,7 +5,6 @@ const tabelaGenerosFilme = require('../model/generoFilme');
 const tabelaListaFilmes = require('../model/listaFilme');
 const tabelaPretendoAssistir = require('../model/pretendeAssistirFilme')
 const { Op, where } = require('sequelize');
-const { raw } = require('express');
 
 module.exports = {
     async getFilmesPage(req, res){
@@ -139,7 +138,7 @@ module.exports = {
         for(let i = 0; i < idGenerosFilme.length; i++)
         {
             listaGeneros[i] = idGenerosFilme[i].IDGenero;
-        }
+        };
 
         const generosFilme = await tabelaGeneros.findAll({
             raw: true,
@@ -156,20 +155,35 @@ module.exports = {
             raw: true,
             attributes: ['IDFilme'],
             where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
-        })
+        });
 
         const idFilmePretendoAssistir = await tabelaPretendoAssistir.findAll({
             raw: true,
             attributes: ['IDFilme'],
             where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
-        })
+        });
 
         const comentarios = await tabelaListaFilmes.findAll({
             raw: true,
             attributes: ['Comentario', 'Nota'],
             include: [{model: tabelaUsuario, attributes: ['Usuario', 'Imagem']}],
             where: {IDFilme: id}
-        })
+        });
+
+        const assistido = await tabelaListaFilmes.count({
+            rwa: true,
+            where: {IDFilme: id}
+        });
+
+        const favoritado = await tabelaListaFilmes.count({
+            rwa: true,
+            where: {IDFilme: id, Favorito: 1}
+        });
+
+        const pretendeAssistir = await tabelaPretendoAssistir.count({
+            rwa: true,
+            where: {IDFilme: id}
+        });
 
         const dataLancamento = new Date(filme[0].Lancamento);
 
@@ -188,7 +202,7 @@ module.exports = {
             }
         } catch (error) {
             adicionadoFilmeAssistido = false;
-        }
+        };
 
         // Verificação para ver se já está na lista "Quero Assistir"
         try {
@@ -199,9 +213,11 @@ module.exports = {
             }
         } catch (error) {
             adicionadoPretendoAssistir = false;
-        }
+        };
+
+
         
-        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 0, adicionadoPretendoAssistir, adicionadoFilmeAssistido, comentarios});        
+        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 0, adicionadoPretendoAssistir, adicionadoFilmeAssistido, comentarios, assistido, favoritado, pretendeAssistir});        
     },
 
     async addFilmeLista(req, res){
@@ -239,7 +255,7 @@ module.exports = {
                 IDFilme: id,
                 IDUsuario: usuario[0].IDUsuario
             });
-        }
+        };
         
 
         const notas = await tabelaListaFilmes.findAll({
@@ -281,32 +297,48 @@ module.exports = {
         for(let i = 0; i < idGenerosFilme.length; i++)
         {
             listaGeneros[i] = idGenerosFilme[i].IDGenero;
-        }
+        };
 
         const generosFilme = await tabelaGeneros.findAll({
             raw: true,
             attributes: ['Nome'],
             where: { IDGenero: listaGeneros }
-        })
+        });
 
         const idFilmeAssistido = await tabelaListaFilmes.findAll({
             raw: true,
             attributes: ['IDFilme'],
             where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
-        })
+        });
 
         const idFilmePretendoAssistir = await tabelaPretendoAssistir.findAll({
             raw: true,
             attributes: ['IDFilme'],
             where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
-        })
+        });
 
         const comentarios = await tabelaListaFilmes.findAll({
             raw: true,
             attributes: ['Comentario', 'Nota'],
             include: [{model: tabelaUsuario, attributes: ['Usuario', 'Imagem']}],
             where: {IDFilme: id}
-        })
+        });
+
+        const assistido = await tabelaListaFilmes.count({
+            rwa: true,
+            where: {IDFilme: id}
+        });
+
+        const favoritado = await tabelaListaFilmes.count({
+            rwa: true,
+            where: {IDFilme: id, Favorito: 1}
+        });
+
+        const pretendeAssistir = await tabelaPretendoAssistir.count({
+            rwa: true,
+            where: {IDFilme: id}
+        });
+
 
         const dataLancamento = new Date(filme[0].Lancamento);
 
@@ -336,7 +368,7 @@ module.exports = {
             adicionadoPretendoAssistir = false;
         }
 
-        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 1, adicionadoFilmeAssistido, adicionadoPretendoAssistir, comentarios})
+        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 1, adicionadoFilmeAssistido, adicionadoPretendoAssistir, comentarios, assistido, favoritado, pretendeAssistir})
     },
 
     async deletarFilme(req, res){
@@ -424,7 +456,7 @@ module.exports = {
         await tabelaPretendoAssistir.create({
             IDFilme: id,
             IDUsuario: usuario[0].IDUsuario
-        })
+        });
 
         const filme = await tabelaFilmes.findAll({
             raw: true,
@@ -447,32 +479,47 @@ module.exports = {
         for(let i = 0; i < idGenerosFilme.length; i++)
         {
             listaGeneros[i] = idGenerosFilme[i].IDGenero;
-        }
+        };
 
         const generosFilme = await tabelaGeneros.findAll({
             raw: true,
             attributes: ['Nome'],
             where: { IDGenero: listaGeneros }
-        })
+        });
 
         const idFilmeAssistido = await tabelaListaFilmes.findAll({
             raw: true,
             attributes: ['IDFilme'],
             where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
-        })
+        });
 
         const idFilmePretendoAssistir = await tabelaPretendoAssistir.findAll({
             raw: true,
             attributes: ['IDFilme'],
             where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
-        })
+        });
 
         const comentarios = await tabelaListaFilmes.findAll({
             raw: true,
             attributes: ['Comentario', 'Nota'],
             include: [{model: tabelaUsuario, attributes: ['Usuario', 'Imagem']}],
             where: {IDFilme: id}
-        })
+        });
+
+        const assistido = await tabelaListaFilmes.count({
+            rwa: true,
+            where: {IDFilme: id}
+        });
+
+        const favoritado = await tabelaListaFilmes.count({
+            rwa: true,
+            where: {IDFilme: id, Favorito: 1}
+        });
+
+        const pretendeAssistir = await tabelaPretendoAssistir.count({
+            rwa: true,
+            where: {IDFilme: id}
+        });
 
         const dataLancamento = new Date(filme[0].Lancamento);
 
@@ -502,7 +549,7 @@ module.exports = {
             adicionadoPretendoAssistir = false;
         }
 
-        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 1, adicionadoFilmeAssistido, adicionadoPretendoAssistir, comentarios})
+        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 1, adicionadoFilmeAssistido, adicionadoPretendoAssistir, comentarios, assistido, favoritado, pretendeAssistir})
         
     }
 }
