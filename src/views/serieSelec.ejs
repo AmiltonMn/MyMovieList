@@ -48,7 +48,7 @@
 
 <main class="container d-flex position-absolute top-50 start-50 translate-middle">
 
-  <div>
+  <div class="p-2 container">
 
     <div class="p-2 container d-flex" id="containerInformacoes">
         <div class="d-flex flex-column align-items-center">
@@ -65,7 +65,7 @@
   
             <p class="text-justify"><%= serie[0].Sinopse %></p>
   
-            <div class="d-flex flex-row">
+            <div class="d-flex flex-row flex-wrap">
               <% for (let i = 0; i < genero.length; i ++) { %>
                 <div class="generos">
                   <%= genero[i]['genero.Nome'] %> 

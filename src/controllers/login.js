@@ -1,5 +1,6 @@
 const tabelaUsuario = require('../model/usuario');
 const tabelaFilme = require('../model/filme');
+const tabelaSerie = require('../model/serie');
 const { Op } = require('sequelize');
 
 module.exports = {
