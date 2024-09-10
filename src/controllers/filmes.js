@@ -218,12 +218,14 @@ module.exports = {
 
         const verificarID = await tabelaListaFilmes.findAll({
             raw: true,
-            where: {IDUsuario: usuario[0].Usuario, IDFilme: id}
+            where: {IDUsuario: usuario[0].IDUsuario, IDFilme: id}
         });
 
-        if(verificarID[0].IDFilme == id) {
-            pass;
-        } else {
+        try {
+            if(verificarID[0].IDFilme == id) {
+                pass;
+            }
+        } catch (error) {
             await tabelaListaFilmes.create({
                 Comentario: dados.comentarioInput,
                 Nota: dados.notaInput,
@@ -231,6 +233,7 @@ module.exports = {
                 IDUsuario: usuario[0].IDUsuario
             });
         }
+        
 
         const notas = await tabelaListaFilmes.findAll({
             raw: true,

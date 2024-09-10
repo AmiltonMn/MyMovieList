@@ -6,12 +6,12 @@ const tabelaSeries = require('../model/serie');
 const tabelaPretendeAssistirFilme = require('../model/pretendeAssistirFilme');
 const tabelaPretendeAssistirSerie = require('../model/pretendeAssistirSerie');
 const { raw } = require('express');
+const { where } = require('sequelize');
 
 module.exports = {
     async getPerfilPage(req, res)
     {
         const nomeUser = req.params.nomeUser;
-        const id = req.params.id;
 
         const usuario = await tabelaUsuario.findAll({
             raw: true,
@@ -86,10 +86,15 @@ module.exports = {
             where: {IDUsuario: usuario[0].IDUsuario}
         });
 
+        const reviewFeitas = await tabelaListaFilmes.count({
+            raw: true,
+            where: {IDUsuario: usuario[0].IDUsuario}
+        });
+
         console.log(listaPretendeAssistirFilme);
         console.log(listaPretendeAssistirSerie);
         
-        res.render('../views/perfil', {usuario, filmes, listaFilmes, series, listaSeries, listaPretendeAssistirFilme, listaPretendeAssistirSerie, flag: 0});
+        res.render('../views/perfil', {usuario, filmes, listaFilmes, series, listaSeries, listaPretendeAssistirFilme, listaPretendeAssistirSerie, reviewFeitas,flag: 0});
     },
 
         async atualizarPerfil(req, res){
@@ -207,7 +212,12 @@ module.exports = {
             where: {IDUsuario: usuario[0].IDUsuario}
         });
 
-        res.render('../views/perfil', {usuario, filmes, listaFilmes, series, listaSeries, listaPretendeAssistirFilme, listaPretendeAssistirSerie, flag: 0});
+        const reviewFeitas = await tabelaListaFilmes.count({
+            raw: true,
+            where: {IDUsuario: usuario[0].IDUsuario}
+        });
+
+        res.render('../views/perfil', {usuario, filmes, listaFilmes, series, listaSeries, listaPretendeAssistirFilme, listaPretendeAssistirSerie, reviewFeitas,flag: 0});
     },
 
     async updateReview(req, res){

@@ -16,7 +16,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
   
-
     <nav class="navbar navbar-expand-lg shadow">
 
       <div class="container-fluid d-flex justify-content-around">
@@ -256,100 +255,7 @@
       
     </div>
 
-    <!-- Modal de editar -->
 
-    <div class="modal" tabindex="-1" id="editarFilme">
-      
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-
-        <div class="modal-content">
-
-          <div class="modal-header">
-
-            <h5 class="modal-title">Preencha os campos!</h5>
-
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-          </div>
-
-          <div class="modal-body">
-
-            <form action="/editarFilme/<%= filme[0].IDFilme %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
-
-              <div class="container p-3 d-flex justify-content-around align-items-center p-0">
-                <img src="/img/<%= filme[0].Imagem %>" id="imagemFilme" alt="Imagem do Usuário" onclick="imgFilmeClick()">
-                <input class="d-none" type="file" name="novaImagemFilme" id="novaImagemFilme" accept="image/*">
-            </div>
-
-              <br>
-
-              <label class="form-label"  for="novoTitulo">Titulo do Filme</label>
-
-              <br>
-
-              <input class="form-control" type="text" name="novoTitulo" value="<%= filme[0].Titulo %>" placeholder="Digite o nome do filme" required>
-  
-              <br>
-
-              <label class="form-label" for="novaSinopse" required>Sinopse do Filme</label>
-
-              <br>
-              <textarea class="form-control" name="novaSinopse" rows="2"><%= filme[0].Sinopse %></textarea>
-
-              <br>
-
-              <label class="form-label" for="novoLancamento">Data de Lançamento</label>
-
-              <br>
-
-              <input class="form-control" type="date" name="novoLancamento" value="" id="lancamentoInput">
-
-              <br>
-
-              <label class="form-label" for="novaIdadeIndicativa">Idade Indicativa</label>
-
-              <br>
-
-              <select class="form-control" name="novaIdadeIndicativa" required>
-
-                <option value="AL"  <%= ("AL"  === filme[0].IdadeIndicativa) ? "selected" : "" %>>AL</option>
-                <option value="A10" <%= ("A10" === filme[0].IdadeIndicativa) ? "selected" : "" %>>A10</option>
-                <option value="A12" <%= ("A12" === filme[0].IdadeIndicativa) ? "selected" : "" %>>A12</option>
-                <option value="A14" <%= ("A14" === filme[0].IdadeIndicativa) ? "selected" : "" %>>A14</option>
-                <option value="A16" <%= ("A16" === filme[0].IdadeIndicativa) ? "selected" : "" %>>A16</option>
-                <option value="A18" <%= ("A18" === filme[0].IdadeIndicativa) ? "selected" : "" %>>A18</option>
-
-              </select>
-
-              <br>
-
-              <label class="form-check-label" for="generos">Generos</label>
-              <div class="overflow-y-auto" style="height: 200px;">
-                <ul class="list-group" id="generos">
-                  <% for(let i = 0; i < generos.length; i++) { %>
-                    
-                    <li class="list-group-item">
-                      <input class="form-check-input me-1" type="checkbox" value="<%= generos[i].IDGenero %>" id="checkbox<%= i %>" name="inputGenero">
-                      <label class="form-check-label" for="checkbox<%= i %>"><%= generos[i].Nome %></label>
-                    </li>
-  
-                  <% } %>
-                </ul>
-              </select>
-
-              <br>
-
-              <button type="submit" id="btnEditar" class="btn btn-primary">Editar</button>
-
-            </form>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
 
     <button type="button" class="d-none" id="abrirSucesso" data-bs-toggle="modal" data-bs-target="#sucesso"></button>
 
