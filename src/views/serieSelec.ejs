@@ -125,7 +125,7 @@
             
         <br>
 
-        <div class="d-flex flex-column gap-2 mt-2" id="containerTemporada">
+        <div class="d-flex flex-column gap-2 mt-2 p-4" id="containerTemporada">
           <% for(let i = 0; i < temporada.length; i++) { %>
             <!-- Temporadas -->
             <div>
@@ -145,10 +145,9 @@
     
                   </div>
 
-              </div>
-  
-  
               <% } %>
+
+              </div>
               
                 <div class="collapse" id="temp<%= i %>">
                   <div class="card card-body" style="border: none;">
@@ -160,7 +159,14 @@
 
                         <div class="d-flex justify-content-between">
 
-                          <p><%= ep[j].Titulo %></p>
+                          <div>
+                            <p><%= ep[j].Titulo %></p>
+                            <p><%= ep[j].Sinopse %></p>
+                            <div class="d-flex justify-content-center" style="background-color: rgb(10, 10, 59); color: orange; width: 155px; border-radius: 999px;">
+                              <b><%= ep[j].Lancamento %></b>
+                            </div>
+                          </div>
+
     
                           <% if(usuario[0].ISAdmin == 1) { %>
 
@@ -185,13 +191,24 @@
           <% } %>
         </div>
           
-        <div id="comentarios" class="mt-4">
+        <div id="comentarios" class="mt-4 p-4">
           <h3>Comentarios</h3>
           <% for(let i = 0; i < comentarios.length; i++) { %>
-            <img src="/img/<%= comentarios[i]['usuario.Imagem'] %>" alt="">
-            <%= comentarios[i]['usuario.Usuario'] %>
-            <%= comentarios[i].Comentario %>
-            <%= comentarios[i].Nota %>
+            <div class="d-flex mt-3 gap-4">
+
+              <img src="/img/<%= comentarios[i]['usuario.Imagem'] %>" alt="">
+
+              <div>
+
+                <h4><%= comentarios[i]['usuario.Usuario'] %></h4>
+                <p class="d-flex flex-wrap"><%= comentarios[i].Comentario %></p>
+                <% for(let j = 0; j < 5; j++) { %>
+                  <i class="fa fa-star" <%= (j < comentarios[i].Nota) ? 'style=color:#FC0' : "" %>></i>
+                <% } %>
+
+              </div>
+
+            </div>
           <% } %>
 
         </div>
