@@ -23,6 +23,22 @@ nav
   margin: 15px;
 }
 
+#addLista
+{
+  i
+  {
+    color: orange;
+  }
+}
+
+#addLista:hover
+{
+  i
+  {
+    color: white;
+  }
+}
+
 #imagemFilme
 {
   width: 100%;
@@ -32,6 +48,7 @@ nav
 #infosDoFilme
 {
     margin-left: 45px;
+    flex-wrap: wrap;
 }
 
 #idadeIndicativa
@@ -48,6 +65,16 @@ nav
   right: 13px;
 }
 
+#editarFilme
+{
+  color: orange;
+}
+
+#editarFilme:hover
+{
+  color: white;
+}
+
 #containerInformacoes
 {
   width: 100%;
@@ -62,12 +89,12 @@ nav
 
 .generos
 {
-    background-color: rgb(10, 10, 10);
+    background-color: rgb(10, 10, 59);
     border-radius: 999px;
     width: 130px;
     text-align: center;
     margin-right: 15px;
-    color: white;
+    color: orange;
 }
 
 .modal

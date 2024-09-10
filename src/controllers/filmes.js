@@ -5,6 +5,7 @@ const tabelaGenerosFilme = require('../model/generoFilme');
 const tabelaListaFilmes = require('../model/listaFilme');
 const tabelaPretendoAssistir = require('../model/pretendeAssistirFilme')
 const { Op, where } = require('sequelize');
+const { raw } = require('express');
 
 module.exports = {
     async getFilmesPage(req, res){
@@ -215,12 +216,21 @@ module.exports = {
             where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
         })
 
-        await tabelaListaFilmes.create({
-            Comentario: dados.comentarioInput,
-            Nota: dados.notaInput,
-            IDFilme: id,
-            IDUsuario: usuario[0].IDUsuario
+        const verificarID = await tabelaListaFilmes.findAll({
+            raw: true,
+            where: {IDUsuario: usuario[0].Usuario, IDFilme: id}
         });
+
+        if(verificarID[0].IDFilme == id) {
+            pass;
+        } else {
+            await tabelaListaFilmes.create({
+                Comentario: dados.comentarioInput,
+                Nota: dados.notaInput,
+                IDFilme: id,
+                IDUsuario: usuario[0].IDUsuario
+            });
+        }
 
         const notas = await tabelaListaFilmes.findAll({
             raw: true,

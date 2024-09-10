@@ -53,13 +53,13 @@
 
     <main class="container d-flex position-absolute top-50 start-50 translate-middle">
 
-          <div class="p-2 container d-flex position-absolute top-50 start-50 translate-middle" id="containerInformacoes">
+          <div class="p-2 container d-flex" id="containerInformacoes">
             
-            <div class="d-flex flex-column align-items-center">
+              <div class="d-flex flex-column align-items-center">
 
-              <img id="filmeCapa" src="/img/<%= filme[0].Imagem %>" alt="">
+                <img id="filmeCapa" src="/img/<%= filme[0].Imagem %>" alt="">
 
-            </div>
+              </div>
 
             <div class="container d-flex flex-column justify-content-center" id="infosDoFilme">
 
@@ -69,10 +69,10 @@
 
               <p class="text-justify"><%= filme[0].Sinopse %></p>
 
-              <div class="d-flex flex-row">
+              <div class="d-flex flex-wrap">
                 <% for (let i = 0; i < generosFilme.length; i ++) { %>
                   <div class="generos">
-                    <%= generosFilme[i].Nome %> 
+                    <b><%= generosFilme[i].Nome %></b>
                   </div>
                 <% } %>
               </div>
@@ -80,8 +80,8 @@
               <br>
               
               <div class="d-flex flex-row align-items-center" style="margin-bottom: 15px;">
-                <div class="d-flex justify-content-center" style="background-color: rgb(10, 10, 10); color: rgb(255, 255, 255); width: 100px; border-radius: 999px;">
-                  <%= filme[0].Lancamento %>
+                <div class="d-flex justify-content-center" style="background-color: rgb(10, 10, 59); color: orange; width: 130px; border-radius: 999px;">
+                  <b><%= filme[0].Lancamento %></b>
                 </div>
   
                 <img src="/img/<%= filme[0].IdadeIndicativa %>.jpg" alt="idadeIndicativa" id="idadeIndicativa">
@@ -89,20 +89,20 @@
 
               <div class="d-flex justify-content-between">
 
-                <div class="d-flex justify-content-start align-items-center" id="btnsUsuario">
+                <div class="d-flex align-items-center" id="btnsUsuario">
 
                   <% if(!adicionadoFilmeAssistido) { %>
 
-                    <button type="button" class="btn btn-outline-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#adicionarLista" style="background: transparent; border: none;"><i class="fa-solid fa-circle-plus fa-xl"></i></button>
+                  <button type="button" id="addLista" class="btn btn-outline-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#adicionarLista" style="background: transparent; border: none;"><i class="fa-solid fa-circle-plus fa-xl" style="position: relative; left: 1px;"></i></button>
 
-                    <% if(!adicionadoPretendoAssistir) { %>
-                      <form action="/addQueroAssistir/<%= filme[0].IDFilme %>/<%= usuario[0].Usuario %>" method="post">
-                        <button type="submit" class="btn btn-outline-primary" style="border: none;">Quero Assistir</button>
-                      </form>
-                    <% } %>
+                  <% if(!adicionadoPretendoAssistir) { %>
+                    <form action="/addQueroAssistir/<%= filme[0].IDFilme %>/<%= usuario[0].Usuario %>" method="post">
+                      <button type="submit" class="btn btn-outline-primary" style="border: none;">Quero Assistir</button>
+                    </form>
+                  <% } %>
 
                   <% } else { %>
-                    <i class="changebtns fa-solid fa-circle-check fa-xl" style="color: red;"></i>
+                      <i class="changebtns fa-solid fa-circle-check fa-xl" style="color: orange; left: 15px; position: relative;"></i>
                   <% } %>
                     
                 </div>
@@ -111,7 +111,7 @@
 
                   <div class="" id="btnsAdmin">
 
-                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarFilme"  style="background: transparent; border: none;"><i class="fa-solid fa-pen-to-square fa-xl"></i></button>
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarFilme"  style="background: transparent; border: none;"><i class="fa-regular fa-pen-to-square fa-xl" id="editarFilme"></i></button>
 
                     <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#deletarFilme" style="background: transparent; border: none; color: red;"><i class="fa-solid fa-trash fa-xl"></i></button>
     

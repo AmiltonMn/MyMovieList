@@ -21,6 +21,12 @@ footer
     height: 50px;
 }
 
+body
+{
+    overflow: hidden;
+}
+
+
 #main {
     width: 80%;
     display: flex;

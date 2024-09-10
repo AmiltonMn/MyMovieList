@@ -35,10 +35,10 @@
           </span>
         <% } catch (error) { %>
           <div class="collapse navbar-collapse">
-            <a class="navbar-brand" href="/" id="tituloNav" >My Movie List</a>
+            <a class="navbar-brand" href="/" id="tituloNav" style="color: orange;"><b>My Movie List</b></a>
           </div>
-          <a class="navbar-brand" href="/login">Login</a>
-          <a class="navbar-brand" href="/cadastrar">Registrar</a>
+          <a class="navbar-brand" href="/login" style="color: orange;"><b>Login</b></a>
+          <a class="navbar-brand" href="/cadastrar" style="color: orange;"><b>Registrar</b></a>
           <span class="material-symbols-outlined" onclick="mudarDarkMode()" id="icone">
             dark_mode
           </span>
@@ -58,6 +58,7 @@
           </div>
           <div id="lancamentos" class="overflow-x-auto overflow-y-hidden d-flex flex-row">
             <% try { %>
+              <% usuario[0].Usuario %>
               <% for(let i = 0; i < filmesMaisRecentes.length; i++) { %>
                   
                   <div class="infoFilme d-flex flex-column justify-content-between align-items-center">
@@ -74,7 +75,20 @@
 
               <% } %>
             <% } catch (error) { %>
-              <p>Lista Vazia!</p>
+              <% for(let i = 0; i < filmesMaisRecentes.length; i++) { %>
+                <div class="infoFilme d-flex flex-column justify-content-between align-items-center">
+
+
+                <img class="imagemFilme" src="/img/<%= filmesMaisRecentes[i].Imagem %>" alt="Imagem não encontrada">
+
+                
+                <div class="notaFilme">
+                  <%= filmesMaisRecentes[i].NotaGeral.toFixed(1) %>
+                </div>
+
+              </div>
+              <% } %>
+
             <% } %>
           </div>
         </div>
@@ -88,6 +102,7 @@
           </div>
           <div id="melhorAvaliados" class="overflow-x-auto overflow-y-hidden d-flex flex-row">
             <% try { %>
+              <% usuario[0].Usuario %>
               <% for(let i = 0; i < filmesMelhorAvaliados.length; i++) { %>
                   
                   <div class="infoFilme d-flex flex-column justify-content-between align-items-center">
@@ -105,7 +120,21 @@
               <% } %>
             <% } catch (error) { %>
               <% console.log(error) %>
-              <p>Lista Vazia!</p>
+              <% for(let i = 0; i < filmesMelhorAvaliados.length; i++) { %>
+                
+                <div class="infoFilme d-flex flex-column justify-content-between align-items-center">
+
+
+                  <img  class="imagemFilme" src="/img/<%= filmesMelhorAvaliados[i].Imagem %>" alt="Imagem não encontrada">
+
+                  
+                  <div class="notaFilme">
+                    <%= filmesMelhorAvaliados[i].NotaGeral.toFixed(1) %>
+                  </div>
+
+                </div>
+
+              <% } %>
             <% } %>
           </div>
         </div>
@@ -119,6 +148,8 @@
           </div>
           <div id="lancamentos" class="overflow-x-auto overflow-y-hidden d-flex flex-row">
             <% try { %>
+              <% usuario[0].Usuario %>
+
               <% for(let i = 0; i < seriesMaisRecentes.length; i++) { %>
                   
                   <div class="infoFilme d-flex flex-column justify-content-between align-items-center">
@@ -135,7 +166,20 @@
 
               <% } %>
             <% } catch (error) { %>
-              <p>Lista Vazia!</p>
+
+              <% for(let i = 0; i < seriesMaisRecentes.length; i++) { %>
+                <div class="infoFilme d-flex flex-column justify-content-between align-items-center">
+
+                  <img  class="imagemFilme" src="/img/<%= seriesMaisRecentes[i].Imagem %>" alt="Imagem não encontrada">
+
+                  
+                  <div class="notaFilme">
+                    <%= seriesMaisRecentes[i].NotaGeral.toFixed(1) %>
+                  </div>
+
+                </div>
+              <% } %>
+
             <% } %>
           </div>
         </div>
@@ -149,8 +193,8 @@
           </div>
           <div id="melhorAvaliados" class="overflow-x-auto overflow-y-hidden d-flex flex-row">
             <% try { %>
+              <% usuario[0].Usuario %>
               <% for(let i = 0; i < seriesMelhorAvaliados.length; i++) { %>
-                  
                   <div class="infoFilme d-flex flex-column justify-content-between align-items-center">
 
                     <a href="/filmeSelec/<%= filmesMelhorAvaliados[i].IDFilme %>/<%= usuario[0].Usuario %>">
@@ -162,11 +206,23 @@
                     </div>
 
                   </div>
-
               <% } %>
+
             <% } catch (error) { %>
               <% console.log(error) %>
-              <p>Lista Vazia!</p>
+
+              <% for(let i = 0; i < seriesMelhorAvaliados.length; i++) { %>
+                <div class="infoFilme d-flex flex-column justify-content-between align-items-center">
+
+                  <img  class="imagemFilme" src="/img/<%= seriesMelhorAvaliados[i].Imagem %>" alt="Imagem não encontrada">
+                  
+                  <div class="notaFilme">
+                    <%= seriesMelhorAvaliados[i].NotaGeral.toFixed(1) %>
+                  </div>
+
+                </div>
+              <% } %>
+
             <% } %>
           </div>
         </div>
@@ -192,11 +248,7 @@
 
                   document.getElementById("background1").style.backgroundImage = "url('" + bg + "')"
                   document.getElementById("background1").style.backgroundColor = "rgba(0, 0, 0, 0.4)";
-                  document.getElementById("background1").style.backgroundBlendMode = "overlay";
-
-              }).on("mouseleave", ".imagemFilme", function() {
-                  document.getElementById("background1").style.backgroundImage = "";
-                  document.getElementById("background1").style.backgroundColor = "";
+                  document.getElementById("background1").style.backgroundBlendMode = "overlay"; 
               });
               $("#background2").on("mouseenter", ".imagemFilme", function() {
                   const bg = this.getAttribute("src");
@@ -204,21 +256,13 @@
                   document.getElementById("background2").style.backgroundImage = "url('" + bg + "')"
                   document.getElementById("background2").style.backgroundColor = "rgba(0, 0, 0, 0.4)";
                   document.getElementById("background2").style.backgroundBlendMode = "overlay";
-
-              }).on("mouseleave", ".imagemFilme", function() {
-                  document.getElementById("background2").style.backgroundImage = "";
-                  document.getElementById("background2").style.backgroundColor = "";
               });
               $("#background3").on("mouseenter", ".imagemFilme", function() {
                   const bg = this.getAttribute("src");
 
                   document.getElementById("background3").style.backgroundImage = "url('" + bg + "')"
-                  document.getElementById("background3").style.backgroundColor = "rgba(0, 0, 0, 0.4)";
+                  document.getElementById("background3").style.backgroundColor = "rgba(0, 0, 0, 0.35)";
                   document.getElementById("background3").style.backgroundBlendMode = "overlay";
-
-              }).on("mouseleave", ".imagemFilme", function() {
-                  document.getElementById("background3").style.backgroundImage = "";
-                  document.getElementById("background3").style.backgroundColor = "";
               });
               $("#background4").on("mouseenter", ".imagemFilme", function() {
                   const bg = this.getAttribute("src");
@@ -226,10 +270,6 @@
                   document.getElementById("background4").style.backgroundImage = "url('" + bg + "')"
                   document.getElementById("background4").style.backgroundColor = "rgba(0, 0, 0, 0.4)";
                   document.getElementById("background4").style.backgroundBlendMode = "overlay";
-
-              }).on("mouseleave", ".imagemFilme", function() {
-                  document.getElementById("background4").style.backgroundImage = "";
-                  document.getElementById("background4").style.backgroundColor = "";
               });
           });
       </script>

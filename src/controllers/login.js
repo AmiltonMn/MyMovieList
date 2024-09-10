@@ -1,16 +1,12 @@
 const tabelaUsuario = require('../model/usuario');
 const tabelaFilme = require('../model/filme');
+const tabelaSerie = require('../model/serie');
+
 const { Op } = require('sequelize');
 
 module.exports = {
 
     async getLoginPage(req, res){
-        // const id = req.params.id;
-
-        // const usuario = await usuarios.findByPk(id, {
-        //     raw: true,
-        //     attributes: ['IDUsuario', 'Usuario', 'Nome', 'Email', 'DtNasc', 'Imagem']
-        // })
 
         res.render('../views/login')
     },
