@@ -146,6 +146,13 @@ module.exports = {
             where: {IDSerie: id, IDUsuario: usuario[0].IDUsuario}
         })
 
+        const comentarios = await tabelaListaSerie.findAll({
+            raw: true,
+            attributes: ['Comentario', 'Nota'],
+            include: [{model: tabelaUsuario, attributes: ['Usuario', 'Imagem']}],
+            where: {IDSerie: id}
+        });
+
         try {
             if (idSerieAssistido[0].IDSerie != id) {
                 adicionadoSerieAssistido = false
@@ -167,7 +174,7 @@ module.exports = {
             adicionadoPretendoAssistir = false;
         }
 
-        res.render('../views/serieSelec', {serie, usuario, temporada, ep, genero, flag: 0, adicionadoPretendoAssistir, adicionadoSerieAssistido});
+        res.render('../views/serieSelec', {serie, usuario, temporada, ep, genero, flag: 0, adicionadoPretendoAssistir, adicionadoSerieAssistido, comentarios});
     },
 
     async atualizarSerie(req, res){
@@ -461,6 +468,13 @@ module.exports = {
             }}
         })
 
+        const comentarios = await tabelaListaSerie.findAll({
+            raw: true,
+            attributes: ['Comentario', 'Nota'],
+            include: [{model: tabelaUsuario, attributes: ['Usuario', 'Imagem']}],
+            where: {IDSerie: id}
+        });
+
         // Verificação para ver se está na lista de filmes
         try {
             if (idSerieAssistido[0].IDSerie != id) {
@@ -483,7 +497,7 @@ module.exports = {
             adicionadoPretendoAssistir = false;
         }
 
-        res.render('../views/serieSelec', {serie, usuario, generosSerie, genero, temporada, ep, flag: 1, adicionadoSerieAssistido, adicionadoPretendoAssistir});
+        res.render('../views/serieSelec', {serie, usuario, generosSerie, genero, temporada, ep, flag: 1, adicionadoSerieAssistido, adicionadoPretendoAssistir, comentarios});
     },
 
     async addPretendoAssistir(req, res)
@@ -575,6 +589,13 @@ module.exports = {
             }}
         })
 
+        const comentarios = await tabelaListaSerie.findAll({
+            raw: true,
+            attributes: ['Comentario', 'Nota'],
+            include: [{model: tabelaUsuario, attributes: ['Usuario', 'Imagem']}],
+            where: {IDSerie: id}
+        });
+
         // Verificação para ver se está na lista de filmes
         try {
             if (idSerieAssistido[0].IDSerie != id) {
@@ -597,7 +618,7 @@ module.exports = {
             adicionadoPretendoAssistir = false;
         }
 
-        res.render('../views/serieSelec', {serie, usuario, genero, flag: 1, adicionadoSerieAssistido, adicionadoPretendoAssistir, temporada, ep})
+        res.render('../views/serieSelec', {serie, usuario, genero, flag: 1, adicionadoSerieAssistido, adicionadoPretendoAssistir, temporada, ep, comentarios})
         
     }
 }
