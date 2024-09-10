@@ -5,8 +5,6 @@ const tabelaFilmes = require('../model/filme');
 const tabelaSeries = require('../model/serie');
 const tabelaPretendeAssistirFilme = require('../model/pretendeAssistirFilme');
 const tabelaPretendeAssistirSerie = require('../model/pretendeAssistirSerie');
-const { raw } = require('express');
-const { where } = require('sequelize');
 
 module.exports = {
     async getPerfilPage(req, res)
@@ -88,11 +86,9 @@ module.exports = {
 
         const reviewFeitas = await tabelaListaFilmes.count({
             raw: true,
-            where: {IDUsuario: usuario[0].IDUsuario}
+            where: {IDUsuario: usuario[0].IDUsuario},
+            order: [['Favorito', 'ASC']]
         });
-
-        console.log(listaPretendeAssistirFilme);
-        console.log(listaPretendeAssistirSerie);
         
         res.render('../views/perfil', {usuario, filmes, listaFilmes, series, listaSeries, listaPretendeAssistirFilme, listaPretendeAssistirSerie, reviewFeitas,flag: 0});
     },
@@ -214,7 +210,8 @@ module.exports = {
 
         const reviewFeitas = await tabelaListaFilmes.count({
             raw: true,
-            where: {IDUsuario: usuario[0].IDUsuario}
+            where: {IDUsuario: usuario[0].IDUsuario},
+            order: [['Favorito', 'DESC']]
         });
 
         res.render('../views/perfil', {usuario, filmes, listaFilmes, series, listaSeries, listaPretendeAssistirFilme, listaPretendeAssistirSerie, reviewFeitas,flag: 0});
@@ -257,6 +254,39 @@ module.exports = {
         {
             where: {IDFilme: id}
         });
+
+        res.redirect('/perfil/' + nomeUser)
+    },
+
+    async favoritar(req, res){
+        const id = req.params.id
+        const nomeUser = req.params.nomeUser
+
+        const usuario = await tabelaUsuario.findAll({
+            raw: true,
+            where: {Usuario: nomeUser}
+        });
+
+        const filme = await tabelaListaFilmes.findAll({
+            raw: true,
+            where: {IDUsuario: usuario[0].IDUsuario, IDFilme: id}
+        });
+
+        if (filme[0].Favorito == 0) {
+            await tabelaListaFilmes.update({
+                Favorito: 1
+            },
+            {
+                where: {IDUsuario: usuario[0].IDUsuario, IDFilme: id}
+            })
+        } else {
+            await tabelaListaFilmes.update({
+                Favorito: 0
+            },
+            {
+                where: {IDUsuario: usuario[0].IDUsuario, IDFilme: id}
+            })
+        }
 
         res.redirect('/perfil/' + nomeUser)
     }

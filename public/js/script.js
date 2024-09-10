@@ -4,7 +4,6 @@ npm init -y
 npm install express mssql sequelize nodemon ejs
 npm install multer
 */
-
 const newImage = document.getElementById('newImage');
 const userImage = document.getElementById('novaImagemPerfil');
 const novaImagemFilme = document.getElementById('novaImagemFilme');
@@ -38,6 +37,15 @@ function imgFilmeClick()
 {
     novaImagemFilme.click()
 }
+
+function favoritar(icon, verificarFav) {
+    console.log(icon)
+    if (verificarFav == 1) {
+        document.getElementById(icon).className = "fa-regular fa-heart fa-xl"
+    } else {
+        document.getElementById(icon).className = "fa-solid fa-heart fa-xl"
+    }
+} 
 
 newImage.addEventListener('change', () =>
 {

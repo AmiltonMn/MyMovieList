@@ -64,9 +64,15 @@
 
               <h1 class=""><%= filme[0].Titulo %></h1>
 
+              <br>
+
               <hr>
 
+              <br>
+
               <p class="text-justify"><%= filme[0].Sinopse %></p>
+
+              <br>
 
               <div class="d-flex flex-wrap">
                 <% for (let i = 0; i < generosFilme.length; i ++) { %>
@@ -77,6 +83,8 @@
               </div>
 
               <br>
+              <br>
+
               
               <div class="d-flex flex-row align-items-center" style="margin-bottom: 15px;">
                 <div class="d-flex justify-content-center" style="background-color: rgb(10, 10, 59); color: orange; width: 130px; border-radius: 999px;">
@@ -110,7 +118,7 @@
 
                   <div class="" id="btnsAdmin">
 
-                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarFilme"  style="background: transparent; border: none;"><i class="fa-regular fa-pen-to-square fa-xl" id="editarFilme"></i></button>
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editarFilme"  style="background: transparent; border: none;"><i class="fa-regular fa-pen-to-square fa-xl" id="editarFilmeIcon"></i></button>
 
                     <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#deletarFilme" style="background: transparent; border: none; color: red;"><i class="fa-solid fa-trash fa-xl"></i></button>
     
@@ -264,6 +272,99 @@
 
       </div>
       
+    </div>
+
+    <!-- Editar Filme -->
+
+    <div class="modal" tabindex="-1" id="editarFilme">
+      
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+
+        <div class="modal-content">
+
+          <div class="modal-header">
+
+            <h5 class="modal-title">Preencha os campos!</h5>
+
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          </div>
+
+          <div class="modal-body">
+
+            <form action="/editarFilme/<%= filme[0].IDFilme %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
+
+
+              <input class="form-control" type="file" name="novaImagemFilme" id="novaImagemFilme" accept="image/*">
+
+
+              <br>
+
+              <label class="form-label"  for="novoTitulo">Titulo do Filme</label>
+
+              <br>
+
+              <input class="form-control" type="text" name="novoTitulo" value="<%= filme[0].Titulo %>" placeholder="Digite o nome do filme" required>
+  
+              <br>
+
+              <label class="form-label" for="novaSinopse" required>Sinopse do Filme</label>
+
+              <br>
+              <textarea class="form-control" name="novaSinopse" rows="2"><%= filme[0].Sinopse %></textarea>
+
+              <br>
+
+              <label class="form-label" for="novoLancamento">Data de Lançamento</label>
+
+              <br>
+
+              <input class="form-control" type="date" name="novoLancamento" value="" id="lancamentoInput">
+
+              <br>
+
+              <label class="form-label" for="novaIdadeIndicativa">Idade Indicativa</label>
+
+              <br>
+
+              <select class="form-control" name="novaIdadeIndicativa" required>
+
+                <option value="1" <%= (1 === filme[0].IdadeIndicativa) ? "selected" : "" %>>AL</option>
+                <option value="2" <%= (2 === filme[0].IdadeIndicativa) ? "selected" : "" %>>A10</option>
+                <option value="3" <%= (3 === filme[0].IdadeIndicativa) ? "selected" : "" %>>A12</option>
+                <option value="4" <%= (4 === filme[0].IdadeIndicativa) ? "selected" : "" %>>A14</option>
+                <option value="5" <%= (5 === filme[0].IdadeIndicativa) ? "selected" : "" %>>A16</option>
+                <option value="6" <%= (6 === filme[0].IdadeIndicativa) ? "selected" : "" %>>A18</option>
+
+              </select>
+
+              <br>
+
+              <div class="overflow-y-auto" style="height: 200px;">
+                <ul class="list-group" id="generos">
+                  <% for(let i = 0; i < generos.length; i++) { %>
+                    
+                    <li class="list-group-item">
+                      <input class="form-check-input me-1" type="checkbox" value="<%= generos[i].IDGenero %>" id="checkbox<%= i %>" name="inputGenero">
+                      <label class="form-check-label" for="checkbox<%= i %>"><%= generos[i].Nome %></label>
+                    </li>
+                    
+                    <% } %>
+                  </ul>
+               </div>
+
+              <br>
+
+              <button type="submit" id="btnEditar" class="btn btn-primary">Editar</button>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
 
 

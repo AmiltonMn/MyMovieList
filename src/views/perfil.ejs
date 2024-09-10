@@ -130,7 +130,17 @@
                       <div class="infoFilme d-flex flex-column justify-content-between">
                         <div class="d-flex flex-row justify-content-between align-items-center">
                           <h2><%= filmes[i]['filme.Titulo'] %></h2>
-                          <i class="heart fa-regular fa-heart fa-xl" style="color: #ff9c00;" id="heart"></i>
+                          <form action="/favoritarFilme/<%= listaFilmes[i].IDFilme %>/<%= usuario[0].Usuario %>" method="post">
+                            <% if (listaFilmes[i].Favorito == 0) { %>
+                              <button type="submit" style="border: none; background-color: transparent;">
+                                <i class="heart fa-regular fa-heart fa-xl" style="color: #ff9c00;" id="heart<%=i%>"onclick="mudarFav('heart<%= i%>', 0)"></i>
+                              </button>
+                            <% } else { %>
+                              <button type="submit" style="border: none; background-color: transparent;">
+                                <i class="heart fa-solid fa-heart fa-xl" style="color: #ff9c00;" id="heart<%=i%>"onclick="mudarFav('heart<%= i%>', 1)"></i>
+                              </button>
+                            <% } %>
+                          </form>
                         </div>
                         <hr style="position: relative; bottom: 40px;">
                         
