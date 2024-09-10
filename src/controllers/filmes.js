@@ -164,6 +164,13 @@ module.exports = {
             where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
         })
 
+        const comentarios = await tabelaListaFilmes.findAll({
+            raw: true,
+            attributes: ['Comentario', 'Nota'],
+            include: [{model: tabelaUsuario, attributes: ['Usuario', 'Imagem']}],
+            where: {IDFilme: id}
+        })
+
         const dataLancamento = new Date(filme[0].Lancamento);
 
         dataLancamento.setDate(dataLancamento.getDate() + 2);
@@ -194,7 +201,7 @@ module.exports = {
             adicionadoPretendoAssistir = false;
         }
         
-        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 0, adicionadoPretendoAssistir, adicionadoFilmeAssistido});        
+        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 0, adicionadoPretendoAssistir, adicionadoFilmeAssistido, comentarios});        
     },
 
     async addFilmeLista(req, res){
@@ -294,6 +301,13 @@ module.exports = {
             where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
         })
 
+        const comentarios = await tabelaListaFilmes.findAll({
+            raw: true,
+            attributes: ['Comentario', 'Nota'],
+            include: [{model: tabelaUsuario, attributes: ['Usuario', 'Imagem']}],
+            where: {IDFilme: id}
+        })
+
         const dataLancamento = new Date(filme[0].Lancamento);
 
         dataLancamento.setDate(dataLancamento.getDate() + 2);
@@ -322,7 +336,7 @@ module.exports = {
             adicionadoPretendoAssistir = false;
         }
 
-        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 1, adicionadoFilmeAssistido, adicionadoPretendoAssistir})
+        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 1, adicionadoFilmeAssistido, adicionadoPretendoAssistir, comentarios})
     },
 
     async deletarFilme(req, res){
@@ -453,6 +467,13 @@ module.exports = {
             where: {IDFilme: id, IDUsuario: usuario[0].IDUsuario}
         })
 
+        const comentarios = await tabelaListaFilmes.findAll({
+            raw: true,
+            attributes: ['Comentario', 'Nota'],
+            include: [{model: tabelaUsuario, attributes: ['Usuario', 'Imagem']}],
+            where: {IDFilme: id}
+        })
+
         const dataLancamento = new Date(filme[0].Lancamento);
 
         dataLancamento.setDate(dataLancamento.getDate() + 2);
@@ -481,7 +502,7 @@ module.exports = {
             adicionadoPretendoAssistir = false;
         }
 
-        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 1, adicionadoFilmeAssistido, adicionadoPretendoAssistir})
+        res.render('../views/filmeSelec', {filme, usuario, generosFilme, generos, flag: 1, adicionadoFilmeAssistido, adicionadoPretendoAssistir, comentarios})
         
     }
 }

@@ -50,7 +50,7 @@
 
     </nav>
 
-    <main class="container d-flex position-absolute top-50 start-50 translate-middle">
+    <main class="container d-flex flex-column" style="margin-top: 100px;">
 
           <div class="p-2 container d-flex" id="containerInformacoes">
             
@@ -122,8 +122,19 @@
               
             </div>
             
+            
           </div>
+          
+          <div id="comentarios" class="mt-4">
+            <h3>Comentarios</h3>
+            <% for(let i = 0; i < comentarios.length; i++) { %>
+              <img src="/img/<%= comentarios[i]['usuario.Imagem'] %>" alt="">
+              <%= comentarios[i]['usuario.Usuario'] %>
+              <%= comentarios[i].Comentario %>
+              <%= comentarios[i].Nota %>
+            <% } %>
 
+          </div>
           
     
     </main>
