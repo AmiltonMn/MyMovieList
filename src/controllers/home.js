@@ -26,14 +26,24 @@ module.exports = {
         const filmesMaisRecentes = await tabelaFilme.findAll ({
             raw: true,
             order: [['Lancamento', 'DESC']]
-        })
+        });
 
         const filmesMelhorAvaliados = await tabelaFilme.findAll ({
             raw: true,
             order: [['NotaGeral', 'DESC']]
-        })
+        });
+
+        const seriesMaisRecentes = await tabelaSerie.findAll ({
+            raw: true,
+            order: [['Lancamento', 'DESC']]
+        });
+
+        const seriesMelhorAvaliados = await tabelaSerie.findAll ({
+            raw: true,
+            order: [['NotaGeral', 'DESC']]
+        });
         
-        res.render('../views/home', {usuario: '', filmesMaisRecentes, filmesMelhorAvaliados});
+        res.render('../views/home', {usuario: '', filmesMaisRecentes, filmesMelhorAvaliados, seriesMaisRecentes, seriesMelhorAvaliados});
     },
 
     async getHome(req, res){
@@ -66,6 +76,16 @@ module.exports = {
             order: [['NotaGeral', 'DESC']]
         })
 
+        const seriesMaisRecentes = await tabelaSerie.findAll ({
+            raw: true,
+            order: [['Lancamento', 'DESC']]
+        });
+
+        const seriesMelhorAvaliados = await tabelaSerie.findAll ({
+            raw: true,
+            order: [['NotaGeral', 'DESC']]
+        });
+
         const nomeUser = req.params.nomeUser;
 
         if (typeof(nomeUser) === undefined || nomeUser == 'favicon.ico') {
@@ -77,7 +97,7 @@ module.exports = {
                     raw: true,
                     where: {Usuario: nomeUser}
                 });
-                res.render('../views/home', {usuario, filmesMaisRecentes, filmesMelhorAvaliados});
+                res.render('../views/home', {usuario, filmesMaisRecentes, filmesMelhorAvaliados, seriesMaisRecentes, seriesMelhorAvaliados});
             } else {
 
             }

@@ -47,7 +47,7 @@ main
     transition: ease-in 1ms;
 }
 
-#background
+#background1, #background2, #background3, #background4
 {
     background-size: cover;
     background-repeat: no-repeat;
