@@ -39,6 +39,16 @@ footer
   
 }
 
+#containerTemporada
+{
+  width: 100%;
+  border: 1px outset orange;
+  height: fit-content;
+  padding: 15px;
+  box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;
+  /* border-top: none; */
+}
+
 #btnsUsuario
 {
   position: relative;
@@ -72,12 +82,12 @@ hr
 
 .generos
 {
-  background-color: rgb(10, 10, 10);
+  background-color: rgb(10, 10, 59);
   border-radius: 999px;
-  width: 130px;
+  width: 155px;
   text-align: center;
   margin-right: 15px;
-  color: white;
+  color: orange;
   margin-bottom: 10px;
 }
 

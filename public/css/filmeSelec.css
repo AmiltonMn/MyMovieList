@@ -91,10 +91,11 @@ nav
 {
     background-color: rgb(10, 10, 59);
     border-radius: 999px;
-    width: 130px;
+    width: 155px;
     text-align: center;
     margin-right: 15px;
     color: orange;
+    margin-bottom: 10px;
 }
 
 .modal
