@@ -2,7 +2,7 @@
   "name": "mymovielist",
   "version": "1.0.0",
   "description": "Site para anotar quais filmes e séries você assistiu e dar uma nota para eles.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
