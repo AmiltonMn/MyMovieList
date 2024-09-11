@@ -88,8 +88,12 @@ module.exports = {
             attributes: ['IDUsuario', 'Usuario', 'Nome', 'DtNasc', 'Senha', 'Email', 'ISAdmin', 'Imagem'],
             where: {Usuario: nomeUser}
         });
+        
+        const generos = await tabelaGenero.findAll({
+            raw: true
+        });
 
-        res.render('../views/series', {series, usuario});
+        res.render('../views/series', {series, usuario, generos});
     },
 
     async getSerieSelecionada(req, res){
