@@ -1,15 +1,21 @@
-const sequelize = require('sequelize');
+require('dotenv').config();
+const Sequelize = require('sequelize');
 
-const database = new sequelize('MML', 'MMLAdmin', 'mmladmin123456',
-    {
-        // dialect: 'mssql', host:'localhost', port: 51032
+// Verifica se está em produção ou desenvolvimento (localhost)
+const isProduction = process.env.NODE_ENV === 'production';
 
-        // dialect: 'mssql', host:'localhost', port: 56732
+// Se estiver em produção, utiliza a URL do banco remoto, senão usa o localhost
+const databaseUrl = isProduction ? process.env.DATABASE_URL : process.env.LOCAL_DATABASE_URL;
 
-        // dialect: 'mssql', host:'localhost', port: 1433, // Sala Original
-
-        dialect: 'mssql', host:'localhost', port: 58770 // Casa Amilton
+const database = new Sequelize(databaseUrl, {
+    dialect: 'postgres',
+    dialectOptions: {
+        ssl: isProduction ? { require: true, rejectUnauthorized: false } : false, // SSL apenas em produção
     }
-);
-database.sync();
+});
+
+database.sync()
+    .then(() => console.log("Conectado com sucesso ao banco de dados"))
+    .catch(err => console.error("Erro ao conectar ao banco de dados:", err));
+
 module.exports = database;
