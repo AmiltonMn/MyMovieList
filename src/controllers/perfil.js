@@ -97,24 +97,25 @@ module.exports = {
         res.render('../views/perfil', {usuario, filmes, listaFilmes, series, listaSeries, listaPretendeAssistirFilme, listaPretendeAssistirSerie, reviewFeitas,flag: 0});
     },
 
-        async atualizarPerfil(req, res){
+    async atualizarPerfil(req, res){
 
-            const dados = req.body;
-            const nomeUser = req.params.nomeUser;
+        const dados = req.body;
+        const nomeUser = req.params.nomeUser;
 
-            const usuario = await tabelaUsuario.findAll({
-                raw: true,
-                where: {Usuario: nomeUser}
-            })
+        const usuario = await tabelaUsuario.findAll({
+            raw: true,
+            where: {Usuario: nomeUser}
+        })
 
-            let novaImagem = usuario[0].Imagem;
+        let novaImagem = usuario[0].Imagem;
 
-            console.log(novaImagem)
+        console.log(novaImagem)
 
-            if (req.file) {
-                novaImagem = req.file.filename;
-            }
+        if (req.file) {
+            novaImagem = req.file.filename;
+        }
 
+        if(dados.senhaAntigaInput == usuario[0].Senha){
             await tabelaUsuario.update({
                 Usuario: dados.usuarioInput,
                 Nome: dados.nomeInput,
@@ -122,10 +123,11 @@ module.exports = {
                 Senha: dados.senhaInput,
                 Email: dados.emailInput,
                 Imagem: novaImagem
-        },
-        {
-            where: { Usuario: nomeUser }
-        });
+            },
+            {
+                where: { Usuario: nomeUser }
+            });
+        }
 
         res.redirect('/perfil/' + dados.usuarioInput);
     },
