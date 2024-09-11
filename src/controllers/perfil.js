@@ -265,6 +265,137 @@ module.exports = {
         res.redirect('/perfil/' + nomeUser)
     },
 
+    async deletarReviewSerie(req, res)
+    {
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+        let flag = 0;
+
+        const usuario = await tabelaUsuario.findAll({
+            raw: true,
+            where: {Usuario: nomeUser}
+        })
+
+        try {
+            await tabelaListaSeries.destroy({
+                where: {IDSerie: id, IDUsuario: usuario[0].IDUsuario}
+            })
+            flag = 1;
+        } catch (error) {
+            flag = 2;
+        }
+
+        const notas = await tabelaListaFilmes.findAll({
+            raw: true,
+            where: {IDFilme: id}
+        });
+
+        let notaFilme = 0;
+
+        for (let i = 0; i < notas.length; i++) {
+            notaFilme += notas[i].Nota;
+            console.log(notas[i].Nota)
+            console.log(notaFilme)
+        };
+
+        if (notas.length == 0) {
+            notaFilme = 0;
+        } else {
+            notaFilme = notaFilme / notas.length;
+        }
+
+        await tabelaFilmes.update({
+        NotaGeral: notaFilme
+        },
+        {
+            where: {IDFilme: id}
+        });
+
+        const filmes = await tabelaListaFilmes.findAll({
+            raw: true,
+            include: [{model: tabelaFilmes}],
+            where: {IDUsuario: usuario[0].IDUsuario}
+        });
+
+        const listaFilmes = await tabelaListaFilmes.findAll({
+            raw: true,
+            where: {IDUsuario: usuario[0].IDUsuario}
+        })
+
+        const series = await tabelaListaSeries.findAll({
+            raw: true,
+            include: [{model: tabelaSeries}],
+            where: {IDUsuario: usuario[0].IDUsuario}
+        });
+
+        const listaSeries = await tabelaListaSeries.findAll({
+            raw: true,
+            where: {IDUsuario: usuario[0].IDUsuario}
+        });
+
+        const listaPretendeAssistirFilme = await tabelaPretendeAssistirFilme.findAll({
+            raw: true,
+            attributes: ['IDFilme'],
+            include: [{model: tabelaFilmes}],
+            where: {IDUsuario: usuario[0].IDUsuario}
+        });
+
+        const listaPretendeAssistirSerie = await tabelaPretendeAssistirSerie.findAll({
+            raw: true,
+            attributes: ['IDSerie'],
+            include: [{model: tabelaSeries}],
+            where: {IDUsuario: usuario[0].IDUsuario}
+        });
+
+        const reviewFeitas = await tabelaListaFilmes.count({
+            raw: true,
+            where: {IDUsuario: usuario[0].IDUsuario}
+        });
+
+        res.render('../views/perfil', {usuario, filmes, listaFilmes, series, listaSeries, listaPretendeAssistirFilme, listaPretendeAssistirSerie, reviewFeitas,flag: 0});
+    },
+
+    async updateReviewSerie(req, res){
+        const id = req.params.id;
+        const nomeUser = req.params.nomeUser;
+        const dados = req.body;
+
+        const usuario = await tabelaUsuario.findAll({
+            raw: true,
+            where: {Usuario: nomeUser}
+        });
+
+        await tabelaListaSeries.update({
+            Comentario: dados.novoComentario,
+            Nota: dados.novaNota,
+        },
+        {
+            where: {IDUsuario: usuario[0].IDUsuario, IDSerie: id}   
+        })
+
+        const notas = await tabelaListaSeries.findAll({
+            raw: true,
+            where: {IDSerie: id}
+        });
+
+        let notaSerie = 0;
+
+        for (let i = 0; i < notas.length; i++) {
+            notaSerie += notas[i].Nota;
+        };
+
+        notaSerie = notaSerie / notas.length;
+
+        await tabelaSeries.update({
+        NotaGeral: notaSerie
+        },
+        {
+            where: {IDSerie: id}
+        });
+
+        res.redirect('/perfil/' + nomeUser)
+    },
+
     async favoritar(req, res){
         const id = req.params.id
         const nomeUser = req.params.nomeUser
