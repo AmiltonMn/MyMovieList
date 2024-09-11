@@ -182,6 +182,24 @@ module.exports = {
 
         serie[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
 
+        for (let i = 0; i < temporada.length; i++) {
+            
+            let dataLancamentoTemp = new Date(temporada[i].Lancamento);
+    
+            dataLancamentoTemp.setDate(dataLancamentoTemp.getDate() + 2);
+    
+            temporada[i].Lancamento = dataLancamentoTemp.toLocaleDateString('pt-BR');
+        }
+
+        for (let i = 0; i < ep.length; i++) {
+            
+            const dataLancamentoEp = new Date(ep[i].Lancamento);
+    
+            dataLancamentoEp.setDate(dataLancamentoEp.getDate() + 2);
+    
+            ep[i].Lancamento = dataLancamentoEp.toLocaleDateString('pt-BR');
+        }
+
         try {
             if (idSerieAssistido[0].IDSerie != id) {
                 adicionadoSerieAssistido = false
@@ -497,6 +515,24 @@ module.exports = {
             }}
         })
 
+        for (let i = 0; i < temporada.length; i++) {
+            
+            let dataLancamentoTemp = new Date(temporada[i].Lancamento);
+    
+            dataLancamentoTemp.setDate(dataLancamentoTemp.getDate() + 2);
+    
+            temporada[i].Lancamento = dataLancamentoTemp.toLocaleDateString('pt-BR');
+        }
+
+        for (let i = 0; i < ep.length; i++) {
+            
+            const dataLancamentoEp = new Date(ep[i].Lancamento);
+    
+            dataLancamentoEp.setDate(dataLancamentoEp.getDate() + 2);
+    
+            ep[i].Lancamento = dataLancamentoEp.toLocaleDateString('pt-BR');
+        }
+
         const comentarios = await tabelaListaSerie.findAll({
             raw: true,
             attributes: ['Comentario', 'Nota'],
@@ -654,6 +690,24 @@ module.exports = {
             rwa: true,
             where: {IDSerie: id}
         });
+
+        for (let i = 0; i < temporada.length; i++) {
+            
+            let dataLancamentoTemp = new Date(temporada[i].Lancamento);
+    
+            dataLancamentoTemp.setDate(dataLancamentoTemp.getDate() + 2);
+    
+            temporada[i].Lancamento = dataLancamentoTemp.toLocaleDateString('pt-BR');
+        }
+
+        for (let i = 0; i < ep.length; i++) {
+            
+            const dataLancamentoEp = new Date(ep[i].Lancamento);
+    
+            dataLancamentoEp.setDate(dataLancamentoEp.getDate() + 2);
+    
+            ep[i].Lancamento = dataLancamentoEp.toLocaleDateString('pt-BR');
+        }
 
         // Verificação para ver se está na lista de filmes
         try {

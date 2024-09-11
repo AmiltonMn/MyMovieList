@@ -160,8 +160,8 @@
               
                 <div class="collapse" id="temp<%= i %>">
                   <div class="card card-body" style="border: none;">
-                    <h3><%= temporada[i].Sinopse %></h3>
-                    Eps: <br>
+                    <h4><%= temporada[i].Sinopse %></h4>
+                    <br>
                     <% for (let j = 0; j < ep.length; j++) { %>
                       <% if (ep[j].IDTemporada == temporada[i].IDTemporada) { %>
                         <!-- Episodios -->
@@ -169,7 +169,7 @@
 
                         <div class="d-flex justify-content-between">
 
-                          <div>
+                          <div  style="width: 80%;">
                             <h3><%= ep[j].Titulo %></h3>
                             <p><%= ep[j].Sinopse %></p>
                             <div class="d-flex justify-content-center" style="background-color: rgb(10, 10, 59); color: orange; width: 155px; border-radius: 999px;">
