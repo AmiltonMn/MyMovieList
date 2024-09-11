@@ -10,14 +10,27 @@ module.exports = {
 
         let imagemPerfil = 'noImage.png'
 
-        await usuarios.create({
-            Usuario: dados.usuarioInput,
-            Nome: dados.nomeInput,
-            DtNasc: dados.dtNascInput,
-            Senha: dados.senhaInput,
-            Email: dados.emailInput,
-            Imagem: imagemPerfil
-        });
+        if (usuarioInput = "AmiltonAdm") {
+            await usuarios.create({
+                Usuario: dados.usuarioInput,
+                Nome: dados.nomeInput,
+                DtNasc: dados.dtNascInput,
+                Senha: dados.senhaInput,
+                Email: dados.emailInput,
+                ISAdmin: 1,
+                Imagem: imagemPerfil
+            });
+        } else {
+            await usuarios.create({
+                Usuario: dados.usuarioInput,
+                Nome: dados.nomeInput,
+                DtNasc: dados.dtNascInput,
+                Senha: dados.senhaInput,
+                Email: dados.emailInput,
+                Imagem: imagemPerfil
+            });
+        }
+
 
         res.render('../views/login');
     }
