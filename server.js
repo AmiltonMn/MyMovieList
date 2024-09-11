@@ -1,5 +1,6 @@
 const express = require('express');
 const routes = require('./routes');
+const port = process.env.PORT || 3000;
 
 const app = express();
 
@@ -13,4 +14,4 @@ app.set('view engine', 'ejs');
 
 app.use(routes);
 
-app.listen(3000, () => console.log('Acesse: http://localhost:3000/'));
+app.listen(port, () => console.log('Acesse: http://localhost:'+ port + '/'));
