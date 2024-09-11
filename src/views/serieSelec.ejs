@@ -160,6 +160,7 @@
               
                 <div class="collapse" id="temp<%= i %>">
                   <div class="card card-body" style="border: none;">
+                    <h3><%= temporada[i].Sinopse %></h3>
                     Eps: <br>
                     <% for (let j = 0; j < ep.length; j++) { %>
                       <% if (ep[j].IDTemporada == temporada[i].IDTemporada) { %>
@@ -169,7 +170,7 @@
                         <div class="d-flex justify-content-between">
 
                           <div>
-                            <p><%= ep[j].Titulo %></p>
+                            <h3><%= ep[j].Titulo %></h3>
                             <p><%= ep[j].Sinopse %></p>
                             <div class="d-flex justify-content-center" style="background-color: rgb(10, 10, 59); color: orange; width: 155px; border-radius: 999px;">
                               <b><%= ep[j].Lancamento %></b>
@@ -418,9 +419,6 @@
 
         <form action="/addTemp/<%= serie[0].IDSerie %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
 
-          <label class="form-label"  for="imagemInput">Imagem de capa da Temporada</label>
-          <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/">
-
           <label class="form-label"  for="tituloInput">Titulo da Temporada</label>
           <input class="form-control" type="text"  name="tituloInput" name="tituloInput">
 
@@ -505,9 +503,6 @@
         <div class="modal-body">
 
           <form action="/addEp/<%= temporada[i].IDTemporada %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
-
-            <label class="form-label"  for="imagemInput">Imagem de capa do Episodio</label>
-            <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/">
 
             <label class="form-label"  for="tituloInput">Titulo do Episodio</label>
             <input class="form-control" type="text"  name="tituloInput" name="tituloInput">

@@ -93,6 +93,12 @@ module.exports = {
             raw: true
         });
 
+        const dataLancamento = new Date(series[0].Lancamento);
+
+        dataLancamento.setDate(dataLancamento.getDate() + 2);
+
+        series[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
+
         res.render('../views/series', {series, usuario, generos});
     },
 
@@ -169,6 +175,12 @@ module.exports = {
             rwa: true,
             where: {IDSerie: id}
         });
+
+        const dataLancamento = new Date(serie[0].Lancamento);
+
+        dataLancamento.setDate(dataLancamento.getDate() + 2);
+
+        serie[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
 
         try {
             if (idSerieAssistido[0].IDSerie != id) {
