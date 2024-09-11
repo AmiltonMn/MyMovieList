@@ -7,8 +7,6 @@ const tabelaGeneroSerie = require('../model/generoSerie');
 const tabelaListaSerie = require('../model/listaSerie');
 const tabelaPretendoAssistir = require('../model/pretendeAssistirSerie');
 const { Op, where } = require('sequelize');
-const { raw } = require('express');
-const usuario = require('../model/usuario');
 
 module.exports = {
     async getSeriesPage(req, res){
@@ -153,6 +151,21 @@ module.exports = {
             where: {IDSerie: id}
         });
 
+        const assistido = await tabelaListaSerie.count({
+            rwa: true,
+            where: {IDSerie: id}
+        });
+
+        const favoritado = await tabelaListaSerie.count({
+            rwa: true,
+            where: {IDSerie: id, Favorito: 1}
+        });
+
+        const pretendeAssistir = await tabelaPretendoAssistir.count({
+            rwa: true,
+            where: {IDSerie: id}
+        });
+
         try {
             if (idSerieAssistido[0].IDSerie != id) {
                 adicionadoSerieAssistido = false
@@ -174,7 +187,7 @@ module.exports = {
             adicionadoPretendoAssistir = false;
         }
 
-        res.render('../views/serieSelec', {serie, usuario, temporada, ep, genero, flag: 0, adicionadoPretendoAssistir, adicionadoSerieAssistido, comentarios});
+        res.render('../views/serieSelec', {serie, usuario, temporada, ep, genero, flag: 0, adicionadoPretendoAssistir, adicionadoSerieAssistido, comentarios, assistido, favoritado, pretendeAssistir});
     },
 
     async atualizarSerie(req, res){
@@ -475,6 +488,21 @@ module.exports = {
             where: {IDSerie: id}
         });
 
+        const assistido = await tabelaListaSerie.count({
+            rwa: true,
+            where: {IDSerie: id}
+        });
+
+        const favoritado = await tabelaListaSerie.count({
+            rwa: true,
+            where: {IDSerie: id, Favorito: 1}
+        });
+
+        const pretendeAssistir = await tabelaPretendoAssistir.count({
+            rwa: true,
+            where: {IDSerie: id}
+        });
+
         // Verificação para ver se está na lista de filmes
         try {
             if (idSerieAssistido[0].IDSerie != id) {
@@ -497,7 +525,7 @@ module.exports = {
             adicionadoPretendoAssistir = false;
         }
 
-        res.render('../views/serieSelec', {serie, usuario, generosSerie, genero, temporada, ep, flag: 1, adicionadoSerieAssistido, adicionadoPretendoAssistir, comentarios});
+        res.render('../views/serieSelec', {serie, usuario, generosSerie, genero, temporada, ep, flag: 1, adicionadoSerieAssistido, adicionadoPretendoAssistir, comentarios, assistido, favoritado, pretendeAssistir});
     },
 
     async addPretendoAssistir(req, res)
@@ -596,6 +624,21 @@ module.exports = {
             where: {IDSerie: id}
         });
 
+        const assistido = await tabelaListaSerie.count({
+            rwa: true,
+            where: {IDSerie: id}
+        });
+
+        const favoritado = await tabelaListaSerie.count({
+            rwa: true,
+            where: {IDSerie: id, Favorito: 1}
+        });
+
+        const pretendeAssistir = await tabelaPretendoAssistir.count({
+            rwa: true,
+            where: {IDSerie: id}
+        });
+
         // Verificação para ver se está na lista de filmes
         try {
             if (idSerieAssistido[0].IDSerie != id) {
@@ -618,7 +661,7 @@ module.exports = {
             adicionadoPretendoAssistir = false;
         }
 
-        res.render('../views/serieSelec', {serie, usuario, genero, flag: 1, adicionadoSerieAssistido, adicionadoPretendoAssistir, temporada, ep, comentarios})
+        res.render('../views/serieSelec', {serie, usuario, genero, flag: 1, adicionadoSerieAssistido, adicionadoPretendoAssistir, temporada, ep, comentarios, assistido, favoritado, pretendeAssistir})
         
     }
 }

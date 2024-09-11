@@ -16,16 +16,13 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
   
-    <nav class="navbar navbar-expand-lg shadow">
+    <nav class="navbar shadow">
 
       <div class="container-fluid d-flex justify-content-around">
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
+  
         <% try { %>
           <% usuario[0].Usuario %>
+          <a class="navbar-brand" href="/<%= usuario[0].Usuario %>" id="tituloNav" style="color: orange;"><b>My Movie List</b></a>
           <div class="collapse navbar-collapse">
             <a class="navbar-brand" href="/<%= usuario[0].Usuario %>" style="color: orange;"><b>My Movie List</b></a>
           </div>
@@ -47,7 +44,7 @@
         <% } %>
           
       </div>
-
+  
     </nav>
 
     <main class="container d-flex flex-column" style="margin-top: 100px;">
@@ -141,20 +138,34 @@
               
             </div>
             
-            
           </div>
           
-          <div id="comentarios" class="mt-4">
+          <div id="comentarios" class="mt-4 p-4">
             <h3>Comentarios</h3>
             <% for(let i = 0; i < comentarios.length; i++) { %>
-              <img src="/img/<%= comentarios[i]['usuario.Imagem'] %>" alt="">
-              <%= comentarios[i]['usuario.Usuario'] %>
-              <%= comentarios[i].Comentario %>
-              <%= comentarios[i].Nota %>
-            <% } %>
+              <div class="d-flex mt-3 gap-4">
+  
+                <img src="/img/<%= comentarios[i]['usuario.Imagem'] %>" alt="">
+  
+                <div>
+  
+                  <h4><%= comentarios[i]['usuario.Usuario'] %></h4>
+                  <p class="d-flex flex-wrap"><%= comentarios[i].Comentario %></p>
+                  <% for(let j = 0; j < 5; j++) { %>
+                    <i class="fa fa-star" <%= (j < comentarios[i].Nota) ? 'style=color:#FC0' : "" %>></i>
+                  <% } %>
+  
+                </div>
+  
+              </div>
 
+              <% if(i < comentarios.length - 1) { %>
+                <hr>
+              <% } %>
+
+            <% } %>
+  
           </div>
-          
     
     </main>
 
@@ -391,8 +402,28 @@
 
     <% } %>
 
-    <footer class="border border-black">
-      aaa
+    <footer class="d-flex flex-column p-2">
+
+      <div class="container d-flex flex-row justify-content-evenly mb-3">
+        <div>
+          <i class="fa-brands fa-square-github" style="color: #ff9c00;"></i> @AmiltonMn
+        </div>
+        <div>
+          <i class="fa-solid fa-envelope" style="color: #ff9c00;"></i>amilton.moreiran@hotmail.com
+        </div>
+        <div>
+          <i class="fa-brands fa-square-github" style="color: #ff9c00;"></i> @Fernandohka
+        </div>
+        <div>
+          <i class="fa-solid fa-envelope" style="color: #ff9c00;"></i>fernando2005andrade@gmail.com
+        </div>
+      </div>
+  
+      <div class="d-flex justify-content-center align-items-center">
+        <h6>
+          ©️ 2024 Copyright | My Movie List
+        </h6>
+      </div>
     </footer>
 
     <script src="/js/script.js"></script>
