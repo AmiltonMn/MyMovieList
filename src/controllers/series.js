@@ -7,6 +7,7 @@ const tabelaGeneroSerie = require('../model/generoSerie');
 const tabelaListaSerie = require('../model/listaSerie');
 const tabelaPretendoAssistir = require('../model/pretendeAssistirSerie');
 const { Op, where } = require('sequelize');
+const { raw } = require('express');
 
 module.exports = {
     async getSeriesPage(req, res){
@@ -176,6 +177,11 @@ module.exports = {
             where: {IDSerie: id}
         });
 
+        const generos = await tabelaGenero.findAll({
+            raw: true,
+            attributes: ['Nome']
+        });
+
         const dataLancamento = new Date(serie[0].Lancamento);
 
         dataLancamento.setDate(dataLancamento.getDate() + 2);
@@ -221,7 +227,7 @@ module.exports = {
             adicionadoPretendoAssistir = false;
         }
 
-        res.render('../views/serieSelec', {serie, usuario, temporada, ep, genero, flag: 0, adicionadoPretendoAssistir, adicionadoSerieAssistido, comentarios, assistido, favoritado, pretendeAssistir});
+        res.render('../views/serieSelec', {serie, usuario, temporada, ep, genero, flag: 0, adicionadoPretendoAssistir, adicionadoSerieAssistido, comentarios, assistido, favoritado, pretendeAssistir, generos});
     },
 
     async atualizarSerie(req, res){
@@ -245,6 +251,30 @@ module.exports = {
         {
             where: { IDSerie: id }
         });
+
+        let listaNovosGeneros = []
+
+        const IDSgeneros = await tabelaGenero.findAll({
+            raw: true,
+            attributes: ['IDGenero'],
+            where: {Nome: dados.novosGeneros}
+        })
+
+        for (let i = 0; i < IDSgeneros.length; i++) {
+            listaNovosGeneros[i] = IDSgeneros[i].IDGenero;
+        }
+
+        await tabelaGeneroSerie.destroy({
+            where: {IDSerie: id}
+        })
+
+        for (let i = 0; i < listaNovosGeneros.length; i++) {
+
+            await tabelaGeneroSerie.create({
+                IDSerie: id,
+                IDGenero: listaNovosGeneros[i]
+            })
+        }
         res.redirect('/serieSelec/' + id + '/' + nomeUser);
     },
 
@@ -555,6 +585,11 @@ module.exports = {
             where: {IDSerie: id}
         });
 
+        const generos = await tabelaGenero ({
+            raw: true,
+            attributes: ['Nome']
+        });
+
         // Verificação para ver se está na lista de filmes
         try {
             if (idSerieAssistido[0].IDSerie != id) {
@@ -577,7 +612,7 @@ module.exports = {
             adicionadoPretendoAssistir = false;
         }
 
-        res.render('../views/serieSelec', {serie, usuario, generosSerie, genero, temporada, ep, flag: 1, adicionadoSerieAssistido, adicionadoPretendoAssistir, comentarios, assistido, favoritado, pretendeAssistir});
+        res.render('../views/serieSelec', {serie, usuario, generosSerie, genero, temporada, ep, flag: 1, adicionadoSerieAssistido, adicionadoPretendoAssistir, comentarios, assistido, favoritado, pretendeAssistir, generos});
     },
 
     async addPretendoAssistir(req, res)
@@ -731,7 +766,7 @@ module.exports = {
             adicionadoPretendoAssistir = false;
         }
 
-        res.render('../views/serieSelec', {serie, usuario, genero, flag: 1, adicionadoSerieAssistido, adicionadoPretendoAssistir, temporada, ep, comentarios, assistido, favoritado, pretendeAssistir})
+        res.render('../views/serieSelec', {serie, usuario, genero, flag: 1, adicionadoSerieAssistido, adicionadoPretendoAssistir, temporada, ep, comentarios, assistido, favoritado, pretendeAssistir, generos})
         
     }
 }
