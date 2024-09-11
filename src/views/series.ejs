@@ -14,33 +14,32 @@
     
     <nav class="navbar shadow">
 
-      <div class="container-fluid d-flex justify-content-around">
-  
+      <div class="container-fluid d-flex justify-content-between">
+
         <% try { %>
           <% usuario[0].Usuario %>
-          <a class="navbar-brand" href="/<%= usuario[0].Usuario %>" id="tituloNav" style="color: orange;"><b>My Movie List</b></a>
-          <div class="collapse navbar-collapse">
-            <a class="navbar-brand" href="/<%= usuario[0].Usuario %>" style="color: orange;"><b>My Movie List</b></a>
+          <a class="navbar-brand" href="/<%= usuario[0].Usuario %>" style="color: orange;"><b>My Movie List</b></a>
+          <div>
+            <a class="navbar-brand" href="/perfil/<%= usuario[0].Usuario %>" style="color: orange;"><b><%= usuario[0].Usuario %></b></a>
+            <a class="navbar-brand" href="/filmes/<%= usuario[0].Usuario %>" style="color: orange;"><b>Filmes</b></a>
+            <a class="navbar-brand" href="/series/<%= usuario[0].Usuario %>" style="color: orange;"><b>Series</b></a>
+            <span class="material-symbols-outlined" onclick="mudarDarkMode()" id="icone">
+              dark_mode
+            </span>
           </div>
-          <a class="navbar-brand" href="/perfil/<%= usuario[0].Usuario %>" style="color: orange;"><b><%= usuario[0].Usuario %></b></a>
-          <a class="navbar-brand" href="/filmes/<%= usuario[0].Usuario %>" style="color: orange;"><b>Filmes</b></a>
-          <a class="navbar-brand" href="/series/<%= usuario[0].Usuario %>" style="color: orange;"><b>Series</b></a>
-          <span class="material-symbols-outlined" onclick="mudarDarkMode()" id="icone">
-            dark_mode
-          </span>
         <% } catch (error) { %>
-          <div class="collapse navbar-collapse">
-            <a class="navbar-brand" href="/" id="tituloNav" >My Movie List</a>
+          <a class="navbar-brand" href="/" id="tituloNav" style="color: orange;"><b>My Movie List</b></a>
+          <div class="d-flex align-items-center">
+            <a class="navbar-brand" href="/login" style="color: orange;"><b>Login</b></a>
+            <a class="navbar-brand" href="/cadastrar" style="color: orange;"><b>Registrar</b></a>
+            <span class="material-symbols-outlined" onclick="mudarDarkMode()" id="icone">
+              dark_mode
+            </span>
           </div>
-          <a class="navbar-brand" href="/login">Login</a>
-          <a class="navbar-brand" href="/cadastrar">Registrar</a>
-          <span class="material-symbols-outlined" onclick="mudarDarkMode()" id="icone">
-            dark_mode
-          </span>
         <% } %>
           
       </div>
-  
+
     </nav>
 
     <main>
@@ -201,9 +200,9 @@
         
       </main>
       
-      <footer class="d-flex flex-column p-2">
+      <footer class="d-flex">
 
-        <div class="container d-flex flex-row justify-content-evenly mb-3">
+        <div class="container d-flex flex-row justify-content-evenly mb-3 flex-wrap">
           <div>
             <i class="fa-brands fa-square-github" style="color: #ff9c00;"></i> @AmiltonMn
           </div>

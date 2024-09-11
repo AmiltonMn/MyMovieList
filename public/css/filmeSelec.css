@@ -13,13 +13,15 @@ footer
     bottom: 0;
     width: 100%;
     height: fit-content;
+    flex-wrap: wrap;
+    flex-direction: column;
 }
 
 nav
 {
     background: linear-gradient(to left, rgb(40, 40, 102), rgb(10, 10, 59), rgb(7, 7, 59));
     color: orange;
-    height: 70px;
+    height: fit-content;
 }
 
 #filmeCapa
