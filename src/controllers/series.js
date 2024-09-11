@@ -7,6 +7,7 @@ const tabelaGeneroSerie = require('../model/generoSerie');
 const tabelaListaSerie = require('../model/listaSerie');
 const tabelaPretendoAssistir = require('../model/pretendeAssistirSerie');
 const { Op, where } = require('sequelize');
+const { raw } = require('express');
 
 module.exports = {
     async getSeriesPage(req, res){
@@ -88,8 +89,18 @@ module.exports = {
             attributes: ['IDUsuario', 'Usuario', 'Nome', 'DtNasc', 'Senha', 'Email', 'ISAdmin', 'Imagem'],
             where: {Usuario: nomeUser}
         });
+        
+        const generos = await tabelaGenero.findAll({
+            raw: true
+        });
 
-        res.render('../views/series', {series, usuario});
+        const dataLancamento = new Date(series[0].Lancamento);
+
+        dataLancamento.setDate(dataLancamento.getDate() + 2);
+
+        series[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
+
+        res.render('../views/series', {series, usuario, generos});
     },
 
     async getSerieSelecionada(req, res){
@@ -166,6 +177,35 @@ module.exports = {
             where: {IDSerie: id}
         });
 
+        const generos = await tabelaGenero.findAll({
+            raw: true,
+            attributes: ['Nome']
+        });
+
+        const dataLancamento = new Date(serie[0].Lancamento);
+
+        dataLancamento.setDate(dataLancamento.getDate() + 2);
+
+        serie[0].Lancamento = dataLancamento.toLocaleDateString('pt-BR');
+
+        for (let i = 0; i < temporada.length; i++) {
+            
+            let dataLancamentoTemp = new Date(temporada[i].Lancamento);
+    
+            dataLancamentoTemp.setDate(dataLancamentoTemp.getDate() + 2);
+    
+            temporada[i].Lancamento = dataLancamentoTemp.toLocaleDateString('pt-BR');
+        }
+
+        for (let i = 0; i < ep.length; i++) {
+            
+            const dataLancamentoEp = new Date(ep[i].Lancamento);
+    
+            dataLancamentoEp.setDate(dataLancamentoEp.getDate() + 2);
+    
+            ep[i].Lancamento = dataLancamentoEp.toLocaleDateString('pt-BR');
+        }
+
         try {
             if (idSerieAssistido[0].IDSerie != id) {
                 adicionadoSerieAssistido = false
@@ -187,7 +227,7 @@ module.exports = {
             adicionadoPretendoAssistir = false;
         }
 
-        res.render('../views/serieSelec', {serie, usuario, temporada, ep, genero, flag: 0, adicionadoPretendoAssistir, adicionadoSerieAssistido, comentarios, assistido, favoritado, pretendeAssistir});
+        res.render('../views/serieSelec', {serie, usuario, temporada, ep, genero, flag: 0, adicionadoPretendoAssistir, adicionadoSerieAssistido, comentarios, assistido, favoritado, pretendeAssistir, generos});
     },
 
     async atualizarSerie(req, res){
@@ -211,6 +251,30 @@ module.exports = {
         {
             where: { IDSerie: id }
         });
+
+        let listaNovosGeneros = []
+
+        const IDSgeneros = await tabelaGenero.findAll({
+            raw: true,
+            attributes: ['IDGenero'],
+            where: {Nome: dados.novosGeneros}
+        })
+
+        for (let i = 0; i < IDSgeneros.length; i++) {
+            listaNovosGeneros[i] = IDSgeneros[i].IDGenero;
+        }
+
+        await tabelaGeneroSerie.destroy({
+            where: {IDSerie: id}
+        })
+
+        for (let i = 0; i < listaNovosGeneros.length; i++) {
+
+            await tabelaGeneroSerie.create({
+                IDSerie: id,
+                IDGenero: listaNovosGeneros[i]
+            })
+        }
         res.redirect('/serieSelec/' + id + '/' + nomeUser);
     },
 
@@ -481,6 +545,24 @@ module.exports = {
             }}
         })
 
+        for (let i = 0; i < temporada.length; i++) {
+            
+            let dataLancamentoTemp = new Date(temporada[i].Lancamento);
+    
+            dataLancamentoTemp.setDate(dataLancamentoTemp.getDate() + 2);
+    
+            temporada[i].Lancamento = dataLancamentoTemp.toLocaleDateString('pt-BR');
+        }
+
+        for (let i = 0; i < ep.length; i++) {
+            
+            const dataLancamentoEp = new Date(ep[i].Lancamento);
+    
+            dataLancamentoEp.setDate(dataLancamentoEp.getDate() + 2);
+    
+            ep[i].Lancamento = dataLancamentoEp.toLocaleDateString('pt-BR');
+        }
+
         const comentarios = await tabelaListaSerie.findAll({
             raw: true,
             attributes: ['Comentario', 'Nota'],
@@ -501,6 +583,11 @@ module.exports = {
         const pretendeAssistir = await tabelaPretendoAssistir.count({
             rwa: true,
             where: {IDSerie: id}
+        });
+
+        const generos = await tabelaGenero ({
+            raw: true,
+            attributes: ['Nome']
         });
 
         // Verificação para ver se está na lista de filmes
@@ -525,7 +612,7 @@ module.exports = {
             adicionadoPretendoAssistir = false;
         }
 
-        res.render('../views/serieSelec', {serie, usuario, generosSerie, genero, temporada, ep, flag: 1, adicionadoSerieAssistido, adicionadoPretendoAssistir, comentarios, assistido, favoritado, pretendeAssistir});
+        res.render('../views/serieSelec', {serie, usuario, generosSerie, genero, temporada, ep, flag: 1, adicionadoSerieAssistido, adicionadoPretendoAssistir, comentarios, assistido, favoritado, pretendeAssistir, generos});
     },
 
     async addPretendoAssistir(req, res)
@@ -639,6 +726,24 @@ module.exports = {
             where: {IDSerie: id}
         });
 
+        for (let i = 0; i < temporada.length; i++) {
+            
+            let dataLancamentoTemp = new Date(temporada[i].Lancamento);
+    
+            dataLancamentoTemp.setDate(dataLancamentoTemp.getDate() + 2);
+    
+            temporada[i].Lancamento = dataLancamentoTemp.toLocaleDateString('pt-BR');
+        }
+
+        for (let i = 0; i < ep.length; i++) {
+            
+            const dataLancamentoEp = new Date(ep[i].Lancamento);
+    
+            dataLancamentoEp.setDate(dataLancamentoEp.getDate() + 2);
+    
+            ep[i].Lancamento = dataLancamentoEp.toLocaleDateString('pt-BR');
+        }
+
         // Verificação para ver se está na lista de filmes
         try {
             if (idSerieAssistido[0].IDSerie != id) {
@@ -661,7 +766,7 @@ module.exports = {
             adicionadoPretendoAssistir = false;
         }
 
-        res.render('../views/serieSelec', {serie, usuario, genero, flag: 1, adicionadoSerieAssistido, adicionadoPretendoAssistir, temporada, ep, comentarios, assistido, favoritado, pretendeAssistir})
+        res.render('../views/serieSelec', {serie, usuario, genero, flag: 1, adicionadoSerieAssistido, adicionadoPretendoAssistir, temporada, ep, comentarios, assistido, favoritado, pretendeAssistir, generos})
         
     }
 }

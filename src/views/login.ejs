@@ -10,34 +10,30 @@
 </head>
     <body>
 
-      <nav class="navbar navbar-expand-lg shadow">
+      <nav class="navbar shadow">
 
-        <div class="container-fluid d-flex justify-content-around">
-  
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-  
+        <div class="container-fluid d-flex justify-content-between">
+
           <% try { %>
             <% usuario[0].Usuario %>
-            <div class="collapse navbar-collapse">
-              <a class="navbar-brand" href="/<%= usuario[0].Usuario %>" style="color: orange;"><b>My Movie List</b></a>
+            <a class="navbar-brand" href="/<%= usuario[0].Usuario %>" style="color: orange;"><b>My Movie List</b></a>
+            <div>
+              <a class="navbar-brand" href="/perfil/<%= usuario[0].Usuario %>" style="color: orange;"><b><%= usuario[0].Usuario %></b></a>
+              <a class="navbar-brand" href="/filmes/<%= usuario[0].Usuario %>" style="color: orange;"><b>Filmes</b></a>
+              <a class="navbar-brand" href="/series/<%= usuario[0].Usuario %>" style="color: orange;"><b>Series</b></a>
+              <span class="material-symbols-outlined" onclick="mudarDarkMode()" id="icone">
+                dark_mode
+              </span>
             </div>
-            <a class="navbar-brand" href="/perfil/<%= usuario[0].Usuario %>" style="color: orange;"><b><%= usuario[0].Usuario %></b></a>
-            <a class="navbar-brand" href="/filmes/<%= usuario[0].Usuario %>" style="color: orange;"><b>Filmes</b></a>
-            <a class="navbar-brand" href="/series/<%= usuario[0].Usuario %>" style="color: orange;"><b>Series</b></a>
-            <span class="material-symbols-outlined" onclick="mudarDarkMode()" id="icone">
-              dark_mode
-            </span>
           <% } catch (error) { %>
-            <div class="collapse navbar-collapse">
-              <a class="navbar-brand" href="/" id="tituloNav" style="color: orange;"><b>My Movie List</b></a>
+            <a class="navbar-brand" href="/" id="tituloNav" style="color: orange;"><b>My Movie List</b></a>
+            <div class="d-flex align-items-center">
+              <a class="navbar-brand" href="/login" style="color: orange;"><b>Login</b></a>
+              <a class="navbar-brand" href="/cadastrar" style="color: orange;"><b>Registrar</b></a>
+              <span class="material-symbols-outlined" onclick="mudarDarkMode()" id="icone">
+                dark_mode
+              </span>
             </div>
-            <a class="navbar-brand" href="/login" style="color: orange;"><b>Login</b></a>
-            <a class="navbar-brand" href="/cadastrar" style="color: orange;"><b>Registrar</b></a>
-            <span class="material-symbols-outlined" onclick="mudarDarkMode()" id="icone">
-              dark_mode
-            </span>
           <% } %>
             
         </div>

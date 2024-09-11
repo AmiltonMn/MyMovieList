@@ -13,17 +13,6 @@ main
     margin-top: 80px;
 }
 
-footer
-{
-    display: flex;
-    background-color: rgb(10, 10, 59);
-    position: fixed;
-    margin-top: 30px;
-    bottom: 0;
-    width: 100%;
-    height: fit-content;
-}
-
 body::-webkit-scrollbar
 {
     width: 12px;
@@ -40,11 +29,24 @@ body
     margin-bottom: 100px;
 }
 
+footer
+{
+    display: flex;
+    background-color: rgb(10, 10, 59);
+    position: fixed;
+    margin-top: 30px;
+    bottom: 0;
+    width: 100%;
+    height: fit-content;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
 nav
 {
     background: linear-gradient(to left, rgb(40, 40, 102), rgb(10, 10, 59), rgb(7, 7, 59));
     color: orange;
-    height: 70px;
+    height: fit-content;
 }
 
 #imagemPerfil

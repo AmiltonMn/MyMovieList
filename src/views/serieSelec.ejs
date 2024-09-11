@@ -14,29 +14,28 @@
       
   <nav class="navbar shadow">
 
-    <div class="container-fluid d-flex justify-content-around">
+    <div class="container-fluid d-flex justify-content-between">
 
       <% try { %>
         <% usuario[0].Usuario %>
-        <a class="navbar-brand" href="/<%= usuario[0].Usuario %>" id="tituloNav" style="color: orange;"><b>My Movie List</b></a>
-        <div class="collapse navbar-collapse">
-          <a class="navbar-brand" href="/<%= usuario[0].Usuario %>" style="color: orange;"><b>My Movie List</b></a>
+        <a class="navbar-brand" href="/<%= usuario[0].Usuario %>" style="color: orange;"><b>My Movie List</b></a>
+        <div>
+          <a class="navbar-brand" href="/perfil/<%= usuario[0].Usuario %>" style="color: orange;"><b><%= usuario[0].Usuario %></b></a>
+          <a class="navbar-brand" href="/filmes/<%= usuario[0].Usuario %>" style="color: orange;"><b>Filmes</b></a>
+          <a class="navbar-brand" href="/series/<%= usuario[0].Usuario %>" style="color: orange;"><b>Series</b></a>
+          <span class="material-symbols-outlined" onclick="mudarDarkMode()" id="icone">
+            dark_mode
+          </span>
         </div>
-        <a class="navbar-brand" href="/perfil/<%= usuario[0].Usuario %>" style="color: orange;"><b><%= usuario[0].Usuario %></b></a>
-        <a class="navbar-brand" href="/filmes/<%= usuario[0].Usuario %>" style="color: orange;"><b>Filmes</b></a>
-        <a class="navbar-brand" href="/series/<%= usuario[0].Usuario %>" style="color: orange;"><b>Series</b></a>
-        <span class="material-symbols-outlined" onclick="mudarDarkMode()" id="icone">
-          dark_mode
-        </span>
       <% } catch (error) { %>
-        <div class="collapse navbar-collapse">
-          <a class="navbar-brand" href="/" id="tituloNav" >My Movie List</a>
+        <a class="navbar-brand" href="/" id="tituloNav" style="color: orange;"><b>My Movie List</b></a>
+        <div class="d-flex align-items-center">
+          <a class="navbar-brand" href="/login" style="color: orange;"><b>Login</b></a>
+          <a class="navbar-brand" href="/cadastrar" style="color: orange;"><b>Registrar</b></a>
+          <span class="material-symbols-outlined" onclick="mudarDarkMode()" id="icone">
+            dark_mode
+          </span>
         </div>
-        <a class="navbar-brand" href="/login">Login</a>
-        <a class="navbar-brand" href="/cadastrar">Registrar</a>
-        <span class="material-symbols-outlined" onclick="mudarDarkMode()" id="icone">
-          dark_mode
-        </span>
       <% } %>
         
     </div>
@@ -161,7 +160,8 @@
               
                 <div class="collapse" id="temp<%= i %>">
                   <div class="card card-body" style="border: none;">
-                    Eps: <br>
+                    <h4><%= temporada[i].Sinopse %></h4>
+                    <br>
                     <% for (let j = 0; j < ep.length; j++) { %>
                       <% if (ep[j].IDTemporada == temporada[i].IDTemporada) { %>
                         <!-- Episodios -->
@@ -169,8 +169,8 @@
 
                         <div class="d-flex justify-content-between">
 
-                          <div>
-                            <p><%= ep[j].Titulo %></p>
+                          <div  style="width: 80%;">
+                            <h3><%= ep[j].Titulo %></h3>
                             <p><%= ep[j].Sinopse %></p>
                             <div class="d-flex justify-content-center" style="background-color: rgb(10, 10, 59); color: orange; width: 155px; border-radius: 999px;">
                               <b><%= ep[j].Lancamento %></b>
@@ -232,20 +232,20 @@
     
   </main>
 
-  <footer class="d-flex flex-column p-2">
+  <footer class="d-flex">
 
-    <div class="container d-flex flex-row justify-content-evenly mb-3">
+    <div class="container d-flex flex-row justify-content-evenly mb-3 flex-wrap">
       <div>
-        <i class="fa-brands fa-square-github" style="color: #ff9c00;"></i> @AmiltonMn
+        <i class="fa-brands fa-square-github" style="color: #ff9c00; margin-right: 5px;"></i>@AmiltonMn
       </div>
       <div>
-        <i class="fa-solid fa-envelope" style="color: #ff9c00;"></i>amilton.moreiran@hotmail.com
+        <i class="fa-solid fa-envelope" style="color: #ff9c00; margin-right: 5px;"></i>amilton.moreiran@hotmail.com
       </div>
       <div>
-        <i class="fa-brands fa-square-github" style="color: #ff9c00;"></i> @Fernandohka
+        <i class="fa-brands fa-square-github" style="color: #ff9c00; margin-right: 5px;"></i>@Fernandohka
       </div>
       <div>
-        <i class="fa-solid fa-envelope" style="color: #ff9c00;"></i>fernando2005andrade@gmail.com
+        <i class="fa-solid fa-envelope" style="color: #ff9c00; margin-right: 5px;"></i>fernando2005andrade@gmail.com
       </div>
     </div>
 
@@ -327,6 +327,22 @@
             <option value="A18" <%= ("A18" === serie[0].IdadeIndicativa) ? "selected" : "" %>>A18</option>
 
           </select>
+
+          <br>
+
+          <div class="overflow-y-auto" style="height: 200px;">
+            <ul class="list-group" id="generos">
+              <% for(let i = 0; i < generos.length; i++) { %>
+                
+                <li class="list-group-item">
+                  <input class="form-check-input me-1" type="checkbox" value="<%= generos[i].Nome %>" id="checkbox<%= i %>" name="novosGeneros">
+
+                  <label class="form-check-label" for="checkbox<%= i %>"><%= generos[i].Nome %></label>
+                </li>
+                
+                <% } %>
+              </ul>
+           </div>
 
           <br>
 
@@ -419,9 +435,6 @@
 
         <form action="/addTemp/<%= serie[0].IDSerie %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
 
-          <label class="form-label"  for="imagemInput">Imagem de capa da Temporada</label>
-          <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/">
-
           <label class="form-label"  for="tituloInput">Titulo da Temporada</label>
           <input class="form-control" type="text"  name="tituloInput" name="tituloInput">
 
@@ -506,9 +519,6 @@
         <div class="modal-body">
 
           <form action="/addEp/<%= temporada[i].IDTemporada %>/<%= usuario[0].Usuario %>" enctype="multipart/form-data" method="post">
-
-            <label class="form-label"  for="imagemInput">Imagem de capa do Episodio</label>
-            <input class="form-control" type="file" name="imagemInput" id="imagemInput" accept="image/">
 
             <label class="form-label"  for="tituloInput">Titulo do Episodio</label>
             <input class="form-control" type="text"  name="tituloInput" name="tituloInput">

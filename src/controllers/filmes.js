@@ -423,8 +423,6 @@ module.exports = {
             listaNovosGeneros[i] = IDSgeneros[i].IDGenero;
         }
 
-        console.log(listaNovosGeneros);
-
         await tabelaGenerosFilme.destroy({
             where: {IDFilme: id}
         })
