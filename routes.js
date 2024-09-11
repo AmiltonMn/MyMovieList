@@ -28,6 +28,7 @@ route.post('/updatePerfil/:nomeUser', multer(config).single("newImage"), perfil.
 route.post('/deleteReview/:id/:nomeUser', perfil.deletarReview);
 route.post('/updateReview/:id/:nomeUser', perfil.updateReview);
 route.post('/favoritarFilme/:id/:nomeUser', perfil.favoritar);
+route.post('/favoritarSerie/:id/:nomeUser', perfil.favoritarSerie);
 
 // Get e Post da Filmes
 route.get('/filmes/:nomeUser', filmes.getFilmesPage);

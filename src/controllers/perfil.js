@@ -50,7 +50,8 @@ module.exports = {
 
         const listaSeries = await tabelaListaSeries.findAll({
             raw: true,
-            where: {IDUsuario: usuario[0].IDUsuario}
+            where: {IDUsuario: usuario[0].IDUsuario},
+            order: [['Favorito', 'DESC']]
         })
         
         const listaIDSeries = await tabelaListaSeries.findAll({
@@ -69,7 +70,8 @@ module.exports = {
         const series = await tabelaListaSeries.findAll({
             raw: true,
             include: [{model: tabelaSeries}],
-            where: {IDUsuario: usuario[0].IDUsuario}
+            where: {IDUsuario: usuario[0].IDUsuario},
+            order: [['Favorito', 'DESC']]
         });
 
         const listaPretendeAssistirFilme = await tabelaPretendeAssistirFilme.findAll({
@@ -290,6 +292,39 @@ module.exports = {
             },
             {
                 where: {IDUsuario: usuario[0].IDUsuario, IDFilme: id}
+            })
+        }
+
+        res.redirect('/perfil/' + nomeUser)
+    },
+
+    async favoritarSerie(req, res){
+        const id = req.params.id
+        const nomeUser = req.params.nomeUser
+
+        const usuario = await tabelaUsuario.findAll({
+            raw: true,
+            where: {Usuario: nomeUser}
+        });
+
+        const filme = await tabelaListaSeries.findAll({
+            raw: true,
+            where: {IDUsuario: usuario[0].IDUsuario, IDSerie: id}
+        });
+
+        if (filme[0].Favorito == 0) {
+            await tabelaListaSeries.update({
+                Favorito: 1
+            },
+            {
+                where: {IDUsuario: usuario[0].IDUsuario, IDSerie: id}
+            })
+        } else {
+            await tabelaListaSeries.update({
+                Favorito: 0
+            },
+            {
+                where: {IDUsuario: usuario[0].IDUsuario, IDSerie: id}
             })
         }
 

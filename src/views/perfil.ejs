@@ -140,9 +140,9 @@
                             <% } %>
                           </form>
                         </div>
+
                         <hr style="position: relative; bottom: 40px;">
                         
-
                         <div style="position: relative; bottom: 40px;">
 
                           <p>
@@ -223,12 +223,24 @@
                       </a>
                       
                       <div class="infoFilme d-flex flex-column justify-content-between">
-                        <div>
+                        <div class="d-flex flex-row justify-content-between align-items-center">
                           <h2><%= series[i]['serie.Titulo'] %></h2>
-                          <hr>
+                          <form action="/favoritarSerie/<%= listaSeries[i].IDSerie %>/<%= usuario[0].Usuario %>" method="post">
+                            <% if (listaSeries[i].Favorito == 0) { %>
+                              <button type="submit" style="border: none; background-color: transparent;">
+                                <i class="heart fa-regular fa-heart fa-xl" style="color: #ff9c00;" id="heart<%=i%>"onclick="mudarFav('heart<%= i%>', 0)"></i>
+                              </button>
+                            <% } else { %>
+                              <button type="submit" style="border: none; background-color: transparent;">
+                                <i class="heart fa-solid fa-heart fa-xl" style="color: #ff9c00;" id="heart<%=i%>"onclick="mudarFav('heart<%= i%>', 1)"></i>
+                              </button>
+                            <% } %>
+                          </form>
                         </div>
+
+                        <hr style="position: relative; bottom: 40px;">
                         
-                        <div>
+                        <div style="position: relative; bottom: 40px;">
                           
                           <p>
                             <%= listaSeries[i].Comentario %>
@@ -252,6 +264,8 @@
                         </div>
                         
                       </div>
+
+                      <hr>
                       <% } %>
                       <% } catch (error) { %>
                         <% console.log(error) %>
